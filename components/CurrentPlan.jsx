@@ -1,4 +1,3 @@
-import { Progress } from "@nextui-org/react";
 import Link from "next/link";
 import React from "react";
 
@@ -20,29 +19,23 @@ export default function CurrentPlan() {
                 </div>
             </div>
             <div className="mt-4">
-                <Progress
-                    label="Generation Credits"
-                    size="md"
-                    value={4000}
-                    maxValue={10000}
-                    color="#FFFFFF"
-                    formatOptions={{ style: "currency", currency: "ARS" }}
-                    showValueLabel={true}
-                    className="max-w-md text-[12px]"
-                />
+                <div className="flex justify-between mb-1">
+                    <span className="font-medium text-blue-700 dark:text-white text-[12px]">Generation Credits</span>
+                    <span className="font-medium text-blue-700 dark:text-white text-[12px]">5m 0s</span>
+                </div>
+                <div className="w-full bg-gray-200 rounded-full h-2 dark:bg-gray-700">
+                    <div className="bg-blue-600 h-2 rounded-full" style={{ width: "45%" }}></div>
+                </div>
                 <p className="text-[#F5F6F7] text-[10px] mt-[5px]">resets on Jan 13, 2024</p>
             </div>
             <div className="mt-4">
-                <Progress
-                    label="Production Storage"
-                    size="md"
-                    value={4000}
-                    maxValue={10000}
-                    color="#FFFFFF"
-                    formatOptions={{ style: "currency", currency: "ARS" }}
-                    showValueLabel={true}
-                    className="max-w-md text-[12px]"
-                />
+                <div className="flex justify-between mb-1">
+                    <span className="font-medium text-blue-700 dark:text-white text-[12px]">Production Storage</span>
+                    <span className="font-medium text-blue-700 dark:text-white text-[12px]">0 / 1GB</span>
+                </div>
+                <div className="w-full bg-gray-200 rounded-full h-2 dark:bg-gray-700">
+                    <div className="bg-blue-600 h-2 rounded-full" style={{ width: "45%" }}></div>
+                </div>
             </div>
         </div>
     );

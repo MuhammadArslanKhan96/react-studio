@@ -4,16 +4,16 @@ import { useRouter } from "next/router";
 import React from "react";
 import { FaChevronDown } from "react-icons/fa";
 
-export default function Sidebar({ children, isOpen, setIsOpen }) {
+export default function Sidebar({ children, open, setOpen }) {
     const router = useRouter();
 
-    if (router.pathname === "/signin" || router.pathname === "/signup") return;
+    if (router.pathname === "/signin" || router.pathname === "/signup" || router.pathname.includes("/project")) return;
 
     return (
         <main
             className={
                 " flex max-xl:fixed z-10 bg-[#2D2D30] bg-opacity-25 inset-0 ease-in-out " +
-                (isOpen
+                (open
                     ? " max-xl:transition-opacity max-xl:opacity-100 max-xl:duration-500 max-xl:left-0 "
                     : " max-xl:transition-all max-xl:delay-500 max-xl:opacity-0 max-xl:w-0")
             }
@@ -21,7 +21,7 @@ export default function Sidebar({ children, isOpen, setIsOpen }) {
             <section
                 className={
                     " w-screen max-w-[264px] xl:!left-0 left-0 max-xl:absolute bg-[#2D2D30] h-full shadow-xl delay-400 duration-500 ease-in-out transition-all" +
-                    (isOpen ? " max-xl:left-0 " : " max-xl:w-0")
+                    (open ? " max-xl:left-0 " : " max-xl:w-0")
                 }
             >
                 <article className="scrollStyle relative w-screen max-w-[264px] pb-10 flex flex-col space-y-0 overflow-y-scroll h-full">
@@ -65,11 +65,11 @@ export default function Sidebar({ children, isOpen, setIsOpen }) {
                     {children}
                 </article>
             </section>
-            {isOpen ? (
+            {open ? (
                 <section
                     className=" xl:w-0 w-screen h-full cursor-pointer"
                     onClick={() => {
-                        setIsOpen(false);
+                        setOpen(false);
                     }}
                 ></section>
             ) : null}
