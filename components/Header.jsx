@@ -30,7 +30,7 @@ export default function Header() {
     return (
         <div className="flex justify-between items-center px-[16px] py-[8px] bg-[#242427] border-b border-b-[#44444A]">
             <div className="flex gap-x-2">
-                <Button onPress={onOpen}>
+                <Button>
                     <Image src={"/logo.svg"} alt="" width={111} height={90} />
                 </Button>
                 <div className="flex max-w-[100px]">
@@ -71,7 +71,7 @@ export default function Header() {
                     Export
                     <RiShareForward2Fill />
                 </Button>
-                <Button className="w-fit border rounded-[5px] h-fit gap-x-2 px-4 py-1 text-white ">
+                <Button className="w-fit border rounded-[5px] h-fit gap-x-2 px-4 py-1 text-white " onPress={onOpen}>
                     <Image src={"/images/invite.svg"} alt="" width={20} height={20} />
                     Invite
                 </Button>
