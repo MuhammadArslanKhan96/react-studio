@@ -1,16 +1,37 @@
-import { Avatar, Button, Checkbox, Tooltip } from "@nextui-org/react";
-import Image from "next/image";
-import React from "react";
-import { FaPlay, FaShareSquare, FaPlus } from "react-icons/fa";
+import { Button, Tooltip } from "@nextui-org/react";
 import { BsPinAngle } from "react-icons/bs";
+import { FaPlus } from "react-icons/fa";
 import { TbClockHour12 } from "react-icons/tb";
-import { CiMenuKebab } from "react-icons/ci";
-import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem } from "@nextui-org/react";
-import { RiDeleteBin5Line } from "react-icons/ri";
-import { CiWarning } from "react-icons/ci";
-import { VscPulse } from "react-icons/vsc";
+import TranscriptInput from "./TranscriptInput";
+import { useAppContext } from "./EditorContext";
 
 export default function Promptbar() {
+    const { mockData, mockEffect, setMockData, setMockEffect } = useAppContext();
+    const addAnotherMock = () => {
+        setMockData((pre) => [
+            ...pre,
+            {
+                id: `${pre.length}`,
+                actions: [
+                    {
+                        id: "",
+                        start: 0,
+                        end: 2,
+                        effectId: "effect" + pre.length,
+                    },
+                ],
+                checked: false,
+            },
+        ]);
+        setMockEffect((pre) => ({
+            ...pre,
+            [`effect${Object.keys(pre).length}`]: {
+                id: "effect" + Object.keys(pre).length,
+                name: "",
+            },
+        }));
+    };
+
     return (
         <div className="flex justify-center mt-4">
             <div className="flex flex-col">
@@ -46,77 +67,24 @@ export default function Promptbar() {
                         <p className="text-[#428BEB] text-[12px]">Free Regeneration Available</p>
                     </div>
                 </div>
-                <div className="flex items-start gap-x-2">
-                    <div className="flex items-center">
-                        <Checkbox defaultSelected className="flex" size="16"></Checkbox>
-                        <Avatar size="24" />
-                        <p className="text-[14px]">Sophia</p>
+                <div className="flex flex-col gap-4">
+                    {mockData.map((item, index) => {
+                        return (
+                            <TranscriptInput mockData={item} mockEffect={mockEffect[`effect${index}`]} key={index} />
+                        );
+                    })}
+                    {/* add new block */}
+                    <div className="flex items-center w-full justify-between cursor-pointer opacity-0 hover:opacity-100">
+                        <div className="bg-[#343438] h-[1px] w-full"></div>
+                        <Button
+                            onClick={addAnotherMock}
+                            className="flex rounded-[10px] w-full gap-x-2 bg-[#44444A] px-2  text-[10px] text-[#EFEFEF]"
+                        >
+                            <FaPlus size={10} />
+                            Add a new block
+                        </Button>
+                        <div className="bg-[#343438] h-[1px] w-full"></div>
                     </div>
-                    <div className="relative">
-                        <textarea
-                            rows="4"
-                            cols="50"
-                            className="bg-transparent resize-none border border-[#44444A] rounded-[5px] p-2"
-                        ></textarea>
-                        <div className="absolute top-2 right-2 hover:bg-[#353538] p-2 rounded-[5px] cursor-pointer">
-                            <Dropdown>
-                                <DropdownTrigger>
-                                    <Button variant="bordered">
-                                        <CiMenuKebab size={16} color="#FFFFFF" />
-                                    </Button>
-                                </DropdownTrigger>
-                                <DropdownMenu
-                                    variant="faded"
-                                    aria-label="Dropdown menu with icons"
-                                    className="bg-[#242427] rounded-[10px] border border-[#44444A]"
-                                >
-                                    <DropdownItem key="new" className="text-[14px]" startContent={<VscPulse />}>
-                                        Producer Mode
-                                    </DropdownItem>
-                                    <DropdownItem
-                                        key="delete"
-                                        className="text-[14px] text-[#F56565]"
-                                        startContent={<RiDeleteBin5Line />}
-                                    >
-                                        Delete file
-                                    </DropdownItem>
-                                    <DropdownItem key="copy" className="text-[14px]" startContent={<CiWarning />}>
-                                        Send Feedback
-                                    </DropdownItem>
-                                </DropdownMenu>
-                            </Dropdown>
-                        </div>
-                    </div>
-                    <div className="flex flex-col gap-2 justify-evenly h-full">
-                        <Tooltip showArrow={true} content="Generate" className="bg-black rounded-[10px]">
-                            <Image
-                                src={"/images/generate.svg"}
-                                alt=""
-                                width={20}
-                                height={20}
-                                className="cursor-pointer"
-                            />
-                        </Tooltip>
-                        <Tooltip showArrow={true} content="Play" className="bg-black rounded-[10px]">
-                            <Button>
-                                <FaPlay size={20} />
-                            </Button>
-                        </Tooltip>
-                        <Tooltip showArrow={true} content="Export" className="bg-black rounded-[10px]">
-                            <Button>
-                                <FaShareSquare size={20} />
-                            </Button>
-                        </Tooltip>
-                    </div>
-                </div>
-                {/* add new block */}
-                <div className="flex items-center w-full justify-between cursor-pointer opacity-0 hover:opacity-100">
-                    <div className="bg-[#343438] h-[1px] w-full"></div>
-                    <Button className="flex rounded-[10px] w-full gap-x-2 bg-[#44444A] px-2  text-[10px] text-[#EFEFEF]">
-                        <FaPlus size={10} />
-                        Add a new block
-                    </Button>
-                    <div className="bg-[#343438] h-[1px] w-full"></div>
                 </div>
             </div>
         </div>

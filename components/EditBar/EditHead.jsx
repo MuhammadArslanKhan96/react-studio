@@ -5,14 +5,23 @@ import { HiOutlineArrowUturnLeft, HiOutlineArrowUturnRight } from "react-icons/h
 import { GrDownload } from "react-icons/gr";
 import { RiSpeedUpLine } from "react-icons/ri";
 import { RiDeleteBin6Line } from "react-icons/ri";
+import { useAppContext } from "./EditorContext";
 
 export default function EditHead() {
+    const { mockData, setMockData, initMockData, initMockEffect, setMockEffect } = useAppContext();
     return (
         <div className="bg-[#2D2D30]">
             <div className="container mx-auto px-4 flex items-center justify-between py-2">
                 <div className="flex items-center">
                     <div className="border-r border-r-[#44444A] px-4">
-                        <Checkbox defaultSelected>Select All (1/1)</Checkbox>
+                        <Checkbox
+                            isSelected={mockData.filter((a) => a.checked).length === mockData.length}
+                            onChange={(e) =>
+                                setMockData((pre) => pre.map((a) => ({ ...a, checked: e.target.checked })))
+                            }
+                        >
+                            Select All ({mockData.filter((a) => a.checked).length}/{mockData.length})
+                        </Checkbox>
                     </div>
                     <div className="flex items-center gap-x-4 px-4">
                         <Tooltip showArrow={true} content="Generate" className="bg-black rounded-[10px]">
@@ -44,7 +53,12 @@ export default function EditHead() {
                             </Button>
                         </Tooltip>
                         <Tooltip showArrow={true} content="Delete" className="bg-black rounded-[10px]">
-                            <Button>
+                            <Button
+                                onClick={() => {
+                                    setMockData(initMockData);
+                                    setMockEffect(initMockEffect);
+                                }}
+                            >
                                 <RiDeleteBin6Line size={20} className="cursor-pointer" />
                             </Button>
                         </Tooltip>
