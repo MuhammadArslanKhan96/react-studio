@@ -28,17 +28,17 @@ export default function SideNav() {
         {
             img: "/images/subtitles.svg",
             title: "Subtitles",
-            click: <PronouneModal isOpen={isOpen} onOpenChange={onOpenChange} />,
+            click: <ResourceModal isOpen={isOpen} onOpenChange={onOpenChange} />,
         },
         {
             img: "/images/aiwriter.svg",
             title: "AI Writer",
-            click: <PronouneModal isOpen={isOpen} onOpenChange={onOpenChange} />,
+            click: <ResourceModal isOpen={isOpen} onOpenChange={onOpenChange} />,
         },
         {
             img: "/images/aiartist.svg",
             title: "AI Artist",
-            click: <PronouneModal isOpen={isOpen} onOpenChange={onOpenChange} />,
+            click: <ResourceModal isOpen={isOpen} onOpenChange={onOpenChange} />,
         },
         {
             img: "/images/pronoune.svg",
@@ -70,7 +70,6 @@ export default function SideNav() {
                     </div>
                 ))}
             </div>
-            {/* <VoiceSelectorModal isOpen={isOpen} onOpenChange={onOpenChange} /> */}
             <div>
                 <Image src={"/images/questionmark.svg"} alt="" width={24} height={24} />
             </div>
