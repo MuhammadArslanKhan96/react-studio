@@ -14,16 +14,17 @@ import {
     Navbar,
     NavbarContent,
     Tooltip,
+    useDisclosure,
 } from "@nextui-org/react";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import React, { useContext } from "react";
-import { Context } from "./Context";
 import EditInput from "./EditInput";
+import InviteMembers from "./InviteMembers";
 
 export default function Header() {
     const router = useRouter();
-    const { onOpen } = useContext(Context);
+    const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
     if (router.pathname === "/signin" || router.pathname === "/signup") return;
 
@@ -75,6 +76,7 @@ export default function Header() {
                     <Image src={"/images/invite.svg"} alt="" width={20} height={20} />
                     Invite
                 </Button>
+                <InviteMembers isOpen={isOpen} onOpenChange={onOpenChange} />
                 <Navbar className="w-fit">
                     <NavbarContent as="div" justify="end">
                         <Dropdown placement="bottom-end">

@@ -7,8 +7,9 @@ import { AiOutlineReload } from "react-icons/ai";
 import VoiceCard from "./VoiceCard";
 import { FaCaretDown, FaPlus } from "react-icons/fa";
 import CreateVoiceModal from "./CreateVoiceModal";
+import { FaRegFolderClosed } from "react-icons/fa6";
 
-export default function VoiceSelectorModal({ isOpen, onOpenChange }) {
+export default function ResourceModal({ isOpen, onOpenChange }) {
     const { onOpen } = useDisclosure();
 
     const [active, setActive] = useState("Pro Voice");
@@ -145,8 +146,22 @@ export default function VoiceSelectorModal({ isOpen, onOpenChange }) {
                 <ModalContent className="bg-[#242427] border border-[#44444A] rounded-[10px] min-w-[1000px]">
                     {(onClose) => (
                         <>
-                            <ModalHeader className="flex flex-col gap-1 text-[16px] text-[#EFEFEF]">
-                                Select a voice
+                            <ModalHeader className="flex gap-1 justify-between text-[16px] text-[#EFEFEF]">
+                                Add Resource
+                                <div>
+                                    <div className="flex gap-x-2">
+                                        <FaRegFolderClosed />
+                                        <div className="flex items-center gap-x-2">
+                                            <div className="w-full bg-gray-200 rounded-full h-2 dark:bg-gray-700 min-w-[200px]">
+                                                <div
+                                                    className="bg-blue-600 h-2 rounded-full"
+                                                    style={{ width: "45%" }}
+                                                ></div>
+                                            </div>
+                                            <p className="text-[#B6B8BF] text-[10px]">0s/1m</p>
+                                        </div>
+                                    </div>
+                                </div>
                             </ModalHeader>
                             <div className="bg-[#44444A] h-[1px]"></div>
                             {/* <ModalBody> */}

@@ -3,6 +3,7 @@ import Image from "next/image";
 import React, { useState } from "react";
 import PronouneModal from "./PronouneModal";
 import VoiceSelectorModal from "./VoiceSelectorModal";
+import ResourceModal from "./ResourceModal";
 
 export default function SideNav() {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -17,12 +18,12 @@ export default function SideNav() {
         {
             img: "/images/voiceCloning.svg",
             title: "Voice Cloning",
-            click: <PronouneModal isOpen={isOpen} onOpenChange={onOpenChange} />,
+            click: <VoiceSelectorModal isOpen={isOpen} onOpenChange={onOpenChange} />,
         },
         {
             img: "/images/resources.svg",
             title: "Resource",
-            click: <PronouneModal isOpen={isOpen} onOpenChange={onOpenChange} />,
+            click: <ResourceModal isOpen={isOpen} onOpenChange={onOpenChange} />,
         },
         {
             img: "/images/subtitles.svg",
