@@ -12,7 +12,7 @@ export default function Sidebar({ children, open, setOpen }) {
     return (
         <main
             className={
-                " flex max-xl:fixed z-10 bg-[#2D2D30] bg-opacity-25 inset-0 ease-in-out " +
+                " flex max-xl:fixed z-10 bg-[#2D2D30] max-xl:hidden inset-0 ease-in-out" +
                 (open
                     ? " max-xl:transition-opacity max-xl:opacity-100 max-xl:duration-500 max-xl:left-0 "
                     : " max-xl:transition-all max-xl:delay-500 max-xl:opacity-0 max-xl:w-0")

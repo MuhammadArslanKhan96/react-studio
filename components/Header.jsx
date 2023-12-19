@@ -21,6 +21,8 @@ import { useRouter } from "next/router";
 import React, { useContext } from "react";
 import EditInput from "./EditInput";
 import InviteMembers from "./InviteMembers";
+import { GiHamburgerMenu } from "react-icons/gi";
+import Sidebar from "./Sidebar";
 
 export default function Header() {
     const router = useRouter();
@@ -30,7 +32,10 @@ export default function Header() {
 
     return (
         <div className="flex justify-between items-center px-[16px] py-[8px] bg-[#242427] border-b border-b-[#44444A]">
-            <div className="flex gap-x-2">
+            <div className="flex gap-x-2 items-center">
+                <div className="cursor-pointer hidden max-xl:flex">
+                    <GiHamburgerMenu size={20} />
+                </div>
                 <Button>
                     <Image src={"/logo.svg"} alt="" width={111} height={90} />
                 </Button>
@@ -39,39 +44,45 @@ export default function Header() {
                 </div>
             </div>
             <div className="flex items-center gap-x-2">
-                <Tooltip
-                    showArrow={true}
-                    content="Generation credits deducted based on voiceover length. No deduction for regeneration if text or speaker remains changed."
-                    className="bg-black rounded-[10px] text-[10px] max-w-[200px]"
-                >
-                    <Button>
-                        <AiOutlineQuestionCircle size={16} />
-                    </Button>
-                </Tooltip>
-                <Tooltip
-                    showArrow={true}
-                    content="used time: 5m 0s"
-                    className="bg-black rounded-[10px] text-[10px] max-w-[200px]"
-                >
-                    <Button>
-                        <div className="min-w-[80px]">
-                            <div className="flex justify-between ">
-                                <span className="font-medium text-blue-700 dark:text-white text-[12px]">5m 0s</span>
-                            </div>
-                            <div className="w-full bg-gray-200 rounded-full h-2 dark:bg-gray-700">
-                                <div className="bg-blue-600 h-2 rounded-full" style={{ width: "45%" }}></div>
-                            </div>
-                        </div>
-                    </Button>
-                </Tooltip>
-                <Button className="bg-[linear-gradient(90deg,rgb(46,148,255)0%,rgb(64,140,255)32.81%,rgb(61,181,255)71.35%,rgb(46,209,234)100%)] bg-clip-text text-transparent font-semibold text-[14px]">
-                    UPGRADE
-                </Button>
-                <Button className="border rounded-[10px] px-2 py-1 text-[14px]">Save</Button>
-                <Button className="border rounded-[10px] px-2 py-1 flex gap-x-2 items-center bg-[#EBECF0] text-black text-[14px]">
-                    Export
-                    <RiShareForward2Fill />
-                </Button>
+                {router.pathname.includes("/project") && (
+                    <>
+                        <Tooltip
+                            showArrow={true}
+                            content="Generation credits deducted based on voiceover length. No deduction for regeneration if text or speaker remains changed."
+                            className="bg-black rounded-[10px] text-[10px] max-w-[200px]"
+                        >
+                            <Button>
+                                <AiOutlineQuestionCircle size={16} />
+                            </Button>
+                        </Tooltip>
+                        <Tooltip
+                            showArrow={true}
+                            content="used time: 5m 0s"
+                            className="bg-black rounded-[10px] text-[10px] max-w-[200px]"
+                        >
+                            <Button>
+                                <div className="min-w-[80px]">
+                                    <div className="flex justify-between ">
+                                        <span className="font-medium text-blue-700 dark:text-white text-[12px]">
+                                            5m 0s
+                                        </span>
+                                    </div>
+                                    <div className="w-full bg-gray-200 rounded-full h-2 dark:bg-gray-700">
+                                        <div className="bg-blue-600 h-2 rounded-full" style={{ width: "45%" }}></div>
+                                    </div>
+                                </div>
+                            </Button>
+                        </Tooltip>
+                        <Button className="bg-[linear-gradient(90deg,rgb(46,148,255)0%,rgb(64,140,255)32.81%,rgb(61,181,255)71.35%,rgb(46,209,234)100%)] bg-clip-text text-transparent font-semibold text-[14px]">
+                            UPGRADE
+                        </Button>
+                        <Button className="border rounded-[10px] px-2 py-1 text-[14px]">Save</Button>
+                        <Button className="border rounded-[10px] px-2 py-1 flex gap-x-2 items-center bg-[#EBECF0] text-black text-[14px]">
+                            Export
+                            <RiShareForward2Fill />
+                        </Button>
+                    </>
+                )}
                 <Button className="w-fit border rounded-[5px] h-fit gap-x-2 px-4 py-1 text-white " onPress={onOpen}>
                     <Image src={"/images/invite.svg"} alt="" width={20} height={20} />
                     Invite

@@ -14,6 +14,7 @@ import { IoMdAdd } from "react-icons/io";
 import { PiFolder } from "react-icons/pi";
 import { RiArrowDownSLine } from "react-icons/ri";
 import { AppContextProvider } from "@/components/EditBar/EditorContext";
+import InviteMembers from "@/components/InviteMembers";
 
 export default function App({ Component, pageProps }) {
     const [open, setOpen] = useState(false);
@@ -67,7 +68,7 @@ export default function App({ Component, pageProps }) {
                             )}
 
                             <Link
-                                href={"/"}
+                                href={"/pricing"}
                                 className="flex items-center gap-x-2 text-[14px] py-2 px-3 hover:bg-[#39393C] "
                             >
                                 <Image src={"/images/pricing.svg"} alt="" width={20} height={20} />
@@ -94,6 +95,8 @@ export default function App({ Component, pageProps }) {
                                 <Image src={"/images/invite.svg"} alt="" width={20} height={20} />
                                 Invite Members
                             </Button>
+                            <InviteMembers isOpen={isOpen} onOpenChange={onOpenChange} />
+
                             <Discount />
                         </Sidebar>
                         <Component {...pageProps} />

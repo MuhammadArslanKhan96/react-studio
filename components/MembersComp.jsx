@@ -4,9 +4,12 @@ import { HiBarsArrowDown } from "react-icons/hi2";
 import { FaSearch } from "react-icons/fa";
 import { GoTriangleDown } from "react-icons/go";
 import Image from "next/image";
-import { Avatar, Button } from "@nextui-org/react";
+import { Avatar, Button, useDisclosure } from "@nextui-org/react";
+import InviteMembers from "./InviteMembers";
 
 export default function MembersComp() {
+    const { isOpen, onOpen, onOpenChange } = useDisclosure();
+
     const items = [
         {
             key: "1",
@@ -78,6 +81,7 @@ export default function MembersComp() {
                             <Image src={"/images/invite.svg"} alt="" width={20} height={20} />
                             Invite Members
                         </Button>
+                        <InviteMembers isOpen={isOpen} onOpenChange={onOpenChange} />
                     </div>
                 </div>
 

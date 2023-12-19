@@ -23,17 +23,12 @@ export default function InviteMembers({ isOpen, onOpenChange }) {
                             <hr className="border border-[#44444A]" />
                             <ModalBody>
                                 <div className="w-[100%] flex justify-between items-center gap-[10px]">
-
                                     <Input
                                         type="email"
-
                                         placeholder="Invite vie email"
                                         labelPlacement="outside"
                                         className=" rounded-[0.25rem] bg-[#242427] border border-[#44444A] text-[#b6b8bf] text-[17px] w-[397.33px] h-[42px] pt-[8px] pb-[8px] pl-[0px] pl-[0px]"
-                                        startContent={
-                                            <AiOutlineMail className="text-[24px] text-[#fff]" />
-
-                                        }
+                                        startContent={<AiOutlineMail className="text-[24px] text-[#fff]" />}
                                     />
                                     <button className="text-[#8c8c96] bg-[#606069] text-[16px]  px-[16px] py-[8px] rounded-[0.25rem]">
                                         {" "}
@@ -47,28 +42,19 @@ export default function InviteMembers({ isOpen, onOpenChange }) {
                                 </div>
 
                                 <div className="flex justify-between items-center">
-
                                     <div className="flex justify-center items-center gap-2">
-                                 <Avatar className="bg-[red]"/>
-                                    <div>
-                                        <p className="text-[14px] text-[#fff]">Username</p>
-                                        <p className="text-[12px] text-[#b6b8bf]">user@gmail.com</p>
+                                        <Avatar className="bg-[red]" />
+                                        <div>
+                                            <p className="text-[14px] text-[#fff]">Username</p>
+                                            <p className="text-[12px] text-[#b6b8bf]">user@gmail.com</p>
+                                        </div>
                                     </div>
-                                    </div>
-                                    
+
                                     <div>
-                                    <p className="text-[12px] text-[#8c8c96]">Owner</p>
+                                        <p className="text-[12px] text-[#8c8c96]">Owner</p>
                                     </div>
                                 </div>
                             </ModalBody>
-                            <ModalFooter>
-                                <Button color="danger" variant="light" onPress={onClose}>
-                                    Close
-                                </Button>
-                                <Button color="primary" onPress={onClose}>
-                                    Action
-                                </Button>
-                            </ModalFooter>
                         </>
                     )}
                 </ModalContent>
