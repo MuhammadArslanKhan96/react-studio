@@ -23,17 +23,31 @@ import EditInput from "./EditInput";
 import InviteMembers from "./InviteMembers";
 import { GiHamburgerMenu } from "react-icons/gi";
 import Sidebar from "./Sidebar";
+import { Context } from "./Context";
+import Link from "next/link";
+import Discount from "./Discount";
+import CurrentPlan from "./CurrentPlan";
+import { IoIosArrowUp } from "react-icons/io";
+import { IoMdAdd } from "react-icons/io";
+import { PiFolder } from "react-icons/pi";
 
-export default function Header() {
+export default function Header({ open, setOpen }) {
     const router = useRouter();
+    const { setSideModal } = useContext(Context);
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
+    console.log(open);
 
     if (router.pathname === "/signin" || router.pathname === "/signup") return;
 
     return (
         <div className="flex justify-between items-center px-[16px] py-[8px] bg-[#242427] border-b border-b-[#44444A]">
             <div className="flex gap-x-2 items-center">
-                <div className="cursor-pointer hidden max-xl:flex">
+                <div
+                    className="cursor-pointer hidden max-xl:flex"
+                    onClick={() => {
+                        setSideModal(true);
+                    }}
+                >
                     <GiHamburgerMenu size={20} />
                 </div>
                 <Button>
