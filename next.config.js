@@ -11,16 +11,17 @@ const nextConfig = {
         ],
     },
     transpilePackages: [
-        "antd",
+        // "antd",
         "rc-util",
-        "@babel/runtime",
+        // "@babel/runtime",
         "@ant-design/icons",
-        "@ant-design/icons-svg",
+        // "@ant-design/icons-svg",
         "rc-pagination",
         "rc-picker",
         "rc-tree",
         "rc-table",
     ],
+    output: "standalone",
 };
 
 module.exports = nextConfig;

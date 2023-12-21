@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import { getSpeakers } from "@/helpers/get-speakers";
+import React, { useEffect, useState } from "react";
 import { createContext, useContext } from "react";
 
 export const AppContext = createContext();
@@ -25,12 +26,29 @@ export const AppContextProvider = ({ children }) => {
         },
     };
     const [mockData, setMockData] = useState(initMockData);
-
     const [mockEffect, setMockEffect] = useState(initMockEffect);
+    const [speakers, setSpeakers] = useState([]);
+
+    const getData = async () => {
+        const data = await getSpeakers();
+        setSpeakers(data);
+    };
+    useEffect(() => {
+        getData();
+    }, []);
     return (
         <>
             <AppContext.Provider
-                value={{ mockData, setMockData, mockEffect, setMockEffect, initMockData, initMockEffect }}
+                value={{
+                    mockData,
+                    setMockData,
+                    mockEffect,
+                    setMockEffect,
+                    initMockData,
+                    initMockEffect,
+                    speakers,
+                    setSpeakers,
+                }}
             >
                 {children}
             </AppContext.Provider>

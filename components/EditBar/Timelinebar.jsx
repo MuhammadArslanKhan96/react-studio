@@ -9,7 +9,7 @@ export default function Timelinebar() {
             <div className="[&>div>div>div>div>div>div>div]:flex [&>div>div>div>div>div>div>div]:items-center [&>div>div>div>div>div>div>div]:justify-around">
                 <Timeline
                     getActionRender={({ id }) => (
-                        <div className="flex justify-center items-center text-center">{id}</div>
+                        <div className="truncate max-w-[300px] cursor-grab active:cursor-grabbing">{id}</div>
                     )}
                     editorData={mockData}
                     onChange={(a) => setMockData(a)}
