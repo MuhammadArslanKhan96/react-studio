@@ -34,7 +34,7 @@ export default function App({ Component, pageProps }) {
             </button> */}
                 <AppContextProvider>
                     <Header open={open} setOpen={setOpen} />
-                    <div className="flex w-full relative min-h-screen overflow-y-scroll">
+                    <div className="flex w-full relative min-h-screen overflow-y-scroll scrollStyle">
                         <div className="h-full ">
                             {sideModal && (
                                 <>
@@ -192,9 +192,7 @@ export default function App({ Component, pageProps }) {
                                 </Sidebar>
                             </div>
                         </div>
-                        <div className="flex min-h-screen overflow-y-scroll">
-                            <Component {...pageProps} />
-                        </div>
+                        <Component {...pageProps} />
                     </div>
                 </AppContextProvider>
             </Context.Provider>
