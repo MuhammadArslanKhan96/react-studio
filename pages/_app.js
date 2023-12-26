@@ -34,12 +34,12 @@ export default function App({ Component, pageProps }) {
             </button> */}
                 <AppContextProvider>
                     <Header open={open} setOpen={setOpen} />
-                    <div className="flex w-full relative">
-                        <div>
+                    <div className="flex w-full relative min-h-screen overflow-y-scroll">
+                        <div className="h-full ">
                             {sideModal && (
                                 <>
                                     <div
-                                        className="absolute left-[266px] max-xl:flex hidden top-[-40px] z-20 cursor-pointer"
+                                        className="absolute left-[266px] max-xl:flex hidden top-[-40px] z-20 cursor-pointer h-full"
                                         onClick={() => {
                                             setSideModal(false);
                                             setOpen(false);
@@ -192,7 +192,9 @@ export default function App({ Component, pageProps }) {
                                 </Sidebar>
                             </div>
                         </div>
-                        <Component {...pageProps} />
+                        <div className="flex min-h-screen overflow-y-scroll">
+                            <Component {...pageProps} />
+                        </div>
                     </div>
                 </AppContextProvider>
             </Context.Provider>

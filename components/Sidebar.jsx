@@ -13,7 +13,7 @@ export default function Sidebar({ children, open, setOpen }) {
     return (
         <main
             className={
-                `flex max-xl:fixed z-10 bg-[#2D2D30] inset-0 ease-in-out h-[100vh]` +
+                `flex max-xl:fixed z-10 bg-[#2D2D30] inset-0 ease-in-out h-screen sticky top-0` +
                 (open
                     ? " max-xl:transition-opacity max-xl:duration-500 max-xl:left-0 "
                     : " max-xl:transition-all max-xl:delay-500 max-xl:w-0")
@@ -68,7 +68,7 @@ export default function Sidebar({ children, open, setOpen }) {
             </section>
             {open ? (
                 <section
-                    className=" xl:w-0 w-screen h-full cursor-pointer"
+                    className=" xl:w-0 w-screen !h-full cursor-pointer"
                     onClick={() => {
                         setOpen(false);
                     }}
