@@ -3,6 +3,7 @@ import "@/styles/globals.css";
 import { Button, NextUIProvider, user } from "@nextui-org/react";
 import Image from "next/image";
 import Sidebar from "@/components/Sidebar";
+import { SettingsContext } from "@/context/settingsContext";
 import Header from "@/components/Header";
 import CurrentPlan from "@/components/CurrentPlan";
 import Link from "next/link";

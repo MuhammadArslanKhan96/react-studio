@@ -1,21 +1,34 @@
-import React from "react";
-import { Avatar, Button, Checkbox, Tooltip } from "@nextui-org/react";
+import {
+    Avatar,
+    Button,
+    Checkbox,
+    Dropdown,
+    DropdownItem,
+    DropdownMenu,
+    DropdownTrigger,
+    Tooltip,
+} from "@nextui-org/react";
 import Image from "next/image";
-import { FaPlay, FaShareSquare } from "react-icons/fa";
-import { CiMenuKebab } from "react-icons/ci";
-import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem } from "@nextui-org/react";
+import { CiMenuKebab, CiWarning } from "react-icons/ci";
+import { FaPause, FaPlay, FaShareSquare } from "react-icons/fa";
 import { RiDeleteBin5Line } from "react-icons/ri";
-import { CiWarning } from "react-icons/ci";
 import { VscPulse } from "react-icons/vsc";
 import { useAppContext } from "./EditorContext";
+import { useEffect, useRef, useState } from "react";
+import { generateSpeech } from "@/helpers/generate-audio";
 
 function TranscriptInput({ mockData, mockEffect }) {
-    const { setMockData, setMockEffect } = useAppContext();
+    const { setMockData, setMockEffect, speakers } = useAppContext();
+    const [disabled, setDisabled] = useState(true);
+    const [play, setPlay] = useState(false);
+    const [speech, setSpeech] = useState();
+    const [selectedSpeaker, setSelectedSpeaker] = useState(speakers[0]);
     const handleCheckboxChange = (e) => {
         setMockData((pre) => [...pre.filter((a) => a.id !== mockData.id), { ...mockData, checked: e.target.checked }]);
     };
 
     const handleTextChange = (e) => {
+        setDisabled(true);
         setMockData((pre) => [
             ...pre.filter((a) => a.id !== mockData.id),
             { ...mockData, actions: [{ ...mockData.actions[0], id: e.target.value }] },
@@ -26,9 +39,23 @@ function TranscriptInput({ mockData, mockEffect }) {
         }));
     };
 
+    useEffect(() => {
+        if (selectedSpeaker) return;
+        setSelectedSpeaker(speakers[0]);
+    }, [speakers, selectedSpeaker]);
+
+    const generateAudio = async () => {
+        if (!mockEffect?.name.length) return;
+
+        const speech = await generateSpeech(JSON.stringify({ text: mockEffect?.name, speaker: selectedSpeaker?.id }));
+        const data = await fetch(speech?.data?.[0]?.urls?.[0]).then((res) => res.blob());
+        setSpeech({ ...speech, blobUrl: URL.createObjectURL(data), type: data.type });
+        setDisabled(false);
+    };
+
     return (
         <div className="flex items-start gap-x-2">
-            <div className="flex items-center">
+            <div className="flex gap-2 items-center">
                 <Checkbox
                     defaultSelected={mockData.checked}
                     onChange={handleCheckboxChange}
@@ -37,8 +64,8 @@ function TranscriptInput({ mockData, mockEffect }) {
                     className="flex"
                     size="16"
                 ></Checkbox>
-                <Avatar size="24" />
-                <p className="text-[14px]">Sophia</p>
+                <Avatar size="24" src={selectedSpeaker?.imageUrl} />
+                <p className="text-[14px]">{selectedSpeaker?.displayName || "Sophia"}</p>
             </div>
             <div className="relative">
                 <textarea
@@ -78,12 +105,32 @@ function TranscriptInput({ mockData, mockEffect }) {
                 </div>
             </div>
             <div className="flex flex-col gap-2 justify-evenly h-full">
-                <Tooltip showArrow={true} content="Generate" className="bg-black rounded-[10px]">
-                    <Image src={"/images/generate.svg"} alt="" width={20} height={20} className="cursor-pointer" />
+                <Tooltip showArrow={true} content="Generate" disabled={!disabled} className="bg-black rounded-[10px]">
+                    <Button
+                        onClick={generateAudio}
+                        disabled={!disabled}
+                        className=" disabled:cursor-not-allowed enabled:cursor-pointer"
+                    >
+                        <Image src={"/images/generate.svg"} alt="" width={20} height={20} />
+                    </Button>
                 </Tooltip>
-                <Tooltip showArrow={true} content="Play" className="bg-black rounded-[10px]">
-                    <Button>
-                        <FaPlay size={20} />
+                <Tooltip showArrow={true} disabled={disabled} content="Play" className="bg-black rounded-[10px]">
+                    <Button
+                        disabled={disabled}
+                        onClick={() => {
+                            var audio = document.getElementById("audio");
+                            if (play) {
+                                audio.pause();
+                            } else {
+                                audio.play();
+                            }
+                            setPlay(!play);
+                        }}
+                        className=" disabled:cursor-not-allowed enabled:cursor-pointer"
+                    >
+                        {play ? <FaPause size={20} /> : <FaPlay size={20} />}
+
+                        <audio id="audio" className="hidden" src={speech?.blobUrl} controls />
                     </Button>
                 </Tooltip>
                 <Tooltip showArrow={true} content="Export" className="bg-black rounded-[10px]">
