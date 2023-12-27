@@ -59,8 +59,8 @@ function TranscriptInput({ mockData, mockEffect }) {
         if (!mockEffect?.name.length) return;
 
         const speech = await generateSpeech(JSON.stringify({ text: mockEffect?.name, speaker: selectedSpeaker?.id }));
-        // const data = await fetch(speech?.data?.[0]?.urls?.[0]).then((res) => res.blob());
-        setSpeech({ ...speech, blobUrl: speech?.data?.[0]?.urls?.[0], type: data.type });
+        const data = await fetch(speech?.data?.[0]?.urls?.[0]).then((res) => res.blob());
+        setSpeech({ ...speech, blobUrl: URL.createObjectURL(data), type: data.type });
         setMockData((pre) => [
             ...pre.filter((a) => a.id !== mockData.id),
             {
