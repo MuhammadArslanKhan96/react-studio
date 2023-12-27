@@ -3,6 +3,7 @@ import SideNav from "@/components/EditBar/SideNav";
 import Timelinebar from "@/components/EditBar/Timelinebar";
 import Promptbar from "@/components/EditBar/Promptbar";
 import React from "react";
+import TimelineEditor from "../player";
 
 export default function project() {
     return (
@@ -16,7 +17,7 @@ export default function project() {
                     <Promptbar />
                 </div>
                 <div>
-                    <Timelinebar />
+                    <TimelineEditor />
                 </div>
             </div>
         </div>

@@ -15,7 +15,7 @@ import { RiDeleteBin5Line } from "react-icons/ri";
 import { VscPulse } from "react-icons/vsc";
 import { useAppContext } from "./EditorContext";
 import { useEffect, useRef, useState } from "react";
-import { generateSpeech } from "@/helpers/generate-audio";
+import { generateSpeech } from "../../helpers/generate-audio";
 
 function TranscriptInput({ mockData, mockEffect }) {
     const { setMockData, setMockEffect, speakers } = useAppContext();
@@ -31,7 +31,10 @@ function TranscriptInput({ mockData, mockEffect }) {
         setDisabled(true);
         setMockData((pre) => [
             ...pre.filter((a) => a.id !== mockData.id),
-            { ...mockData, actions: [{ ...mockData.actions[0], id: e.target.value }] },
+            {
+                ...mockData,
+                actions: [{ ...mockData.actions[0], data: { ...mockData.actions[0].data, name: e.target.value } }],
+            },
         ]);
         setMockEffect((pre) => ({
             ...pre,
@@ -42,6 +45,13 @@ function TranscriptInput({ mockData, mockEffect }) {
     useEffect(() => {
         if (selectedSpeaker) return;
         setSelectedSpeaker(speakers[0]);
+        setMockData((pre) => [
+            ...pre.filter((a) => a.id !== mockData.id),
+            {
+                ...mockData,
+                actions: [{ ...mockData.actions[0], speaker: speakers[0] }],
+            },
+        ]);
     }, [speakers, selectedSpeaker]);
 
     const generateAudio = async () => {
@@ -50,6 +60,18 @@ function TranscriptInput({ mockData, mockEffect }) {
         const speech = await generateSpeech(JSON.stringify({ text: mockEffect?.name, speaker: selectedSpeaker?.id }));
         const data = await fetch(speech?.data?.[0]?.urls?.[0]).then((res) => res.blob());
         setSpeech({ ...speech, blobUrl: URL.createObjectURL(data), type: data.type });
+        setMockData((pre) => [
+            ...pre.filter((a) => a.id !== mockData.id),
+            {
+                ...mockData,
+                actions: [
+                    {
+                        ...mockData.actions[0],
+                        data: { ...mockData.actions[0].data, src: speech?.data?.[0]?.urls?.[0] },
+                    },
+                ],
+            },
+        ]);
         setDisabled(false);
     };
 

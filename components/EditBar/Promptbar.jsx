@@ -4,20 +4,26 @@ import { FaPlus } from "react-icons/fa";
 import { TbClockHour12 } from "react-icons/tb";
 import TranscriptInput from "./TranscriptInput";
 import { useAppContext } from "./EditorContext";
+import audioControl from "../../pages/player/audioControl";
 
 export default function Promptbar() {
     const { mockData, mockEffect, setMockData, setMockEffect } = useAppContext();
     const addAnotherMock = () => {
+        const editor = mockData.length;
         setMockData((pre) => [
             ...pre,
             {
-                id: `${pre.length}`,
+                id: `${editor}`,
                 actions: [
                     {
-                        id: "",
+                        id: `action${editor}`,
                         start: 0,
                         end: 2,
-                        effectId: "effect" + pre.length,
+                        effectId: "effect" + editor,
+                        data: {
+                            src: "/audio/bg.mp3",
+                            name: "",
+                        },
                     },
                 ],
                 checked: false,
@@ -25,9 +31,31 @@ export default function Promptbar() {
         ]);
         setMockEffect((pre) => ({
             ...pre,
-            [`effect${Object.keys(pre).length}`]: {
-                id: "effect" + Object.keys(pre).length,
+            [`effect${editor}`]: {
+                id: "effect" + editor,
                 name: "",
+                source: {
+                    start: ({ action, engine, isPlaying, time }) => {
+                        if (isPlaying) {
+                            const src = action.data.src;
+                            audioControl.start({ id: src, src, startTime: action.start, engine, time });
+                        }
+                    },
+                    enter: ({ action, engine, isPlaying, time }) => {
+                        if (isPlaying) {
+                            const src = action.data.src;
+                            audioControl.start({ id: src, src, startTime: action.start, engine, time });
+                        }
+                    },
+                    leave: ({ action, engine }) => {
+                        const src = action.data.src;
+                        audioControl.stop({ id: src, engine });
+                    },
+                    stop: ({ action, engine }) => {
+                        const src = action.data.src;
+                        audioControl.stop({ id: src, engine });
+                    },
+                },
             },
         }));
     };
@@ -68,9 +96,14 @@ export default function Promptbar() {
                     </div>
                 </div>
                 <div className="flex flex-col gap-4">
-                    {mockData.map((item, index) => {
+                    {mockData.map((item) => {
+                        console.log(item);
                         return (
-                            <TranscriptInput mockData={item} mockEffect={mockEffect[`effect${index}`]} key={index} />
+                            <TranscriptInput
+                                mockData={item}
+                                mockEffect={mockEffect[`effect${item.id}`]}
+                                key={item.id}
+                            />
                         );
                     })}
                     {/* add new block */}
