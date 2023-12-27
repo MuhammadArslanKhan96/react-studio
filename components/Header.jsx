@@ -50,7 +50,7 @@ export default function Header({ open, setOpen }) {
                 >
                     <GiHamburgerMenu size={20} />
                 </div>
-                <Button>
+                <Button onClick={"/"}>
                     <Image src={"/logo.svg"} alt="" width={111} height={90} />
                 </Button>
                 <div className="flex max-w-[100px]">
