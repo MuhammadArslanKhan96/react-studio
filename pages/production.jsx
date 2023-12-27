@@ -5,7 +5,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export default function Production() {
     return (
-        <div className="w-full">
+        <div className="w-full h-screen">
             <ProductionComp />
         </div>
     );

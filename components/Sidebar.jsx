@@ -3,6 +3,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import React from "react";
 import { FaChevronDown } from "react-icons/fa";
+import { RxCross2 } from "react-icons/rx";
 
 export default function Sidebar({ children, open, setOpen }) {
     const router = useRouter();
@@ -12,23 +13,23 @@ export default function Sidebar({ children, open, setOpen }) {
     return (
         <main
             className={
-                " flex max-xl:fixed z-10 bg-[#2D2D30] max-xl:hidden inset-0 ease-in-out" +
+                `flex max-xl:fixed z-10 bg-[#2D2D30] inset-0 ease-in-out h-[100vh]` +
                 (open
-                    ? " max-xl:transition-opacity max-xl:opacity-100 max-xl:duration-500 max-xl:left-0 "
-                    : " max-xl:transition-all max-xl:delay-500 max-xl:opacity-0 max-xl:w-0")
+                    ? " max-xl:transition-opacity max-xl:duration-500 max-xl:left-0 "
+                    : " max-xl:transition-all max-xl:delay-500 max-xl:w-0")
             }
         >
             <section
                 className={
-                    " w-screen max-w-[264px] xl:!left-0 left-0 max-xl:absolute bg-[#2D2D30] h-full shadow-xl delay-400 duration-500 ease-in-out transition-all" +
-                    (open ? " max-xl:left-0 " : " max-xl:w-0")
+                    " w-screen max-w-[264px] xl:!left-0 left-0 max-xl:absolute h-full shadow-xl delay-400 duration-500 ease-in-out transition-all" +
+                    (open ? " max-xl:left-0" : " max-xl:w-0")
                 }
             >
-                <article className="scrollStyle relative w-screen max-w-[264px] pb-10 flex flex-col space-y-0 overflow-y-scroll h-full">
+                <article className="scrollStyle relative w-screen max-w-[264px] pb-10 flex flex-col space-y-0 overflow-y-scroll h-full bg-[#2D2D30]">
                     <header className="p-2 font-bold text-lg">
                         <Dropdown>
                             <DropdownTrigger>
-                                <Button className="flex items-center justify-between p-[16px] rounded-[10px] bg-transparent hover:bg-[#353538] w-full">
+                                <Button className="flex items-center justify-between p-[16px] rounded-[10px] bg-transparent hover:bg-[#353538] w-full ">
                                     <div className="flex items-center gap-x-2">
                                         <div>
                                             {/* <Image src={"/logo.svg"} alt="" width={50} height={10} /> */}
