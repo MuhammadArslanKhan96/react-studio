@@ -2,7 +2,7 @@ import { Pause, PlayArrow } from '@mui/icons-material';
 import { Box, IconButton, Stack, Tooltip, Typography } from '@mui/material';
 import React, { useEffect, useRef, useState } from 'react';
 import { useThemeSettings } from '../../../hooks';
-import { secondsToHMS } from '@/utils/timeformatter';
+import { secondsToHMS } from "../../../utils/timeformatter";
 const CustomTimeLine = ({ bottom, ee }) => {
   const { theme, keyPress } = useThemeSettings();
   const { key, shiftKey, code } = keyPress;

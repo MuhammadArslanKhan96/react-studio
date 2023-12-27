@@ -1,6 +1,6 @@
 import React from "react";
-import SettingLayout from "@/components/SettingLayout";
-import InfoComp from "@/components/InfoComp";
+import SettingLayout from "../../components/SettingLayout";
+import InfoComp from "../../components/InfoComp";
 
 export default function info() {
     return (

@@ -1,7 +1,7 @@
 import React from "react";
-import Card from "@/components/Card";
-import EmptyCard from "@/components/EmptyCard";
-import EditInput from "@/components/EditInput";
+import Card from "../components/Card";
+import EmptyCard from "../components/EmptyCard";
+import EditInput from "../components/EditInput";
 
 export default function Home() {
     return (

@@ -1,7 +1,7 @@
-import EditHead from "@/components/EditBar/EditHead";
-import SideNav from "@/components/EditBar/SideNav";
-import Timelinebar from "@/components/EditBar/Timelinebar";
-import Promptbar from "@/components/EditBar/Promptbar";
+import EditHead from "../../components/EditBar/EditHead";
+import SideNav from "../../components/EditBar/SideNav";
+// import Timelinebar from "../../components/EditBar/Timelinebar";
+import Promptbar from "../../components/EditBar/Promptbar";
 import React from "react";
 import TimelineEditor from "../player";
 

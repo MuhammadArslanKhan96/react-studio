@@ -1,5 +1,5 @@
-import MembersComp from "@/components/MembersComp";
-import SettingLayout from "@/components/SettingLayout";
+import MembersComp from "../../components/MembersComp";
+import SettingLayout from "../../components/SettingLayout";
 import React from "react";
 
 export default function members() {

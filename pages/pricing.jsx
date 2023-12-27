@@ -1,4 +1,4 @@
-import PriceCompare from "@/components/PricingComp/PriceCompare";
+import PriceCompare from "../components/PricingComp/PriceCompare";
 import React from "react";
 
 export default function pricing() {

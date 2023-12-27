@@ -1,5 +1,5 @@
-import SettingLayout from "@/components/SettingLayout";
-import SubscriptionComp from "@/components/SubscriptionComp";
+import SettingLayout from "../../components/SettingLayout";
+import SubscriptionComp from "../../components/SubscriptionComp";
 import React from "react";
 
 export default function subscription() {

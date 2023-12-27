@@ -8,12 +8,12 @@ import { v4 as uuidv4 } from "uuid";
 // ===========================================================>
 import { Box, Paper } from "@mui/material";
 // ===========================================================>
-import DialogBox from "@/components/DialogBox";
-import CustomAudioBar from "@/components/CUSTOM/audioBar/CustomAudioBar";
-import { ETypes, dark } from "@/theme";
-import NavBar from "@/components/NavBar";
-import { useThemeSettings } from "@/hooks";
-import EditorButtons from "@/components/editorButtons/EditorButtons";
+import DialogBox from "../components/DialogBox";
+import CustomAudioBar from "../components/CUSTOM/audioBar/CustomAudioBar";
+import { ETypes, dark } from "../theme";
+import NavBar from "../components/NavBar";
+import { useThemeSettings } from "../hooks";
+import EditorButtons from "../components/editorButtons/EditorButtons";
 // ===========================================================>
  
 const Editor = () => {

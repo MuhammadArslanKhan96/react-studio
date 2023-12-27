@@ -15,8 +15,8 @@ import { IoIosArrowUp } from "react-icons/io";
 import { IoMdAdd } from "react-icons/io";
 import { PiFolder } from "react-icons/pi";
 import { RiArrowDownSLine } from "react-icons/ri";
-import { AppContextProvider } from "@/components/EditBar/EditorContext";
-import InviteMembers from "@/components/InviteMembers";
+import { AppContextProvider } from "../components/EditBar/EditorContext";
+import InviteMembers from "../components/InviteMembers";
 import { FaArrowAltCircleLeft } from "react-icons/fa";
 
 export default function App({ Component, pageProps }) {
