@@ -1,3 +1,4 @@
+/* eslint-disable import/no-anonymous-default-export */
 "use client";
 import lottie, { AnimationItem } from 'lottie-web';
 

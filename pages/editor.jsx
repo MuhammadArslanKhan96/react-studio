@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 import React, { ChangeEvent, useCallback, useEffect, useReducer, useRef } from "react";
 import ReactStudio from "react-studio-js";

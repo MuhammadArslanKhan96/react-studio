@@ -35,6 +35,7 @@ const TimelinePlayer = ({ timelineState, autoScrollWhenPlay }) => {
             engine.listener.offAll();
             // lottieControl.destroy();
         };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
     // 开始或暂停
     const handlePlayOrPause = () => {

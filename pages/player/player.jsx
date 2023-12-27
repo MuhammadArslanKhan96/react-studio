@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { CaretRightOutlined, PauseOutlined } from "@ant-design/icons";
 import { TimelineState } from "@xzdarcy/react-timeline-editor";
 import { Select } from "antd";

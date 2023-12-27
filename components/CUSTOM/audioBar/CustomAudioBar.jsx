@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Pause, PlayArrow } from '@mui/icons-material';
 import { Box, IconButton, Stack, Tooltip, Typography } from '@mui/material';
 import React, { useEffect, useRef, useState } from 'react';

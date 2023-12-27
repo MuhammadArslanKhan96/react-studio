@@ -1,3 +1,4 @@
+/* eslint-disable import/no-anonymous-default-export */
 import lottie, { AnimationItem } from "lottie-web";
 
 class LottieControl {

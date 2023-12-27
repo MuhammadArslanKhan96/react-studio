@@ -1,3 +1,4 @@
+/* eslint-disable import/no-anonymous-default-export */
 import { Howl } from 'howler';
 import { TimelineEngine } from '@xzdarcy/react-timeline-editor';
 
