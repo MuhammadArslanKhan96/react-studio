@@ -31,6 +31,7 @@ const Editor = () => {
         setDialogBox,
     } = useThemeSettings();
 
+    console.log(setEventEmitter);   
     const { backgroundColor, textColor } = theme;
 
     // =============Initial State================>

@@ -23,9 +23,10 @@ export default function App({ Component, pageProps }) {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const [modal, setModal] = useState(false);
     return (
+        <SettingsContext>
         <NextUIProvider>
             <Context.Provider value={{ isOpen, onOpen, onOpenChange }}>
-                <SettingsContext>
+              
                     <AppContextProvider>
                         <Header />
                         <div className="flex w-full">
@@ -102,8 +103,9 @@ export default function App({ Component, pageProps }) {
                             <Component {...pageProps} />
                         </div>
                     </AppContextProvider>
-                </SettingsContext>
             </Context.Provider>
         </NextUIProvider>
+        </SettingsContext>
+
     );
 }
