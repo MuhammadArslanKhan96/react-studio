@@ -1,4 +1,4 @@
-import { apiOptions } from "@/constants";
+import { apiOptions } from "../constants";
 
 export const getSpeakers = () => {
     return new Promise(async (resolve, reject) => {

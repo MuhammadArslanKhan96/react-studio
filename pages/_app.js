@@ -1,22 +1,22 @@
 // @ts-ignore importMeta is replaced in the loader
 import React, { useState } from "react";
-import "@/styles/globals.css";
+import "../styles/globals.css";
 import { Button, NextUIProvider } from "@nextui-org/react";
 import Image from "next/image";
-import Sidebar from "@/components/Sidebar";
-import { SettingsContext } from "@/context/settingsContext";
-import Header from "@/components/Header";
-import CurrentPlan from "@/components/CurrentPlan";
+import Sidebar from "../components/Sidebar";
+import { SettingsContext } from "../context/settingsContext";
+import Header from "../components/Header";
+import CurrentPlan from "../components/CurrentPlan";
 import Link from "next/link";
-import Discount from "@/components/Discount";
-import { Context } from "@/components/Context";
+import Discount from "../components/Discount";
+import { Context } from "../components/Context";
 import { useDisclosure } from "@nextui-org/react";
 import { IoIosArrowUp } from "react-icons/io";
 import { IoMdAdd } from "react-icons/io";
 import { PiFolder } from "react-icons/pi";
 import { RiArrowDownSLine } from "react-icons/ri";
-import { AppContextProvider } from "@/components/EditBar/EditorContext";
-import InviteMembers from "@/components/InviteMembers";
+import { AppContextProvider } from "../components/EditBar/EditorContext";
+import InviteMembers from "../components/InviteMembers";
 
 export default function App({ Component, pageProps }) {
     const [open, setOpen] = useState(false);

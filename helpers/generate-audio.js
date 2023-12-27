@@ -1,4 +1,4 @@
-import { apiOptions } from "@/constants";
+import { apiOptions } from "../constants";
 
 export function generateSpeech(body) {
     return new Promise(async function (resolve, reject) {

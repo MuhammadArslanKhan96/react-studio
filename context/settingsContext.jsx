@@ -1,9 +1,9 @@
 'use client';
 // ======Imports============
 import { ReactNode, createContext, useEffect, useReducer } from 'react';
-import { ETypes, dark, light } from '@/theme';
+import { ETypes, dark, light } from '../theme';
 import { CssBaseline, ThemeProvider, createTheme } from '@mui/material';
-import ContextMenu from '@/components/ContextMenu';
+import ContextMenu from '../components/ContextMenu';
 
 
 // ======Initital State============

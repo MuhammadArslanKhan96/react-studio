@@ -1,4 +1,5 @@
-import { getSpeakers } from "@/helpers/get-speakers";
+import audioControl from "../../pages/player/audioControl";
+import { getSpeakers } from "../../helpers/get-speakers";
 import React, { useEffect, useState } from "react";
 import { createContext, useContext } from "react";
 
@@ -10,10 +11,14 @@ export const AppContextProvider = ({ children }) => {
             id: "0",
             actions: [
                 {
-                    id: "",
+                    id: "action0",
                     start: 0,
-                    end: 2,
+                    end: 5,
                     effectId: "effect0",
+                    data: {
+                        src: "/audio/bg.mp3",
+                        name: "",
+                    },
                 },
             ],
             checked: false,
@@ -23,12 +28,33 @@ export const AppContextProvider = ({ children }) => {
         effect0: {
             id: "effect0",
             name: "",
+            source: {
+                start: ({ action, engine, isPlaying, time }) => {
+                    if (isPlaying) {
+                        const src = action.data.src;
+                        audioControl.start({ id: src, src, startTime: action.start, engine, time });
+                    }
+                },
+                enter: ({ action, engine, isPlaying, time }) => {
+                    if (isPlaying) {
+                        const src = action.data.src;
+                        audioControl.start({ id: src, src, startTime: action.start, engine, time });
+                    }
+                },
+                leave: ({ action, engine }) => {
+                    const src = action.data.src;
+                    audioControl.stop({ id: src, engine });
+                },
+                stop: ({ action, engine }) => {
+                    const src = action.data.src;
+                    audioControl.stop({ id: src, engine });
+                },
+            },
         },
     };
     const [mockData, setMockData] = useState(initMockData);
     const [mockEffect, setMockEffect] = useState(initMockEffect);
     const [speakers, setSpeakers] = useState([]);
-
     const getData = async () => {
         const data = await getSpeakers();
         setSpeakers(data);

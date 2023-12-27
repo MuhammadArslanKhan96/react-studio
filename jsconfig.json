@@ -23,6 +23,4 @@
             "@/*": ["./*"]
         }
     },
-    "include": ["**/*.js", "**/*.jsx", ".next/types/**/*.js"],
-    "exclude": ["node_modules"]
 }
