@@ -61,11 +61,7 @@ const TimelinePlayer = ({ timelineState, autoScrollWhenPlay }) => {
     };
 
     return (
-        <div className="timeline-player">
-            <div className="play-control" onClick={handlePlayOrPause}>
-                {isPlaying ? <PauseOutlined /> : <CaretRightOutlined />}
-            </div>
-            <div className="time">{timeRender(time)}</div>
+        <div className="timeline-player flex justify-center items-center gap-4">
             <div className="rate-control">
                 <Select size={"small"} defaultValue={1} style={{ width: 120 }} onChange={handleRateChange}>
                     {Rates.map((rate) => (
@@ -73,6 +69,10 @@ const TimelinePlayer = ({ timelineState, autoScrollWhenPlay }) => {
                     ))}
                 </Select>
             </div>
+            <div className="play-control " onClick={handlePlayOrPause}>
+                {isPlaying ? <PauseOutlined /> : <CaretRightOutlined />}
+            </div>
+            <div className="time">{timeRender(time)}</div>
         </div>
     );
 };

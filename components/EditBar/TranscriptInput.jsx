@@ -45,6 +45,13 @@ function TranscriptInput({ mockData, mockEffect }) {
     useEffect(() => {
         if (selectedSpeaker) return;
         setSelectedSpeaker(speakers[0]);
+        setMockData((pre) => [
+            ...pre.filter((a) => a.id !== mockData.id),
+            {
+                ...mockData,
+                actions: [{ ...mockData.actions[0], speaker: speakers[0] }],
+            },
+        ]);
     }, [speakers, selectedSpeaker]);
 
     const generateAudio = async () => {
