@@ -4,7 +4,7 @@ import { FaPlus } from "react-icons/fa";
 import { TbClockHour12 } from "react-icons/tb";
 import TranscriptInput from "./TranscriptInput";
 import { useAppContext } from "./EditorContext";
-import audioControl from "../../pages/player/audioControl";
+import audioControl from "../player/audioControl";
 
 export default function Promptbar() {
     const { mockData, mockEffect, setMockData, setMockEffect } = useAppContext();

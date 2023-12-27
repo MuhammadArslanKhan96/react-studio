@@ -3,7 +3,7 @@ import SideNav from "../../components/EditBar/SideNav";
 // import Timelinebar from "../../components/EditBar/Timelinebar";
 import Promptbar from "../../components/EditBar/Promptbar";
 import React from "react";
-import TimelineEditor from "../player";
+import TimelineEditor from "../../components/player";
 
 export default function project() {
     return (

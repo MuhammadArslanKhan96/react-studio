@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { CustomRender0, CustomRender1 } from "./custom";
 import { scale, scaleWidth, startLeft } from "./mock";
 import TimelinePlayer from "./player";
-import { useAppContext } from "../../components/EditBar/EditorContext";
+import { useAppContext } from "../EditBar/EditorContext";
 
 const TimelineEditor = () => {
     const { mockData, mockEffect } = useAppContext();
@@ -14,7 +14,7 @@ const TimelineEditor = () => {
 
     useEffect(() => {
         setData(mockData);
-    }, [mockData])
+    }, [mockData]);
 
     return (
         <div className="timeline-editor-engine">

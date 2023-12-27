@@ -1,4 +1,4 @@
-import audioControl from "../../pages/player/audioControl";
+import audioControl from "../player/audioControl";
 import { getSpeakers } from "../../helpers/get-speakers";
 import React, { useEffect, useState } from "react";
 import { createContext, useContext } from "react";
