@@ -25,9 +25,6 @@ export default function App({ Component, pageProps }) {
     const [modal, setModal] = useState(false);
     const [sideModal, setSideModal] = useState(false);
 
-    const ref = useRef(null);
-
-    console.log(sideModal, open);
     return (
         <SettingsContext>
             <NextUIProvider>

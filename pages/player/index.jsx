@@ -9,7 +9,7 @@ import { useAppContext } from "../../components/EditBar/EditorContext";
 const TimelineEditor = () => {
     const { mockData, mockEffect } = useAppContext();
     const [data, setData] = useState(mockData);
-    const timelineState = useRef();
+    const timelineState = useRef(null);
     const autoScrollWhenPlay = useRef(true);
 
     useEffect(() => {
