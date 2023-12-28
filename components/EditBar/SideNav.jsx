@@ -11,17 +11,16 @@ export default function SideNav() {
     const [modal, setModal] = useState(false);
     const { voiceModel, setVoiceModel } = useAppContext();
 
-
     const data = [
         {
             img: "/images/speakerSelection.svg",
             title: "Speaker Selection",
-            click: <></>,
+            click: <VoiceSelectorModal isOpen={isOpen} onOpenChange={onOpenChange} />,
         },
         {
             img: "/images/voiceCloning.svg",
             title: "Voice Cloning",
-            click: <></>,
+            click: <VoiceSelectorModal isOpen={isOpen} onOpenChange={onOpenChange} />,
         },
         {
             img: "/images/resources.svg",
@@ -63,7 +62,7 @@ export default function SideNav() {
                         key={idx}
                         className="flex flex-col justify-center items-center gap-1 py-[12px] px-[2px] hover:bg-[#2D2D30] rounded-[10px] cursor-pointer"
                         onClick={() => {
-                            (idx == 0 || idx == 1) && setVoiceModel(true);
+                            // (idx == 0 || idx == 1) && setVoiceModel(true);
                             onOpen();
                             setModal(idx);
                         }}
@@ -71,9 +70,9 @@ export default function SideNav() {
                         <Image src={item.img} alt="" width={24} height={24} />
                         <p className="text-white text-[10px] flex text-center">{item.title}</p>
                         {modal === idx && item.click}
-                        <VoiceSelectorModal isOpen={voiceModel} onOpenChange={setVoiceModel} />
                     </div>
                 ))}
+                <VoiceSelectorModal isOpen={voiceModel} onOpenChange={setVoiceModel} />
             </div>
             <div>
                 <Image src={"/images/questionmark.svg"} alt="" width={24} height={24} />

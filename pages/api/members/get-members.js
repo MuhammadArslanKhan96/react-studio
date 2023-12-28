@@ -10,8 +10,9 @@ export default async function handler(req, res) {
         const q = query(collection(db, "members"), where("userId", "==", req.query.email));
 
         const querySnapshot = await getDocs(q);
-        querySnapshot.forEach((doc) => {
-            members.push({ ...doc.data(), id: doc.id });
+        querySnapshot.forEach(async (doc) => {
+            const member = await fetch(`/api/auth/get-user?email=${doc.data().email}`).then(r => r.json());
+            members.push({ ...doc.data(), ...member, id: doc.id });
         });
         res.status(200).json({ members, success: true })
     } catch (error) {

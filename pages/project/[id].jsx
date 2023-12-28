@@ -9,14 +9,16 @@ import { useAppContext } from "../../components/EditBar/EditorContext";
 export default function Project() {
     const router = useRouter();
     const { id } = router.query;
-    const { projects, setSelectedProject, selectedProject } = useAppContext();
+    const { projects, setSelectedProject, setMockData, setMockEffect } = useAppContext();
     React.useEffect(() => {
         if (projects) {
-            setSelectedProject(projects.find((project) => project.id === id));
+            const project = projects.find((project) => project.id === id);
+            setSelectedProject(project);
+            setMockData(project?.mockData || []);
+            setMockEffect(project?.mockEffect || []);
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [projects, id]);
-
-    console.log(selectedProject);
 
     return (
         <div className="flex bg-[#242427] w-full">

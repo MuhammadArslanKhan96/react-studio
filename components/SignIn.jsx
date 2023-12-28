@@ -10,27 +10,27 @@ import { toast } from "react-toastify";
 import { useAppContext } from "./EditBar/EditorContext";
 
 export default function SignIn() {
-    const { setUser } = useAppContext();
+    const { setUser, getProjects } = useAppContext();
     const [credentials, setCredentials] = useState({
         email: "",
-        password: "",
+        password: ""
     });
     const image = [
         {
-            img: "/images/forbes.svg",
+            img: "/images/forbes.svg"
         },
         {
-            img: "/images/bbc.svg",
+            img: "/images/bbc.svg"
         },
         {
-            img: "/images/lg.svg",
+            img: "/images/lg.svg"
         },
         {
-            img: "/images/frontier.svg",
+            img: "/images/frontier.svg"
         },
         {
-            img: "/images/berkely.svg",
-        },
+            img: "/images/berkely.svg"
+        }
     ];
 
     async function signInWithGoogle() {
@@ -44,8 +44,8 @@ export default function SignIn() {
                 method: "POST",
                 body: JSON.stringify(data),
                 headers: {
-                    "Content-Type": "application/json",
-                },
+                    "Content-Type": "application/json"
+                }
             }).then((r) => r.json());
             if (addUser.user.signInMethod === "email") {
                 toast.error("Signed In email and password!");
@@ -53,7 +53,7 @@ export default function SignIn() {
             }
             localStorage.setItem("email", addUser.user.email);
             setUser(addUser.user);
-
+            getProjects(addUser.user.email);
             toast.success("Signed In successfully");
         } catch (error) {
             toast.error(error?.response?.data?.message || error?.message);
@@ -63,7 +63,7 @@ export default function SignIn() {
     const handleChange = (e) => {
         setCredentials((pre) => ({
             ...pre,
-            [e.target.name]: e.target.value,
+            [e.target.name]: e.target.value
         }));
     };
 
@@ -85,16 +85,18 @@ export default function SignIn() {
             const data = {
                 ...user,
                 password: credentials.password,
-                signInMethod: "email",
+                signInMethod: "email"
             };
             const addUser = await fetch(`/api/auth/signin`, {
                 method: "POST",
                 body: JSON.stringify(data),
                 headers: {
-                    "Content-Type": "application/json",
-                },
+                    "Content-Type": "application/json"
+                }
             }).then((r) => r.json());
             localStorage.setItem("email", credentials.email);
+            getProjects(addUser.user.email);
+
             setUser(addUser.user);
             toast.success("Signed In successfully");
         } catch (error) {

@@ -43,6 +43,38 @@ export default function Header() {
         });
     };
 
+    const saveProject = async () => {
+        setSelectedProject({
+            ...selectedProject,
+            mockData,
+            mockEffect,
+            lastModified: new Date().toDateString()
+        });
+        setProjects((pre) => [
+            ...pre.filter((a) => a.id !== selectedProject?.id),
+            {
+                ...selectedProject,
+                mockData,
+                mockEffect,
+                lastModified: new Date().toDateString()
+            }
+        ]);
+        await fetch(`/api/projects/update-project?id=${selectedProject?.id}`, {
+            method: "PUT",
+            body: JSON.stringify({
+                ...selectedProject,
+                mockData,
+                mockEffect,
+                lastModified: new Date().toDateString()
+            }),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
+
+        toast.success("Saved successfully");
+    };
+
     return (
         <div className="flex justify-between items-center px-[16px] py-[8px] bg-[#242427] border-b border-b-[#44444A]">
             <div className="flex gap-x-2 items-center">
@@ -54,7 +86,12 @@ export default function Header() {
                 >
                     <GiHamburgerMenu size={20} />
                 </div>
-                <Button onClick={() => router.push("/")}>
+                <Button onClick={() => {
+                    if (router.pathname.includes('/project')) {
+                        saveProject();
+                    }
+                    router.push("/");
+                }}>
                     <Image src={"/logo.svg"} alt="" width={111} height={90} />
                 </Button>
                 {router.pathname.includes("/project") && (
@@ -97,37 +134,7 @@ export default function Header() {
                             UPGRADE
                         </Button>
                         <Button
-                            onClick={async () => {
-                                setSelectedProject({
-                                    ...selectedProject,
-                                    mockData,
-                                    mockEffect,
-                                    lastModified: new Date().toDateString(),
-                                });
-                                setProjects((pre) => [
-                                    ...pre.filter((a) => a.id !== selectedProject?.id),
-                                    {
-                                        ...selectedProject,
-                                        mockData,
-                                        mockEffect,
-                                        lastModified: new Date().toDateString(),
-                                    },
-                                ]);
-                                await fetch(`/api/projects/update-project?id=${selectedProject?.id}`, {
-                                    method: "PUT",
-                                    body: JSON.stringify({
-                                        ...selectedProject,
-                                        mockData,
-                                        mockEffect,
-                                        lastModified: new Date().toDateString(),
-                                    }),
-                                    headers: {
-                                        "Content-Type": "application/json",
-                                    },
-                                });
-
-                                toast.success("Saved successfully");
-                            }}
+                            onClick={saveProject}
                             className="border rounded-[10px] px-2 py-1 text-[14px]"
                         >
                             Save

@@ -67,7 +67,6 @@ function TranscriptInput({ mockData, mockEffect }) {
                 ...pre.filter((a) => a.id !== mockData.id),
                 {
                     ...mockData,
-                    actions: [{ ...mockData.actions[0] }],
                     speaker: speakers[0],
                 },
             ].sort(function (a, b) {
@@ -110,7 +109,7 @@ function TranscriptInput({ mockData, mockEffect }) {
                     className="flex"
                     size="16"
                 ></Checkbox>
-                <div className="flex cursor-pointer gap-2 items-center" onClick={() => setVoiceModel(true)}>
+                <div className="flex cursor-pointer gap-2 items-center" onClick={() => setVoiceModel(mockData?.id)}>
                     <Avatar size="24" src={mockData?.speaker?.imageUrl} />
                     <p className="text-[14px]">{mockData?.speaker?.displayName || "Sophia"}</p>
                 </div>

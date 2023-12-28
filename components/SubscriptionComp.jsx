@@ -4,8 +4,10 @@ import { FaRegCircleQuestion } from "react-icons/fa6";
 import { IoFolderOutline } from "react-icons/io5";
 import NextPaymentDetails from "./NextPaymentDetails";
 import BillingHistory from "./BillingHistory";
+import { useAppContext } from "./EditBar/EditorContext";
 
 export default function SubscriptionComp() {
+    const { user, inviteMembers } = useAppContext();
     return (
         <div className="flex flex-col gap-4">
             <div className="border border-[#44444A] rounded-[10px] p-[24px] flex justify-between gap-x-4">
@@ -13,7 +15,7 @@ export default function SubscriptionComp() {
                 <div className="w-full">
                     <div>
                         <p className="text-[14px] text-[#EFEFEF]">Current Plan</p>
-                        <p className="text-[24px] text-[#EFEFEF] font-bold">Free</p>
+                        <p className="text-[24px] text-[#EFEFEF] font-bold">{user?.plan || "Free"}</p>
                     </div>
                     <div>
                         <div className="mt-4">
@@ -41,7 +43,8 @@ export default function SubscriptionComp() {
                     <div>
                         <p className="text-[14px] text-[#EFEFEF]">Current team</p>
                         <p className="text-[24px] text-[#EFEFEF] font-bold">
-                            1/1 <span className="text-[12px] text-[#EFEFEF]">member(s)</span>{" "}
+                            {inviteMembers.filter((a) => a.accepted).length + 1}/{inviteMembers.length + 1}{" "}
+                            <span className="text-[12px] text-[#EFEFEF]">member(s)</span>{" "}
                         </p>
                     </div>
                     <div>

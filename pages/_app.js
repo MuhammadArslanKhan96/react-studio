@@ -17,6 +17,7 @@ import { SettingsContext } from "../context/settingsContext";
 import "../styles/globals.css";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useRouter } from "next/router";
 
 export default function App({ Component,
     pageProps,
@@ -25,7 +26,6 @@ export default function App({ Component,
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const [modal, setModal] = useState(false);
     const [sideModal, setSideModal] = useState(false);
-
     return (
         <SettingsContext>
             <ToastContainer />

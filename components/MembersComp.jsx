@@ -6,24 +6,28 @@ import { GoTriangleDown } from "react-icons/go";
 import Image from "next/image";
 import { Avatar, Button, useDisclosure } from "@nextui-org/react";
 import InviteMembers from "./InviteMembers";
+import { useAppContext } from "./EditBar/EditorContext";
 
 export default function MembersComp() {
+    const { user, inviteMembers } = useAppContext();
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
     const items = [
         {
             key: "1",
-            label: "Date Added",
+            label: "Date Added"
         },
         {
             key: "2",
-            label: "Name (A-Z)",
+            label: "Name (A-Z)"
         },
         {
             key: "3",
-            label: "Name (Z-A)",
-        },
+            label: "Name (Z-A)"
+        }
     ];
+
+    console.log(user);
     return (
         <div className="flex flex-col gap-4">
             {/* pending */}
@@ -42,7 +46,7 @@ export default function MembersComp() {
             <div className="flex flex-col gap-4">
                 <div>
                     <p className="text-[20px] text-[#EFEFEF] font-semibold">
-                        Members <span className="text-[#8C8C96] text-[16px]">(1)</span>
+                        Members <span className="text-[#8C8C96] text-[16px]">({inviteMembers.length + 1})</span>
                     </p>
                 </div>
                 <div className="flex justify-between items-center">
@@ -52,7 +56,7 @@ export default function MembersComp() {
                             menu={{
                                 items,
                                 selectable: true,
-                                defaultSelectedKeys: ["3"],
+                                defaultSelectedKeys: ["3"]
                             }}
                         >
                             <Typography.Link className="text-[#FFFFFF]">
@@ -77,7 +81,10 @@ export default function MembersComp() {
                         </div>
                     </div>
                     <div>
-                        <Button className="text-[14px] bg-[#2871DE] text-white rounded-[5px] px-[12px] py-[6px] flex items-center">
+                        <Button
+                            onClick={onOpen}
+                            className="text-[14px] bg-[#2871DE] text-white rounded-[5px] px-[12px] py-[6px] flex items-center"
+                        >
                             <Image src={"/images/invite.svg"} alt="" width={20} height={20} />
                             Invite Members
                         </Button>
@@ -109,17 +116,45 @@ export default function MembersComp() {
                                 >
                                     <div className="flex gap-x-[3px] items-center">
                                         <div>
-                                            <Avatar />
+                                            <Avatar src={user?.photoURL} />
                                         </div>
                                         <div>
-                                            <p>name</p>
-                                            <p>email</p>
+                                            <p>{user?.displayName}</p>
+                                            <p>{user?.email}</p>
                                         </div>
                                     </div>
                                 </th>
                                 <td className="px-6 py-4 text-white">Owner</td>
-                                <td className="px-6 py-4 text-white">Aug 14,2023</td>
+                                <td className="px-6 py-4 text-white">
+                                    {new Date(Number(user?.metadata?.createdAt) || new Date().getTime()).toDateString()}
+                                </td>
                             </tr>
+                            {inviteMembers.map((member, idx) => (
+                                <tr className="bg-[#242427] dark:border-gray-700" key={idx}>
+                                    <th
+                                        scope="row"
+                                        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                                    >
+                                        <div className="flex gap-x-[3px] items-center">
+                                            <div>
+                                                <Avatar src={member?.photoURL} />
+                                            </div>
+                                            <div>
+                                                <p>{member?.displayName}</p>
+                                                <p>{member?.email}</p>
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <td className="px-6 py-4 text-white">Owner</td>
+                                    <td className="px-6 py-4 text-white">
+                                        {member?.metadata?.createdAt
+                                            ? new Date(
+                                                  Number(member?.metadata?.createdAt) || new Date().getTime()
+                                              ).toDateString()
+                                            : "Not Joined"}
+                                    </td>
+                                </tr>
+                            ))}
                         </tbody>
                     </table>
                 </div>

@@ -12,7 +12,7 @@ export default async function handler(req, res) {
             res.status(400).json({ message: "User already exists", success: false });
             return;
         }
-        await setDoc(doc(db, "users", req.body.email), { ...req.body, refer: "", plan: "Free" });
+        await setDoc(doc(db, "users", req.body.email), { ...req.body, members: [], plan: "Free", slug: req.body.displayName.toLowerCase().split(' ').join('-') });
         res.status(200).json({ user: req.body, success: true });
     } catch (error) {
         res.status(400).json({ message: error.message, success: false })

@@ -1,12 +1,12 @@
-import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from "@nextui-org/react";
-import Image from "next/image";
+import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Avatar } from "@nextui-org/react";
 import { useRouter } from "next/router";
 import React from "react";
 import { FaChevronDown } from "react-icons/fa";
-import { RxCross2 } from "react-icons/rx";
+import { useAppContext } from "./EditBar/EditorContext";
 
 export default function Sidebar({ children, open, setOpen }) {
     const router = useRouter();
+    const { user } = useAppContext();
 
     if (router.pathname === "/signin" || router.pathname === "/signup" || router.pathname.includes("/project")) return;
 
@@ -27,19 +27,19 @@ export default function Sidebar({ children, open, setOpen }) {
             >
                 <article className="scrollStyle relative w-screen max-w-[264px] pb-10 flex flex-col space-y-0 overflow-y-scroll h-full bg-[#2D2D30]">
                     <header className="p-2 font-bold text-lg">
-                        <Dropdown>
+                        <Dropdown className="absolute -left-[8.5rem] min-w-[17rem]">
                             <DropdownTrigger>
                                 <Button className="flex items-center justify-between p-[16px] rounded-[10px] bg-transparent hover:bg-[#353538] w-full ">
                                     <div className="flex items-center gap-x-2">
                                         <div>
-                                            {/* <Image src={"/logo.svg"} alt="" width={50} height={10} /> */}
-                                            <p className="bg-[#755EE5] rounded-[50px] px-[18px] py-[10px] text-[12px] text-black font-bold ">
+                                            <Avatar src={user?.photoURL} />
+                                            {/* <p className="bg-[#755EE5] rounded-[50px] px-[18px] py-[10px] text-[12px] text-black font-bold ">
                                                 V
-                                            </p>
+                                            </p> */}
                                         </div>
                                         <div className="flex flex-col items-start">
-                                            <p className="text-[12px] leading-3">Free Plan</p>
-                                            <p>Vival Team</p>
+                                            <p className="text-[12px] leading-3">{user?.plan || "Free"} Plan</p>
+                                            <p>{user?.displayName || "Vivald"} Team</p>
                                         </div>
                                     </div>
                                     <FaChevronDown />
@@ -49,14 +49,14 @@ export default function Sidebar({ children, open, setOpen }) {
                                 <DropdownItem>
                                     <div className="flex items-center bg-[#182C5C] rounded-[10px] gap-x-2 px-3 py-4 w-full">
                                         <div>
-                                            {/* <Image src={"/logo.svg"} alt="" width={50} height={10} /> */}
-                                            <p className="bg-[#755EE5] rounded-[50px] px-[18px] py-[10px] text-[12px] text-black font-bold ">
+                                            <Avatar src={user?.photoURL} />
+                                            {/* <p className="bg-[#755EE5] rounded-[50px] px-[18px] py-[10px] text-[12px] text-black font-bold ">
                                                 V
-                                            </p>
+                                            </p> */}
                                         </div>
                                         <div>
-                                            <p className="text-[12px]">Free Plan</p>
-                                            <p>Vival Team</p>
+                                            <p className="text-[12px]">{user?.plan || "Free"} Plan</p>
+                                            <p>{user?.displayName || "Vivald"} Team</p>
                                         </div>
                                     </div>
                                 </DropdownItem>
