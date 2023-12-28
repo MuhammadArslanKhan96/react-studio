@@ -23,7 +23,7 @@ export default function EditHead() {
                         actions: [
                             {
                                 ...speaker.actions[0],
-                                data: { ...speaker.actions[0].data, src: speech?.data?.[0]?.urls?.[0] },
+                                data: { ...speaker.actions[0].data, src: speech?.urls?.[0] },
                             },
                         ],
                     },

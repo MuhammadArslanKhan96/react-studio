@@ -22,7 +22,7 @@ function TranscriptInput({ mockData, mockEffect }) {
     const { setMockData, setMockEffect, speakers } = useAppContext();
     const [disabled, setDisabled] = useState(true);
     const [play, setPlay] = useState(false);
-    const [speech, setSpeech] = useState();
+    const [speech, setSpeech] = useState({ type: "audio/mpeg" });
     const [selectedSpeaker, setSelectedSpeaker] = useState(speakers[0]);
     const handleCheckboxChange = (e) => {
         setMockData((pre) => [...pre.filter((a) => a.id !== mockData.id), { ...mockData, checked: e.target.checked }]);
@@ -59,8 +59,7 @@ function TranscriptInput({ mockData, mockEffect }) {
         if (!mockEffect?.name.length) return;
 
         const speech = await generateSpeech(JSON.stringify({ text: mockEffect?.name, speaker: selectedSpeaker?.id }));
-        const data = await fetch(speech?.data?.[0]?.urls?.[0]).then((res) => res.blob());
-        setSpeech({ ...speech, blobUrl: URL.createObjectURL(data), type: data.type });
+        setSpeech({ ...speech, blobUrl: speech?.urls?.[0], type: 'audio/mpeg' });
         setMockData((pre) => [
             ...pre.filter((a) => a.id !== mockData.id),
             {
@@ -68,7 +67,7 @@ function TranscriptInput({ mockData, mockEffect }) {
                 actions: [
                     {
                         ...mockData.actions[0],
-                        data: { ...mockData.actions[0].data, src: speech?.data?.[0]?.urls?.[0] },
+                        data: { ...mockData.actions[0].data, src: speech?.urls?.[0] },
                     },
                 ],
             },
