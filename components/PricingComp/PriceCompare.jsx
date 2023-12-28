@@ -6,10 +6,20 @@ import { TiTick } from "react-icons/ti";
 import { RxCross2 } from "react-icons/rx";
 import { FaArrowDownLong } from "react-icons/fa6";
 import ComparePlans from "./ComparePlans";
+import { useAppContext } from "../EditBar/EditorContext";
 
 export default function PriceCompare() {
     const [switchactive, setSwitchActive] = useState(true);
     const [count, setcount] = useState(1);
+    const { setUser } = useAppContext();
+
+
+    const handlePlanChange = (name) => {
+        setUser(prevUser => ({
+            ...prevUser,
+            plan: name
+          }));
+    }
 
     const inc = () => {
         setcount(count + 1);
@@ -171,32 +181,30 @@ export default function PriceCompare() {
                                     </div>
                                 )}
                                 <p
-                                    className={`${
-                                        item.tier === "Free"
-                                            ? "text-[#F5F6F7]"
-                                            : item.tier === "Basic"
+                                    className={`${item.tier === "Free"
+                                        ? "text-[#F5F6F7]"
+                                        : item.tier === "Basic"
                                             ? "text-[#F6AD55]"
                                             : item.tier === "Pro"
-                                            ? "text-[#428BEB]"
-                                            : item.tier === "Pro +"
-                                            ? "text-[#B794F4]" // Set the color to #B794F4 for "Pro +"
-                                            : "" // Default case, you can adjust this based on your requirements
-                                    } text-[20px]`}
+                                                ? "text-[#428BEB]"
+                                                : item.tier === "Pro +"
+                                                    ? "text-[#B794F4]" // Set the color to #B794F4 for "Pro +"
+                                                    : "" // Default case, you can adjust this based on your requirements
+                                        } text-[20px]`}
                                 >
                                     {item.tier}
                                 </p>
                                 <p
-                                    className={`${
-                                        item.tier === "Free"
-                                            ? "text-[#F5F6F7]"
-                                            : item.tier === "Basic"
+                                    className={`${item.tier === "Free"
+                                        ? "text-[#F5F6F7]"
+                                        : item.tier === "Basic"
                                             ? "text-[#F6AD55]"
                                             : item.tier === "Pro"
-                                            ? "text-[#428BEB]"
-                                            : item.tier === "Pro +"
-                                            ? "text-[#B794F4]" // Set the color to #B794F4 for "Pro +"
-                                            : "" // Default case, you can adjust this based on your requirements
-                                    } text-[48px] font-bold`}
+                                                ? "text-[#428BEB]"
+                                                : item.tier === "Pro +"
+                                                    ? "text-[#B794F4]" // Set the color to #B794F4 for "Pro +"
+                                                    : "" // Default case, you can adjust this based on your requirements
+                                        } text-[48px] font-bold`}
                                 >
                                     {!switchactive ? item.pricemon : item.priceyear}
                                 </p>
@@ -223,7 +231,7 @@ export default function PriceCompare() {
                                             </div>
                                         </div>
                                     ))}
-                                <Button className="bg-[#2871DE] text-[14px] rounded-[10px] w-full py-2 mt-2">
+                                <Button onClick={() => handlePlanChange(item.tier)} className="bg-[#2871DE] text-[14px] rounded-[10px] w-full py-2 mt-2">
                                     Change Plan
                                 </Button>
                             </div>

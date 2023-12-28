@@ -4,8 +4,20 @@ import { RxCross2 } from "react-icons/rx";
 import { AiOutlineQuestionCircle } from "react-icons/ai";
 import { Button, Tooltip } from "@nextui-org/react";
 import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell } from "@nextui-org/react";
+import { useAppContext } from "../EditBar/EditorContext";
 
 export default function ComparePlans({ switchactive, inc, dec, count }) {
+
+    const { setUser } = useAppContext();
+
+
+    const handlePlanChange = (name) => {
+        setUser(prevUser => ({
+            ...prevUser,
+            plan: name
+          }));
+    }
+
     const aivoice = [
         {
             voice: "Voice Generation",
@@ -426,7 +438,7 @@ export default function ComparePlans({ switchactive, inc, dec, count }) {
                                     <p className="text-[#F5F6F7] text-[14px]">
                                         Fully experience the product before committing
                                     </p>
-                                    <Button className="bg-[#2871DE] text-[14px] rounded-[10px] w-full py-2 mt-2">
+                                    <Button onClick={() => handlePlanChange('Free')}  className="bg-[#2871DE] text-[14px] rounded-[10px] w-full py-2 mt-2">
                                         Change Plan
                                     </Button>
                                 </div>
@@ -441,7 +453,7 @@ export default function ComparePlans({ switchactive, inc, dec, count }) {
                                         Billed US$ {switchactive ? "348" : "36"} monthly
                                     </p>
                                     <p className="text-[#F5F6F7] text-[14px]">Essential for creating awesome content</p>
-                                    <Button className="bg-[#2871DE] text-[14px] rounded-[10px] w-full py-2 mt-2">
+                                    <Button onClick={() => handlePlanChange('Basic')}  className="bg-[#2871DE] text-[14px] rounded-[10px] w-full py-2 mt-2">
                                         Change Plan
                                     </Button>
                                 </div>
@@ -474,7 +486,7 @@ export default function ComparePlans({ switchactive, inc, dec, count }) {
                                             <button onclick={inc}>+</button>
                                         </div>
                                     </div>
-                                    <Button className="bg-[#2871DE] text-[14px] rounded-[10px] w-full py-2 mt-2">
+                                    <Button onClick={() => handlePlanChange('Pro')}  className="bg-[#2871DE] text-[14px] rounded-[10px] w-full py-2 mt-2">
                                         Change Plan
                                     </Button>
                                 </div>
@@ -507,7 +519,7 @@ export default function ComparePlans({ switchactive, inc, dec, count }) {
                                             <button onclick={inc}>+</button>
                                         </div>
                                     </div>
-                                    <Button className="bg-[#2871DE] text-[14px] rounded-[10px] w-full py-2 mt-2">
+                                    <Button onClick={() => handlePlanChange('Pro +')} className="bg-[#2871DE] text-[14px] rounded-[10px] w-full py-2 mt-2">
                                         Change Plan
                                     </Button>
                                 </div>

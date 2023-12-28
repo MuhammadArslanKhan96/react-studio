@@ -34,6 +34,7 @@ export default function Header() {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
     if (router.pathname === "/signin" || router.pathname === "/signup") return;
+
     const logout = () => {
         signOut(auth);
         setUser(undefined);

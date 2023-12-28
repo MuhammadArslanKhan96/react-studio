@@ -4,21 +4,24 @@ import React, { useState } from "react";
 import PronouneModal from "./PronouneModal";
 import VoiceSelectorModal from "./VoiceSelectorModal";
 import ResourceModal from "./ResourceModal";
+import { useAppContext } from "./EditorContext";
 
 export default function SideNav() {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const [modal, setModal] = useState(false);
+    const { voiceModel, setVoiceModel } = useAppContext();
+
 
     const data = [
         {
             img: "/images/speakerSelection.svg",
             title: "Speaker Selection",
-            click: <VoiceSelectorModal isOpen={isOpen} onOpenChange={onOpenChange} />,
+            click: <VoiceSelectorModal isOpen={voiceModel} onOpenChange={setVoiceModel} />,
         },
         {
             img: "/images/voiceCloning.svg",
             title: "Voice Cloning",
-            click: <VoiceSelectorModal isOpen={isOpen} onOpenChange={onOpenChange} />,
+            click: <VoiceSelectorModal isOpen={voiceModel} onOpenChange={setVoiceModel} />,
         },
         {
             img: "/images/resources.svg",
@@ -60,6 +63,7 @@ export default function SideNav() {
                         key={idx}
                         className="flex flex-col justify-center items-center gap-1 py-[12px] px-[2px] hover:bg-[#2D2D30] rounded-[10px] cursor-pointer"
                         onClick={() => {
+                            (idx == 0 || idx == 1) && setVoiceModel(true);
                             onOpen();
                             setModal(idx);
                         }}

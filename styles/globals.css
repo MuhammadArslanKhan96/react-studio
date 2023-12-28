@@ -184,7 +184,30 @@ input[type="number"] {
 	 color: #ddd;
 }
  
+.loadingButton {
+  position: relative;
+  height: 20px;
+  width: 20px;
+}
 
+.loadingButton::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  margin: -10px 0 0 -10px; /* Centers the spinner */
+  border: 3px solid #ccc; /* Gray color */
+  border-top: 3px solid #333; /* Darker gray for the top */
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
 
 
 

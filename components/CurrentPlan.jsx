@@ -1,13 +1,18 @@
 import Link from "next/link";
 import React from "react";
+import { useAppContext } from "./EditBar/EditorContext";
 
 export default function CurrentPlan() {
+
+    const { user } = useAppContext();
+
+
     return (
         <div className="border-y border-y-[#4D4D51]  p-[16px]">
             <div className="flex items-center justify-between">
                 <div>
                     <p className="text-[#8C8C96] text-[10px]">Current Plan</p>
-                    <p className="text-[#F5F6F&]">Free</p>
+                    <p className="text-[#F5F6F&]">{user?.plan ?? ''}</p>
                 </div>
                 <div>
                     <Link

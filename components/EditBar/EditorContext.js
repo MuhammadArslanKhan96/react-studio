@@ -57,6 +57,9 @@ export const AppContextProvider = ({ children }) => {
     const [user, setUser] = useState();
     const [mockEffect, setMockEffect] = useState(initMockEffect);
     const [speakers, setSpeakers] = useState([]);
+    const [selectedSpeaker, setSelectedSpeaker] = useState(speakers[0] ?? false);
+
+    const [voiceModel, setVoiceModel] = useState(false);
     const [projects, setProjects] = useState([]);
     const [selectedProject, setSelectedProject] = useState({});
 
@@ -91,7 +94,8 @@ export const AppContextProvider = ({ children }) => {
             getProjects();
             router.push('/')
         }
-    }, [user, router]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [user]);
 
     return (
         <>
@@ -105,6 +109,10 @@ export const AppContextProvider = ({ children }) => {
                     initMockEffect,
                     speakers,
                     setSpeakers,
+                    selectedSpeaker,
+                    setSelectedSpeaker,
+                    voiceModel, 
+                    setVoiceModel,
                     projects,
                     setProjects,
                     user,
