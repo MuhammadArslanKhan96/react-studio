@@ -22,6 +22,7 @@
     "@types/uuid": "^9.0.7",
     "@xzdarcy/react-timeline-editor": "^0.1.9",
     "antd": "^5.12.5",
+    "cloudinary": "^1.41.1",
     "event-emitter": "^0.3.5",
     "ffmpeg.js": "^4.2.9003",
     "file-saver": "^2.0.5",
