@@ -1,7 +1,7 @@
-import { IoKeyOutline } from "react-icons/io5";
-import { FaDiscord } from "react-icons/fa";
-import { MdOutlineLogout } from "react-icons/md";
 import { AiOutlineQuestionCircle } from "react-icons/ai";
+import { FaDiscord } from "react-icons/fa";
+import { IoKeyOutline } from "react-icons/io5";
+import { MdOutlineLogout } from "react-icons/md";
 import { RiShareForward2Fill } from "react-icons/ri";
 
 import {
@@ -19,25 +19,26 @@ import {
 import Image from "next/image";
 import { useRouter } from "next/router";
 import React, { useContext } from "react";
+import { GiHamburgerMenu } from "react-icons/gi";
+import { Context } from "./Context";
 import EditInput from "./EditInput";
 import InviteMembers from "./InviteMembers";
-import { GiHamburgerMenu } from "react-icons/gi";
-import Sidebar from "./Sidebar";
-import { Context } from "./Context";
-import Link from "next/link";
-import Discount from "./Discount";
-import CurrentPlan from "./CurrentPlan";
-import { IoIosArrowUp } from "react-icons/io";
-import { IoMdAdd } from "react-icons/io";
-import { PiFolder } from "react-icons/pi";
+import { useAppContext } from "./EditBar/EditorContext";
+import { signOut } from "firebase/auth";
+import { auth } from "../constants/firebaseConfigs";
 
-export default function Header({ open, setOpen }) {
+export default function Header() {
     const router = useRouter();
     const { setSideModal } = useContext(Context);
+    const { setUser, user } = useAppContext();
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
-    console.log(open);
 
     if (router.pathname === "/signin" || router.pathname === "/signup") return;
+    console.log(user);
+    const logout = () => {
+        signOut(auth);
+        setUser(undefined);
+    };
 
     return (
         <div className="flex justify-between items-center px-[16px] py-[8px] bg-[#242427] border-b border-b-[#44444A]">
@@ -50,12 +51,14 @@ export default function Header({ open, setOpen }) {
                 >
                     <GiHamburgerMenu size={20} />
                 </div>
-                <Button onClick={"/"}>
+                <Button onClick={() => router.push("/")}>
                     <Image src={"/logo.svg"} alt="" width={111} height={90} />
                 </Button>
-                <div className="flex max-w-[100px]">
-                    <EditInput />
-                </div>
+                {router.pathname.includes("/project") && (
+                    <div className="flex max-w-[100px]">
+                        <EditInput />
+                    </div>
+                )}
             </div>
             <div className="flex items-center gap-x-2">
                 {router.pathname.includes("/project") && (
@@ -113,7 +116,7 @@ export default function Header({ open, setOpen }) {
                                     color="secondary"
                                     name="Jason Hughes"
                                     size="sm"
-                                    src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
+                                    src={user?.photoUrl || "https://i.pravatar.cc/150?u=a042581f4e29026704d"}
                                 />
                             </DropdownTrigger>
                             <DropdownMenu
@@ -130,7 +133,9 @@ export default function Header({ open, setOpen }) {
 
                                         <div>
                                             <p className="font-semibold">Signed in as</p>
-                                            <p className="font-semibold text-[12px] text-[#b6b8bf]">zoey@example.com</p>
+                                            <p className="font-semibold text-[12px] text-[#b6b8bf]">
+                                                {user?.email || "zoey@example.com"}
+                                            </p>
                                         </div>
                                     </div>
                                 </DropdownItem>
@@ -188,7 +193,7 @@ export default function Header({ open, setOpen }) {
                                         Join Discord
                                     </div>
                                 </DropdownItem>
-                                <DropdownItem key="logout" color="danger">
+                                <DropdownItem onClick={logout} key="logout" color="danger">
                                     <div className="flex items-center gap-2">
                                         <MdOutlineLogout />
                                         Log Out

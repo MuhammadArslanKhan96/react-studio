@@ -1,11 +1,10 @@
 import EditHead from "../../components/EditBar/EditHead";
 import SideNav from "../../components/EditBar/SideNav";
-// import Timelinebar from "../../components/EditBar/Timelinebar";
-import Promptbar from "../../components/EditBar/Promptbar";
 import React from "react";
+import Promptbar from "../../components/EditBar/Promptbar";
 import TimelineEditor from "../../components/player";
 
-export default function project() {
+export default function Project() {
     return (
         <div className="flex bg-[#242427] w-full">
             <div>

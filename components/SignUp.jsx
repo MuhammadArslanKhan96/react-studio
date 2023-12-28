@@ -1,11 +1,22 @@
 /* eslint-disable react/no-unescaped-entities */
-import { Button, Checkbox, Input } from "@nextui-org/react";
+import { Button, Input } from "@nextui-org/react";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { CiLock, CiMail } from "react-icons/ci";
+import { useAppContext } from "./EditBar/EditorContext";
+import { useRouter } from "next/router";
+import { createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { auth } from "../constants/firebaseConfigs";
+import { toast } from "react-toastify";
 
 export default function SignUp() {
+    const [credentials, setCredentials] = useState({
+        email: "",
+        password: "",
+        confirmpassword: "",
+        name: "",
+    });
     const image = [
         {
             img: "/images/forbes.svg",
@@ -23,6 +34,89 @@ export default function SignUp() {
             img: "/images/berkely.svg",
         },
     ];
+    const { setUser } = useAppContext();
+
+    async function signUpWithGoogle() {
+        try {
+            const provider = new GoogleAuthProvider();
+            const result = await signInWithPopup(auth, provider);
+            const credential = GoogleAuthProvider.credentialFromResult(result);
+            const user = result.user;
+            const data = { ...credential, ...user };
+            const addUser = await fetch(`/api/auth/signup`, {
+                method: "POST",
+                body: JSON.stringify(data),
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            }).then((r) => r.json());
+
+            setUser(addUser.user);
+            toast.success("Signed Up successfully");
+        } catch (error) {
+            toast.error(error?.response?.data?.message || error?.message);
+        }
+    }
+
+    const handleChange = (e) => {
+        setCredentials((pre) => ({
+            ...pre,
+            [e.target.name]: e.target.value,
+        }));
+    };
+
+    async function signUpWithEmailAndPassword() {
+        try {
+            var minNumberofChars = 6;
+            var regularExpression = /^[a-zA-Z0-9!@#$%^&*]{6,16}$/;
+            if (credentials.password.length < minNumberofChars) {
+                toast.error("Password should be between 6 to 16 characters");
+                return;
+            }
+            if (!regularExpression.test(credentials.password)) {
+                toast.error("Please enter a valid password");
+                return;
+            }
+
+            if (credentials.password !== credentials.confirmpassword) {
+                toast.error("Password and confirm password does not match");
+                return;
+            }
+
+            if (
+                !credentials.email
+                    .toLowerCase()
+                    .match(
+                        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+                    )
+            ) {
+                toast.error("Please enter a valid email");
+                return;
+            }
+
+            const result = await createUserWithEmailAndPassword(auth, credentials.email, credentials.password);
+            const user = result.user;
+            const data = {
+                ...user,
+                displayName: credentials.name,
+                password: credentials.password,
+                signInMethod: "email",
+            };
+            const addUser = await fetch(`/api/auth/signup`, {
+                method: "POST",
+                body: JSON.stringify(data),
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            }).then((r) => r.json());
+
+            setUser(addUser.user);
+            toast.success("Signed Up successfully");
+        } catch (error) {
+            toast.error(error?.response?.data?.message || error?.message);
+        }
+    }
+
     return (
         <div className="flex h-screen bg-[#242427] relative ">
             <div className="absolute top-8 left-8 max-lg:hidden flex">
@@ -51,7 +145,10 @@ export default function SignUp() {
                 <div className="min-w-[352px] max-w-[360px] max-sm:min-w-[290px] px-2 py-4">
                     <Image src={"/logo.svg"} alt="" width={111} height={40} className="max-lg:flex hidden" />
                     <p className="text-[#EFEFEF] text-[24px] font-semibold mb-[40px]">Sign up for Free</p>
-                    <Button className="bg-[#FFFFFF] flex rounded-[5px] items-center text-[#242427] w-full justify-between px-4 py-2">
+                    <Button
+                        onClick={signUpWithGoogle}
+                        className="bg-[#FFFFFF] flex rounded-[5px] items-center text-[#242427] w-full justify-between px-4 py-2"
+                    >
                         <Image src={"/images/google.svg"} alt="" width={20} height={20} />
                         Continue with Google
                         <span></span>
@@ -67,6 +164,8 @@ export default function SignUp() {
                             type="text"
                             placeholder="Name"
                             labelPlacement="outside"
+                            onChange={handleChange}
+                            name="name"
                             startContent={<Image src={"/images/user.svg"} alt="" width={20} height={20} />}
                         />
                         <Input
@@ -74,6 +173,8 @@ export default function SignUp() {
                             type="email"
                             placeholder="Email"
                             labelPlacement="outside"
+                            onChange={handleChange}
+                            name="email"
                             startContent={
                                 <CiMail
                                     color="#8C8C96"
@@ -85,6 +186,8 @@ export default function SignUp() {
                             className="bg-[#2D2D30] border border-[#505057] rounded-[5px] py-2"
                             placeholder="Password"
                             labelPlacement="outside"
+                            onChange={handleChange}
+                            name="password"
                             startContent={
                                 <CiLock
                                     color="#8C8C96"
@@ -105,6 +208,8 @@ export default function SignUp() {
                         className="bg-[#2D2D30] border border-[#505057] rounded-[5px] py-2"
                         placeholder="Confirm Password"
                         labelPlacement="outside"
+                        onChange={handleChange}
+                        name="confirmpassword"
                         startContent={
                             <CiLock
                                 color="#8C8C96"
@@ -112,7 +217,10 @@ export default function SignUp() {
                             />
                         }
                     />
-                    <Button className="bg-[#FFFFFF] flex justify-center items-center text-[#242427] mt-2 w-full px-4 py-2 rounded-[5px]">
+                    <Button
+                        onClick={signUpWithEmailAndPassword}
+                        className="bg-[#FFFFFF] flex justify-center items-center text-[#242427] mt-2 w-full px-4 py-2 rounded-[5px]"
+                    >
                         Sign up
                     </Button>
 

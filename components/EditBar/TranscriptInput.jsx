@@ -28,6 +28,14 @@ function TranscriptInput({ mockData, mockEffect }) {
         setMockData((pre) => [...pre.filter((a) => a.id !== mockData.id), { ...mockData, checked: e.target.checked }]);
     };
 
+    const downloadFile = async () => {
+        const downloadLink = document.createElement("a");
+        downloadLink.href = speech?.blobUrl;
+        downloadLink.download = `${mockEffect?.name?.slice(0, 5)}.mp3`;
+        downloadLink.click();
+        document.removeChild(downloadLink);
+    };
+
     const handleTextChange = (e) => {
         setDisabled(true);
         setMockData((pre) => [
@@ -59,7 +67,7 @@ function TranscriptInput({ mockData, mockEffect }) {
         if (!mockEffect?.name.length) return;
 
         const speech = await generateSpeech(JSON.stringify({ text: mockEffect?.name, speaker: selectedSpeaker?.id }));
-        setSpeech({ ...speech, blobUrl: speech?.urls?.[0], type: 'audio/mpeg' });
+        setSpeech({ ...speech, blobUrl: speech?.urls?.[0], type: "audio/mpeg" });
         setMockData((pre) => [
             ...pre.filter((a) => a.id !== mockData.id),
             {
@@ -127,7 +135,7 @@ function TranscriptInput({ mockData, mockEffect }) {
                 </div>
             </div>
             <div className="flex flex-col gap-2 justify-evenly h-full">
-                <Tooltip showArrow={true} content="Generate" disabled={!disabled} className="bg-black rounded-[10px]">
+                <Tooltip showArrow={true} content="Generate" className="bg-black rounded-[10px]">
                     <Button
                         onClick={generateAudio}
                         disabled={!disabled}
@@ -136,7 +144,7 @@ function TranscriptInput({ mockData, mockEffect }) {
                         <Image src={"/images/generate.svg"} alt="" width={20} height={20} />
                     </Button>
                 </Tooltip>
-                <Tooltip showArrow={true} disabled={disabled} content="Play" className="bg-black rounded-[10px]">
+                <Tooltip showArrow={true} content="Play" className="bg-black rounded-[10px]">
                     <Button
                         disabled={disabled}
                         onClick={() => {
@@ -156,7 +164,11 @@ function TranscriptInput({ mockData, mockEffect }) {
                     </Button>
                 </Tooltip>
                 <Tooltip showArrow={true} content="Export" className="bg-black rounded-[10px]">
-                    <Button>
+                    <Button
+                        disabled={disabled}
+                        onClick={downloadFile}
+                        className=" disabled:cursor-not-allowed disabled:opacity-50 enabled:cursor-pointer"
+                    >
                         <FaShareSquare size={20} />
                     </Button>
                 </Tooltip>

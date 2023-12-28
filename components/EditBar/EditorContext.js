@@ -2,6 +2,7 @@ import audioControl from "../player/audioControl";
 import { getSpeakers } from "../../helpers/get-speakers";
 import React, { useEffect, useState } from "react";
 import { createContext, useContext } from "react";
+import { useRouter } from "next/router";
 
 export const AppContext = createContext();
 
@@ -53,15 +54,34 @@ export const AppContextProvider = ({ children }) => {
         },
     };
     const [mockData, setMockData] = useState(initMockData);
+    const [user, setUser] = useState();
     const [mockEffect, setMockEffect] = useState(initMockEffect);
     const [speakers, setSpeakers] = useState([]);
+    const [projects, setProjects] = useState([]);
+
     const getData = async () => {
         const data = await getSpeakers();
         setSpeakers(data);
+        const projects = localStorage.getItem('projects');
+        if (projects) {
+            setProjects(JSON.parse(projects));
+        }
     };
+
     useEffect(() => {
         getData();
     }, []);
+
+    const router = useRouter();
+
+    useEffect(() => {
+        if (!user && (router.pathname !== '/signin' || router.pathname !== '/signup')) {
+            router.push('/signin')
+        } else if (user && (router.pathname === '/signin' || router.pathname === '/signup')) {
+            router.push('/')
+        }
+    }, [user, router]);
+
     return (
         <>
             <AppContext.Provider
@@ -74,6 +94,10 @@ export const AppContextProvider = ({ children }) => {
                     initMockEffect,
                     speakers,
                     setSpeakers,
+                    projects,
+                    setProjects,
+                    user,
+                    setUser
                 }}
             >
                 {children}

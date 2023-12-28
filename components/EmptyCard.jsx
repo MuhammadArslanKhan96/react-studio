@@ -1,12 +1,30 @@
 import React, { useState } from "react";
 import { FaPlus } from "react-icons/fa";
-import { RxCross2 } from "react-icons/rx";
-
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure } from "@nextui-org/react";
+import { useAppContext } from "./EditBar/EditorContext";
 
 export default function EmptyCard() {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
+    const { projects, setProjects, initMockEffect, initMockData } = useAppContext();
     const [active, setActive] = useState("simple");
+
+    const createProject = (onClose) => {
+        const newProjects = [
+            ...projects,
+            {
+                id: projects.length,
+                mockData: initMockData,
+                mockEffect: initMockEffect,
+                name: "",
+                lastModified: new Date().toDateString(),
+                description: "",
+            },
+        ];
+        setProjects(newProjects);
+        localStorage.setItem("projects", JSON.stringify(newProjects));
+        onClose();
+    };
+
     return (
         <>
             <div
@@ -91,7 +109,7 @@ export default function EmptyCard() {
                                 <Button className="border border-[#44444A] rounded-[5px] px-4 py-2" onPress={onClose}>
                                     Cancel
                                 </Button>
-                                <Button className="bg-[#2871DE] rounded-[5px] px-4 py-2" onPress={onClose}>
+                                <Button className="bg-[#2871DE] rounded-[5px] px-4 py-2" onPress={() => createProject(onClose)}>
                                     Create
                                 </Button>
                             </ModalFooter>
