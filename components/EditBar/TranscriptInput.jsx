@@ -131,7 +131,7 @@ function TranscriptInput({ mockData, mockEffect }) {
                     <Button
                         onClick={generateAudio}
                         disabled={!disabled}
-                        className=" disabled:cursor-not-allowed enabled:cursor-pointer"
+                        className=" disabled:cursor-not-allowed disabled:opacity-50 enabled:cursor-pointer"
                     >
                         <Image src={"/images/generate.svg"} alt="" width={20} height={20} />
                     </Button>
@@ -148,7 +148,7 @@ function TranscriptInput({ mockData, mockEffect }) {
                             }
                             setPlay(!play);
                         }}
-                        className=" disabled:cursor-not-allowed enabled:cursor-pointer"
+                        className=" disabled:cursor-not-allowed disabled:opacity-50 enabled:cursor-pointer"
                     >
                         {play ? <FaPause size={20} /> : <FaPlay size={20} />}
 
