@@ -167,7 +167,7 @@ export default function Header() {
                                     </div>
                                 </DropdownItem>
                                 <DropdownItem key="invite_member">
-                                    <div className="flex items-center gap-2">
+                                    <div className="flex items-center gap-2" onClick={onOpen}>
                                         <Image src={"/images/invite.svg"} alt="" width={20} height={20} />
                                         Invite Member
                                     </div>
