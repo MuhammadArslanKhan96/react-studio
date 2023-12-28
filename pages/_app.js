@@ -1,25 +1,26 @@
 // @ts-ignore importMeta is replaced in the loader
-import React, { useState } from "react";
-import "../styles/globals.css";
-import { Button, NextUIProvider } from "@nextui-org/react";
+import { Button, NextUIProvider, useDisclosure } from "@nextui-org/react";
 import Image from "next/image";
+import Link from "next/link";
+import React, { useState } from "react";
+import { FaArrowAltCircleLeft } from "react-icons/fa";
+import { IoIosArrowUp, IoMdAdd } from "react-icons/io";
+import { PiFolder } from "react-icons/pi";
+import { Context } from "../components/Context";
+import CurrentPlan from "../components/CurrentPlan";
+import Discount from "../components/Discount";
+import { AppContextProvider } from "../components/EditBar/EditorContext";
+import Header from "../components/Header";
+import InviteMembers from "../components/InviteMembers";
 import Sidebar from "../components/Sidebar";
 import { SettingsContext } from "../context/settingsContext";
-import Header from "../components/Header";
-import CurrentPlan from "../components/CurrentPlan";
-import Link from "next/link";
-import Discount from "../components/Discount";
-import { Context } from "../components/Context";
-import { useDisclosure } from "@nextui-org/react";
-import { IoIosArrowUp } from "react-icons/io";
-import { IoMdAdd } from "react-icons/io";
-import { PiFolder } from "react-icons/pi";
-import { RiArrowDownSLine } from "react-icons/ri";
-import { AppContextProvider } from "../components/EditBar/EditorContext";
-import InviteMembers from "../components/InviteMembers";
-import { FaArrowAltCircleLeft } from "react-icons/fa";
+import "../styles/globals.css";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-export default function App({ Component, pageProps }) {
+export default function App({ Component,
+    pageProps,
+}) {
     const [open, setOpen] = useState(false);
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const [modal, setModal] = useState(false);
@@ -27,11 +28,9 @@ export default function App({ Component, pageProps }) {
 
     return (
         <SettingsContext>
+            <ToastContainer />
             <NextUIProvider>
                 <Context.Provider value={{ isOpen, onOpen, onOpenChange, open, setOpen, setSideModal }}>
-                    {/* <button className="bg-green-600 text-white rounded px-4 py-1" onClick={() => setIsOpen(true)}>
-                open
-            </button> */}
                     <AppContextProvider>
                         <Header open={open} setOpen={setOpen} />
                         <div className="flex w-full relative min-h-screen overflow-y-scroll scrollStyle">
@@ -197,6 +196,6 @@ export default function App({ Component, pageProps }) {
                     </AppContextProvider>
                 </Context.Provider>
             </NextUIProvider>
-        </SettingsContext>
+        </SettingsContext >
     );
 }
