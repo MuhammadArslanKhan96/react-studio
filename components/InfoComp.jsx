@@ -1,10 +1,73 @@
 import { Avatar, Button, Input } from "@nextui-org/react";
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import PaymentMethod from "./PaymentMethod";
+import { useAppContext } from "./EditBar/EditorContext";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { storage } from "../constants/firebaseConfigs";
 
 export default function InfoComp() {
-    const ref = useRef();
+    const inputref = useRef();
+    const { user, setUser } = useAppContext();
+    const [name, setName] = useState(user?.displayName || "");
+
+    const handlePlanChange = async () => {
+        setUser((prevUser) => ({
+            ...prevUser,
+            displayName: name,
+        }));
+
+        await fetch(`/api/users/update-user?email=${user?.email}`, {
+            method: "POST",
+            body: JSON.stringify({
+                displayName: name,
+            }),
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+    };
+
+    const removePhoto = async () => {
+        setUser((prevUser) => ({
+            ...prevUser,
+            photoURL: null,
+        }));
+
+        await fetch(`/api/users/update-user?email=${user?.email}`, {
+            method: "POST",
+            body: JSON.stringify({
+                photoURL: null,
+            }),
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+    };
+
+    async function handleFileChange(e) {
+        const file = e.target.files[0];
+        const profileRef = ref(storage, `${name}/profile.jpg`);
+
+        uploadBytes(profileRef, file).then(async (snapshot) => {
+            const url = await getDownloadURL(snapshot.ref);
+            setUser((prevUser) => ({
+                ...prevUser,
+                photoURL: url,
+            }));
+
+            await fetch(`/api/users/update-user?email=${user?.email}`, {
+                method: "POST",
+                body: JSON.stringify({
+                    photoURL: url,
+                }),
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+        });
+    }
+
     return (
         <>
             <div className="flex flex-col gap-4 border-b border-b-[#44444A] pb-6">
@@ -16,19 +79,21 @@ export default function InfoComp() {
                     <p className="text-[#EFEFEF] font-semibold">Logo</p>
                     <div className="flex gap-x-2 items-center">
                         <div>
-                            <Avatar />
+                            <Avatar src={user?.photoURL} />
                         </div>
                         <div>
                             <div className="flex items-center gap-x-2">
                                 <Button
-                                    onClick={() => ref.current.click()}
+                                    onClick={() => inputref.current.click()}
                                     className="text-white text-[14px] border rounded-[5px] px-4 py-1"
                                 >
                                     Upload Photo
                                 </Button>
-                                <RiDeleteBin5Line color="#C53030" />
+                                {user?.photoURL && (
+                                    <RiDeleteBin5Line onClick={removePhoto} className="text-[#C53030] cursor-pointer" />
+                                )}
                             </div>
-                            <Input ref={ref} type="file" className="hidden" />
+                            <Input onChange={handleFileChange} ref={inputref} type="file" className="hidden" />
                             <p className="text-[#F5F6F7] text-[12px] mt-2">
                                 You can upload jpg, png files. Max size of 4MB
                             </p>
@@ -38,8 +103,16 @@ export default function InfoComp() {
                 <div className="flex flex-col gap-2">
                     <p>Name</p>
                     <div className="flex gap-x-2">
-                        <Input placeholder="Enter name" className="border rounded-[10px]" />
-                        <Button className="text-white border px-4 rounded-[10px]">Update</Button>
+                        <Input
+                            placeholder="Enter name"
+                            defaultValue={user?.displayName}
+                            onChange={(e) => setName(e.target.value)}
+                            value={name}
+                            className="border rounded-[10px]"
+                        />
+                        <Button className="text-white border px-4 rounded-[10px]" onClick={handlePlanChange}>
+                            Update
+                        </Button>
                     </div>
                 </div>
             </div>

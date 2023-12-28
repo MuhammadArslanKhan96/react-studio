@@ -1,14 +1,17 @@
 "use client";
 import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from "@nextui-org/react";
+import { useRouter } from "next/router";
 import React from "react";
 import { CiMenuKebab } from "react-icons/ci";
 import { IoCopyOutline } from "react-icons/io5";
 import { RiDeleteBin5Line } from "react-icons/ri";
-import { useRouter } from "next/router";
 import { useAppContext } from "./EditBar/EditorContext";
 
+import {
+    Avatar
+} from "@nextui-org/react";
 export default function Card({ project }) {
-    const { projects, setProjects } = useAppContext();
+    const { projects, setProjects, setSelectedProject, setMockData, setMockEffect, user } = useAppContext();
     const router = useRouter();
     const iconClasses = "text-xl text-default-500 pointer-events-none flex-shrink-0";
 
@@ -33,7 +36,12 @@ export default function Card({ project }) {
     return (
         <div
             className="w-fit max-w-[330px] cursor-pointer min-w-[310px] min-h-[260px] max-h-[270px] border border-[#44444A] rounded-[5px] bg-[#2D2D30]"
-            onClick={() => router.push("/project/" + project.id)}
+            onClick={() => {
+                setSelectedProject(project);
+                setMockData(project.mockData);
+                setMockEffect(project.mockEffect);
+                router.push("/project/" + project.id);
+            }}
         >
             <div className="bg-[#242427] flex justify-between p-[16px] border-b border-b-[#44444A]">
                 <div>
@@ -87,9 +95,21 @@ export default function Card({ project }) {
                     industry standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
                     scrambled it to make a type specimen book.`}
                 </p>
-                <Button className="bg-[#755EE5] rounded-[50px] px-[16px] py-[10px] text-[12px] text-black font-bold absolute bottom-1 right-3">
-                    V
-                </Button>
+                {user?.photoURL ? (
+                    <Avatar
+                        isBordered
+                        as="button"
+                        className="transition-transform absolute bottom-1 right-3"
+                        color="secondary"
+                        name="Jason Hughes"
+                        size="sm"
+                        src={user?.photoURL || "https://i.pravatar.cc/150?u=a042581f4e29026704d"}
+                    />
+                ) : (
+                    <Button className="bg-[#755EE5] rounded-[50px] px-[16px] py-[10px] text-[12px] text-black font-bold absolute bottom-1 right-3">
+                        V
+                    </Button>
+                )}
             </div>
         </div>
     );

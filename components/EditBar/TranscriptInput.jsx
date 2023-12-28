@@ -15,24 +15,21 @@ import { FaPause, FaPlay, FaShareSquare } from "react-icons/fa";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import { VscPulse } from "react-icons/vsc";
 import { useAppContext } from "./EditorContext";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { generateSpeech } from "../../helpers/generate-audio";
-import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 function TranscriptInput({ mockData, mockEffect }) {
-    const { setMockData, setMockEffect, speakers, setVoiceModel } =
-        useAppContext();
-    const [disabled, setDisabled] = useState(true);
+    const { setMockData, setMockEffect, speakers, setVoiceModel } = useAppContext();
+    const [disabled, setDisabled] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [play, setPlay] = useState(false);
-    const [speech, setSpeech] = useState({ type: "audio/mpeg" });
     const handleCheckboxChange = (e) => {
         setMockData((pre) => [...pre.filter((a) => a.id !== mockData.id), { ...mockData, checked: e.target.checked }]);
     };
 
     const downloadFile = async () => {
         const downloadLink = document.createElement("a");
-        downloadLink.href = speech?.blobUrl;
+        downloadLink.href = mockData?.actions?.[0]?.data?.src;
         downloadLink.download = `${mockEffect?.name?.slice(0, 5)}.mp3`;
         downloadLink.click();
         document.removeChild(downloadLink);
@@ -68,7 +65,6 @@ function TranscriptInput({ mockData, mockEffect }) {
         if (!mockEffect?.name.length) return;
         setIsLoading(true);
         const speech = await generateSpeech(JSON.stringify({ text: mockEffect?.name, speaker: mockData?.speaker?.id }));
-        setSpeech({ ...speech, blobUrl: speech?.urls?.[0], type: "audio/mpeg" });
         setMockData((pre) => [
             ...pre.filter((a) => a.id !== mockData.id),
             {
@@ -95,7 +91,7 @@ function TranscriptInput({ mockData, mockEffect }) {
                     className="flex"
                     size="16"
                 ></Checkbox>
-                <div className="flex gap-2 items-center" onClick={() => setVoiceModel(true)}>
+                <div className="flex cursor-pointer gap-2 items-center" onClick={() => setVoiceModel(true)}>
                     <Avatar size="24" src={mockData?.speaker?.imageUrl} />
                     <p className="text-[14px]">{mockData?.speaker?.displayName || "Sophia"}</p>
                 </div>
@@ -143,12 +139,12 @@ function TranscriptInput({ mockData, mockEffect }) {
                     showArrow={true}
                     content="Generate"
                     onClick={() => setDisabled(true)}
-                    disabled={!disabled}
+                    disabled={!disabled || !isLoading || mockData?.actions?.[0]?.data?.src}
                     className="bg-black rounded-[10px]"
                 >
                     <Button
                         onClick={generateAudio}
-                        disabled={!disabled}
+                        disabled={!disabled || !isLoading || mockData?.actions?.[0]?.data?.src}
                         className=" disabled:cursor-not-allowed disabled:opacity-50 enabled:cursor-pointer"
                     >
                         {!isLoading ? (
@@ -160,7 +156,7 @@ function TranscriptInput({ mockData, mockEffect }) {
                 </Tooltip>
                 <Tooltip showArrow={true} content="Play" className="bg-black rounded-[10px]">
                     <Button
-                        disabled={disabled}
+                        disabled={disabled || isLoading || !mockData?.actions?.[0]?.data?.src}
                         onClick={() => {
                             var audio = document.getElementById("audio");
                             if (play) {
@@ -174,12 +170,12 @@ function TranscriptInput({ mockData, mockEffect }) {
                     >
                         {play ? <FaPause size={20} /> : <FaPlay size={20} />}
 
-                        <audio id="audio" className="hidden" src={speech?.blobUrl} controls />
+                        <audio id="audio" className="hidden" src={mockData?.actions?.[0]?.data?.src} controls />
                     </Button>
                 </Tooltip>
                 <Tooltip showArrow={true} content="Export" className="bg-black rounded-[10px]">
                     <Button
-                        disabled={disabled}
+                        disabled={disabled || isLoading || !mockData?.actions?.[0]?.data?.src}
                         onClick={downloadFile}
                         className=" disabled:cursor-not-allowed disabled:opacity-50 enabled:cursor-pointer"
                     >
