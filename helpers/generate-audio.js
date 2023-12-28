@@ -2,13 +2,13 @@ import { apiOptions } from "../constants";
 
 export function generateSpeech(body) {
     return new Promise(async function (resolve, reject) {
-        await fetch("https://api.genny.lovo.ai/api/v1/tts/sync", {
+        await fetch("/api/generate-audio", {
             ...apiOptions,
             method: "POST",
             body,
         })
             .then((response) => response.json())
-            .then(resolve)
+            .then(({ data }) => resolve(data))
             .catch((err) => reject(err));
     });
 }

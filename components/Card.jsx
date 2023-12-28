@@ -1,14 +1,17 @@
+'use client';
 import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from "@nextui-org/react";
 import React from "react";
 import { CiMenuKebab } from "react-icons/ci";
 import { IoCopyOutline } from "react-icons/io5";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import { LuFolderInput } from "react-icons/lu";
+import { useRouter } from "next/router";
 
 export default function Card() {
+    const router = useRouter()
     const iconClasses = "text-xl text-default-500 pointer-events-none flex-shrink-0";
     return (
-        <div className="w-fit max-w-[330px] min-w-[310px] min-h-[260px] max-h-[270px] border border-[#44444A] rounded-[5px] bg-[#2D2D30]">
+        <div className="w-fit max-w-[330px] cursor-pointer min-w-[310px] min-h-[260px] max-h-[270px] border border-[#44444A] rounded-[5px] bg-[#2D2D30]" onClick={() => router.push('/project/@')}>
             <div className="bg-[#242427] flex justify-between p-[16px] border-b border-b-[#44444A]">
                 <div>
                     <p className="text-[#EFEFEF]">Untitled</p>
