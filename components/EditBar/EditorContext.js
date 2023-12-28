@@ -100,7 +100,7 @@ export const AppContextProvider = ({ children }) => {
 
     const getMembers = useCallback(async (email) => {
         const members = await fetch('/api/members/get-members?email=' + email).then(r => r.json()).then(r => r.members);
-        console.log(members)
+        setInviteMembers(members);
      }, []);
 
     useEffect(() => {

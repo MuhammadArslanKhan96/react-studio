@@ -23,7 +23,7 @@ export default function InviteMembers({ isOpen, onOpenChange }) {
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({ "userId": user.email, email: memberEmailInput, accepted: false }),
+            body: JSON.stringify({ "userId": user.email, displayName: 'Pending', email: memberEmailInput, accepted: false }),
         }).then((res) => res.json());
 
         setInviteMembers(prevMembers => [...prevMembers, { displayName: 'Pending', email: memberEmailInput }]);
