@@ -20,12 +20,12 @@ import { generateSpeech } from "../../helpers/generate-audio";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 function TranscriptInput({ mockData, mockEffect }) {
-    const { setMockData, setMockEffect, speakers, selectedSpeaker, setVoiceModel, setSelectedSpeaker } = useAppContext();
+    const { setMockData, setMockEffect, speakers, setVoiceModel } =
+        useAppContext();
     const [disabled, setDisabled] = useState(true);
     const [isLoading, setIsLoading] = useState(false);
     const [play, setPlay] = useState(false);
     const [speech, setSpeech] = useState({ type: "audio/mpeg" });
-    // const [selectedSpeaker, setSelectedSpeaker] = useState(speakers[0]);
     const handleCheckboxChange = (e) => {
         setMockData((pre) => [...pre.filter((a) => a.id !== mockData.id), { ...mockData, checked: e.target.checked }]);
     };
@@ -54,21 +54,20 @@ function TranscriptInput({ mockData, mockEffect }) {
     };
 
     useEffect(() => {
-        if (selectedSpeaker) return;
-        setSelectedSpeaker(speakers[0]);
         setMockData((pre) => [
             ...pre.filter((a) => a.id !== mockData.id),
             {
                 ...mockData,
-                actions: [{ ...mockData.actions[0], speaker: speakers[0] }],
+                actions: [{ ...mockData.actions[0] }],
+                speaker: speakers[0],
             },
         ]);
-    }, [speakers, selectedSpeaker]);
+    }, [speakers]);
 
     const generateAudio = async () => {
         if (!mockEffect?.name.length) return;
-        setIsLoading(true)
-        const speech = await generateSpeech(JSON.stringify({ text: mockEffect?.name, speaker: selectedSpeaker?.id }));
+        setIsLoading(true);
+        const speech = await generateSpeech(JSON.stringify({ text: mockEffect?.name, speaker: mockData?.speaker?.id }));
         setSpeech({ ...speech, blobUrl: speech?.urls?.[0], type: "audio/mpeg" });
         setMockData((pre) => [
             ...pre.filter((a) => a.id !== mockData.id),
@@ -82,10 +81,9 @@ function TranscriptInput({ mockData, mockEffect }) {
                 ],
             },
         ]);
-        setIsLoading(false)
+        setIsLoading(false);
         setDisabled(false);
     };
-
     return (
         <div className="flex items-start gap-x-2">
             <div className="flex gap-2 items-center">
@@ -98,8 +96,8 @@ function TranscriptInput({ mockData, mockEffect }) {
                     size="16"
                 ></Checkbox>
                 <div className="flex gap-2 items-center" onClick={() => setVoiceModel(true)}>
-                    <Avatar size="24" src={selectedSpeaker?.imageUrl} />
-                    <p className="text-[14px]">{selectedSpeaker?.displayName || "Sophia"}</p>
+                    <Avatar size="24" src={mockData?.speaker?.imageUrl} />
+                    <p className="text-[14px]">{mockData?.speaker?.displayName || "Sophia"}</p>
                 </div>
             </div>
             <div className="relative">
@@ -127,6 +125,7 @@ function TranscriptInput({ mockData, mockEffect }) {
                             </DropdownItem>
                             <DropdownItem
                                 key="delete"
+                                onClick={() => setMockData((pre) => pre.filter((a) => a.id !== mockData.id))}
                                 className="text-[14px] text-[#F56565]"
                                 startContent={<RiDeleteBin5Line />}
                             >
@@ -140,17 +139,23 @@ function TranscriptInput({ mockData, mockEffect }) {
                 </div>
             </div>
             <div className="flex flex-col gap-2 justify-evenly h-full">
-                <Tooltip showArrow={true} content="Generate" onClick={() => setDisabled(true)} disabled={!disabled} className="bg-black rounded-[10px]">
+                <Tooltip
+                    showArrow={true}
+                    content="Generate"
+                    onClick={() => setDisabled(true)}
+                    disabled={!disabled}
+                    className="bg-black rounded-[10px]"
+                >
                     <Button
                         onClick={generateAudio}
                         disabled={!disabled}
                         className=" disabled:cursor-not-allowed disabled:opacity-50 enabled:cursor-pointer"
                     >
-                        {!isLoading ?
+                        {!isLoading ? (
                             <Image src={"/images/generate.svg"} alt="" width={20} height={20} />
-                            :
+                        ) : (
                             <div className="loadingButton"></div>
-                        }
+                        )}
                     </Button>
                 </Tooltip>
                 <Tooltip showArrow={true} content="Play" className="bg-black rounded-[10px]">

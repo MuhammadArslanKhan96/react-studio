@@ -1,6 +1,6 @@
 import audioControl from "../player/audioControl";
 import { getSpeakers } from "../../helpers/get-speakers";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useCallback, useState } from "react";
 import { createContext, useContext } from "react";
 import { useRouter } from "next/router";
 
@@ -23,6 +23,22 @@ export const AppContextProvider = ({ children }) => {
                 },
             ],
             checked: false,
+            speaker: {
+                "id": "63b4094b241a82001d51c5fc",
+                "displayName": "Aadesh Madar",
+                "locale": "kn-IN",
+                "gender": "male",
+                "imageUrl": "https://cdn.lovo.ai/f5349e2d/Aadesh+Madar.jpeg",
+                "speakerType": "global",
+                "speakerStyles": [
+                    {
+                        "deprecated": false,
+                        "id": "63b4094b241a82001d51c5fd",
+                        "displayName": "Default",
+                        "sampleTtsUrl": "https://cdn.lovo.ai/speaker-tts-samples/prod/kn-IN-GaganNeural-default.wav"
+                    }
+                ]
+            }
         },
     ];
     const initMockEffect = {
@@ -57,8 +73,7 @@ export const AppContextProvider = ({ children }) => {
     const [user, setUser] = useState();
     const [mockEffect, setMockEffect] = useState(initMockEffect);
     const [speakers, setSpeakers] = useState([]);
-    const [selectedSpeaker, setSelectedSpeaker] = useState(speakers[0] ?? false);
-
+    const [selectedSpeaker, setSelectedSpeaker] = useState(speakers?.[0] ?? false);
     const [voiceModel, setVoiceModel] = useState(false);
     const [projects, setProjects] = useState([]);
     const [selectedProject, setSelectedProject] = useState({});
@@ -75,10 +90,10 @@ export const AppContextProvider = ({ children }) => {
     const router = useRouter();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    const getProjects = useMemo(async () => {
-        const projects = await fetch('/api/projects/get-projects?email=' + user?.email).then(r => r.json()).then(r => r.projects);
+    const getProjects = useCallback(async (email) => {
+        const projects = await fetch('/api/projects/get-projects?email=' + email).then(r => r.json()).then(r => r.projects);
         setProjects(projects);
-    }, [user?.email]);
+    }, []);
 
     useEffect(() => {
         const email = localStorage.getItem('email');
@@ -86,15 +101,15 @@ export const AppContextProvider = ({ children }) => {
             fetch('/api/auth/get-user?email=' + email).then(r => r.json()).then(newUser => {
                 setUser(newUser.user);
             });
+            getProjects(email);
             return;
         }
         if (!user?.email && (router.pathname !== '/signin' || router.pathname !== '/signup')) {
             router.push('/signin')
         } else if (user?.email && (router.pathname === '/signin' || router.pathname === '/signup')) {
-            getProjects();
             router.push('/')
         }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [user]);
 
     return (
@@ -111,7 +126,7 @@ export const AppContextProvider = ({ children }) => {
                     setSpeakers,
                     selectedSpeaker,
                     setSelectedSpeaker,
-                    voiceModel, 
+                    voiceModel,
                     setVoiceModel,
                     projects,
                     setProjects,
