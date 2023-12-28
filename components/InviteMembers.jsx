@@ -18,7 +18,7 @@ export default function InviteMembers({ isOpen, onOpenChange }) {
             return;
         }
 
-        const response = await fetch(`/api/members/add-members`, {
+        await fetch(`/api/members/add-members`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
