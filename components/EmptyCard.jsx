@@ -5,23 +5,26 @@ import { useAppContext } from "./EditBar/EditorContext";
 
 export default function EmptyCard() {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
-    const { projects, setProjects, initMockEffect, initMockData } = useAppContext();
+    const { projects, setProjects, initMockEffect, initMockData, user } = useAppContext();
     const [active, setActive] = useState("simple");
 
-    const createProject = (onClose) => {
-        const newProjects = [
-            ...projects,
-            {
-                id: projects.length,
+    const createProject = async (onClose) => {
+        const { project: newProject } = await fetch(`/api/projects/add-project`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
                 mockData: initMockData,
                 mockEffect: initMockEffect,
                 name: "",
                 lastModified: new Date().toDateString(),
                 description: "",
-            },
-        ];
+                userId: user?.email,
+            }),
+        }).then((res) => res.json());
+        const newProjects = [...projects, newProject];
         setProjects(newProjects);
-        localStorage.setItem("projects", JSON.stringify(newProjects));
         onClose();
     };
 
@@ -109,7 +112,10 @@ export default function EmptyCard() {
                                 <Button className="border border-[#44444A] rounded-[5px] px-4 py-2" onPress={onClose}>
                                     Cancel
                                 </Button>
-                                <Button className="bg-[#2871DE] rounded-[5px] px-4 py-2" onPress={() => createProject(onClose)}>
+                                <Button
+                                    className="bg-[#2871DE] rounded-[5px] px-4 py-2"
+                                    onPress={() => createProject(onClose)}
+                                >
                                     Create
                                 </Button>
                             </ModalFooter>

@@ -1,6 +1,6 @@
 import audioControl from "../player/audioControl";
 import { getSpeakers } from "../../helpers/get-speakers";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { createContext, useContext } from "react";
 import { useRouter } from "next/router";
 
@@ -58,14 +58,11 @@ export const AppContextProvider = ({ children }) => {
     const [mockEffect, setMockEffect] = useState(initMockEffect);
     const [speakers, setSpeakers] = useState([]);
     const [projects, setProjects] = useState([]);
+    const [selectedProject, setSelectedProject] = useState({});
 
     const getData = async () => {
         const data = await getSpeakers();
         setSpeakers(data);
-        const projects = localStorage.getItem('projects');
-        if (projects) {
-            setProjects(JSON.parse(projects));
-        }
     };
 
     useEffect(() => {
@@ -74,10 +71,24 @@ export const AppContextProvider = ({ children }) => {
 
     const router = useRouter();
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const getProjects = useMemo(async () => {
+        const projects = await fetch('/api/projects/get-projects?email=' + user?.email).then(r => r.json()).then(r => r.projects);
+        setProjects(projects);
+    }, [user?.email]);
+
     useEffect(() => {
-        if (!user && (router.pathname !== '/signin' || router.pathname !== '/signup')) {
+        const email = localStorage.getItem('email');
+        if (email !== null && !user) {
+            fetch('/api/auth/get-user?email=' + email).then(r => r.json()).then(newUser => {
+                setUser(newUser.user);
+            });
+            return;
+        }
+        if (!user?.email && (router.pathname !== '/signin' || router.pathname !== '/signup')) {
             router.push('/signin')
-        } else if (user && (router.pathname === '/signin' || router.pathname === '/signup')) {
+        } else if (user?.email && (router.pathname === '/signin' || router.pathname === '/signup')) {
+            getProjects();
             router.push('/')
         }
     }, [user, router]);
@@ -97,7 +108,9 @@ export const AppContextProvider = ({ children }) => {
                     projects,
                     setProjects,
                     user,
-                    setUser
+                    setUser,
+                    selectedProject,
+                    setSelectedProject
                 }}
             >
                 {children}

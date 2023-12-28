@@ -51,6 +51,7 @@ export default function SignIn() {
                 toast.error("Signed In email and password!");
                 return;
             }
+            localStorage.setItem("email", addUser.user.email);
             setUser(addUser.user);
 
             toast.success("Signed In successfully");
@@ -93,7 +94,7 @@ export default function SignIn() {
                     "Content-Type": "application/json",
                 },
             }).then((r) => r.json());
-
+            localStorage.setItem("email", credentials.email);
             setUser(addUser.user);
             toast.success("Signed In successfully");
         } catch (error) {

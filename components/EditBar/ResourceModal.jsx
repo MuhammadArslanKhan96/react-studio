@@ -22,8 +22,6 @@ export default function ResourceModal({ isOpen, onOpenChange }) {
     const [popular, setPopular] = useState(false);
     const [styleActive, setStyleActive] = useState("Photography1");
 
-    console.log(active);
-
     const image = [
         {
             img: "https://pixabay.com/get/gc1973bd873ca00850cdc12f2793c8c8c856ff0abaa5fa424e5460089ba65294114b4fd308146cf1908c41c9d0577bdbddc9066e30e01938a5c42818078c02482_640.jpg",

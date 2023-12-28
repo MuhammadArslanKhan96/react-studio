@@ -29,12 +29,10 @@ export default function NavBAr() {
     setDialogBox,
   } = useThemeSettings();
 
-  // console.log(event_Emitter)
   const [loading, setLoading] = React.useState(false);
 
   async function showDemo() {
     setLoading(() => true);
-    console.log(event_Emitter);
     // return;
     event_Emitter.emit('clear');
     event_Emitter.emit('clearAnnotations');

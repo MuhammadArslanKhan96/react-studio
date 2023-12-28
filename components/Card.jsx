@@ -12,22 +12,22 @@ export default function Card({ project }) {
     const router = useRouter();
     const iconClasses = "text-xl text-default-500 pointer-events-none flex-shrink-0";
 
-    const duplicateProject = () => {
-        const newProjects = [
-            ...projects,
-            {
-                ...project,
-                id: projects.length,
+    const duplicateProject = async () => {
+        const { project: newProject } = await fetch(`/api/projects/add-project`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
             },
-        ];
+            body: JSON.stringify({ ...project, lastModified: new Date().toDateString() }),
+        }).then((res) => res.json());
+        const newProjects = [...projects, newProject];
         setProjects(newProjects);
-        localStorage.setItem("projects", JSON.stringify(newProjects));
     };
 
-    const deleteProject = () => {
+    const deleteProject = async () => {
+        await fetch(`/api/projects/delete-project?id=${project?.id}`);
         const newProjects = projects.filter((a) => a.id !== project.id);
         setProjects(newProjects);
-        localStorage.setItem("projects", JSON.stringify(newProjects));
     };
 
     return (

@@ -34,7 +34,6 @@ export default function Header() {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
     if (router.pathname === "/signin" || router.pathname === "/signup") return;
-    console.log(user);
     const logout = () => {
         signOut(auth);
         setUser(undefined);
@@ -153,14 +152,14 @@ export default function Header() {
                                     </div>
                                 </DropdownItem>
 
-                                <DropdownItem key="settings">
+                                <DropdownItem key="settings" onClick={() => router.push("/settings/info")}>
                                     <div className="flex items-center gap-2">
                                         <Image src={"/images/setting.svg"} alt="" width={20} height={20} />
                                         Settings
                                     </div>
                                 </DropdownItem>
 
-                                <DropdownItem key="pricing">
+                                <DropdownItem key="pricing" onClick={() => router.push("/pricing")}>
                                     <div className="flex items-center gap-2">
                                         <Image src={"/images/pricing.svg"} alt="" width={20} height={20} />
                                         Pricing
@@ -180,7 +179,7 @@ export default function Header() {
                                     </div>
                                 </DropdownItem>
 
-                                <DropdownItem key="help_&_support">
+                                {/* <DropdownItem key="help_&_support">
                                     <div className="flex items-center gap-2">
                                         <Image src={"/images/questionmark.svg"} alt="" width={20} height={20} />
                                         Help & Support
@@ -192,7 +191,7 @@ export default function Header() {
                                         <FaDiscord />
                                         Join Discord
                                     </div>
-                                </DropdownItem>
+                                </DropdownItem> */}
                                 <DropdownItem onClick={logout} key="logout" color="danger">
                                     <div className="flex items-center gap-2">
                                         <MdOutlineLogout />

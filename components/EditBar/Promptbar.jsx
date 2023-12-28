@@ -97,7 +97,6 @@ export default function Promptbar() {
                 </div>
                 <div className="flex flex-col gap-4">
                     {mockData.map((item) => {
-                        console.log(item);
                         return (
                             <TranscriptInput
                                 mockData={item}
