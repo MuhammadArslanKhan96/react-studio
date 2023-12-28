@@ -98,6 +98,11 @@ export const AppContextProvider = ({ children }) => {
         setProjects(projects);
     }, []);
 
+    const getMembers = useCallback(async (email) => {
+        const members = await fetch('/api/members/get-members?email=' + email).then(r => r.json()).then(r => r.members);
+        console.log(members)
+     }, []);
+
     useEffect(() => {
         const email = localStorage.getItem('email');
         if (email !== null && !user) {
@@ -105,6 +110,7 @@ export const AppContextProvider = ({ children }) => {
                 setUser(newUser.user);
             });
             getProjects(email);
+            getMembers(email);
             return;
         }
         if (!user?.email && (router.pathname !== '/signin' || router.pathname !== '/signup')) {
