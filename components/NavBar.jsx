@@ -29,7 +29,6 @@ export default function NavBAr() {
     setDialogBox,
   } = useThemeSettings();
 
-  // console.log(event_Emitter)
   const [loading, setLoading] = React.useState(false);
 
   async function showDemo() {

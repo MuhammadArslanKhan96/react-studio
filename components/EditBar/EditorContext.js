@@ -83,7 +83,8 @@ export const AppContextProvider = ({ children }) => {
         } else if (user && (router.pathname === '/signin' || router.pathname === '/signup')) {
             router.push('/')
         }
-    }, [user, router]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [user]);
 
     return (
         <>
