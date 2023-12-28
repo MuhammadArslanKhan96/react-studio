@@ -78,6 +78,9 @@ export const AppContextProvider = ({ children }) => {
     const [projects, setProjects] = useState([]);
     const [selectedProject, setSelectedProject] = useState({});
 
+    const [inviteMembers, setInviteMembers] = useState([]);
+
+
     const getData = async () => {
         const data = await getSpeakers();
         setSpeakers(data);
@@ -133,7 +136,9 @@ export const AppContextProvider = ({ children }) => {
                     user,
                     setUser,
                     selectedProject,
-                    setSelectedProject
+                    setSelectedProject,
+                    inviteMembers,
+                    setInviteMembers
                 }}
             >
                 {children}
