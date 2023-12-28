@@ -55,10 +55,16 @@ export const AppContextProvider = ({ children }) => {
     const [mockData, setMockData] = useState(initMockData);
     const [mockEffect, setMockEffect] = useState(initMockEffect);
     const [speakers, setSpeakers] = useState([]);
+    const [selectedSpeaker, setSelectedSpeaker] = useState(speakers[0] ?? false);
+
+    const [voiceModel, setVoiceModel] = useState(false);
+
     const getData = async () => {
         const data = await getSpeakers();
         setSpeakers(data);
+        // setSelectedSpeaker(speakers[0])
     };
+
     useEffect(() => {
         getData();
     }, []);
@@ -74,6 +80,9 @@ export const AppContextProvider = ({ children }) => {
                     initMockEffect,
                     speakers,
                     setSpeakers,
+                    selectedSpeaker,
+                    setSelectedSpeaker,
+                    voiceModel, setVoiceModel
                 }}
             >
                 {children}

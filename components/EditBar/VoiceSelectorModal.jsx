@@ -7,6 +7,7 @@ import { AiOutlineReload } from "react-icons/ai";
 import VoiceCard from "./VoiceCard";
 import { FaCaretDown, FaPlus } from "react-icons/fa";
 import CreateVoiceModal from "./CreateVoiceModal";
+import { useAppContext } from "./EditorContext";
 
 export default function VoiceSelectorModal({ isOpen, onOpenChange }) {
     const { onOpen } = useDisclosure();
@@ -16,6 +17,9 @@ export default function VoiceSelectorModal({ isOpen, onOpenChange }) {
     const [model, setModel] = useState(false);
     const [styleModel, setStyleModel] = useState(false);
     const [caseModel, setCaseModel] = useState(false);
+
+    const { speakers } = useAppContext();
+
     const voices = [
         {
             img: "/images/diamond.svg",
@@ -132,6 +136,12 @@ export default function VoiceSelectorModal({ isOpen, onOpenChange }) {
             title: "⏱ Urgent",
         },
     ];
+
+    const globalVoices = speakers.filter(speaker => speaker.speakerType === 'global');
+    const premiumVoices = speakers.filter(speaker => speaker.speakerType === 'premium');
+    const emotionalVoices = speakers.filter(speaker => speaker.speakerType === 'emotional');
+
+
     return (
         <div>
             <Modal
@@ -157,11 +167,10 @@ export default function VoiceSelectorModal({ isOpen, onOpenChange }) {
                                         <div
                                             key={idx}
                                             onClick={() => setActive(item.title)}
-                                            className={`${
-                                                active === item.title
-                                                    ? "bg-[#182C5C] border border-[#375C8D]"
-                                                    : "bg-transparent"
-                                            } px-4 py-3 flex flex-col justify-center items-center hover:bg-[#44444A] rounded-[10px] cursor-pointer`}
+                                            className={`${active === item.title
+                                                ? "bg-[#182C5C] border border-[#375C8D]"
+                                                : "bg-transparent"
+                                                } px-4 py-3 flex flex-col justify-center items-center hover:bg-[#44444A] rounded-[10px] cursor-pointer`}
                                         >
                                             <Image src={item.img} alt="" width={24} height={24} />
                                             <p className="text-[12px] flex text-center">{item.title}</p>
@@ -198,17 +207,15 @@ export default function VoiceSelectorModal({ isOpen, onOpenChange }) {
                                             </Radio.Group> */}
                                             <div className="flex border border-[#44444A] w-fit rounded-[5px]">
                                                 <p
-                                                    className={`${
-                                                        activeTab === "male" ? "bg-[#44444A]" : "bg-transparent"
-                                                    } px-3 py-[3px] text-[#EFEFEF] cursor-pointer border-r border-r-[#44444A]`}
+                                                    className={`${activeTab === "male" ? "bg-[#44444A]" : "bg-transparent"
+                                                        } px-3 py-[3px] text-[#EFEFEF] cursor-pointer border-r border-r-[#44444A]`}
                                                     onClick={() => setActiveTab("male")}
                                                 >
                                                     Male
                                                 </p>
                                                 <p
-                                                    className={`${
-                                                        activeTab === "female" ? "bg-[#44444A]" : "bg-transparent"
-                                                    } px-3 py-[3px] text-[#EFEFEF] cursor-pointer`}
+                                                    className={`${activeTab === "female" ? "bg-[#44444A]" : "bg-transparent"
+                                                        } px-3 py-[3px] text-[#EFEFEF] cursor-pointer`}
                                                     onClick={() => setActiveTab("female")}
                                                 >
                                                     Female
@@ -299,39 +306,27 @@ export default function VoiceSelectorModal({ isOpen, onOpenChange }) {
                                     </div>
                                     {active === "Pro Voice" ? (
                                         <div className="mt-2 flex gap-2 flex-wrap overflow-y-scroll scrollStyle max-h-[400px]">
-                                            <VoiceCard />
-                                            <VoiceCard />
-                                            <VoiceCard />
-                                            <VoiceCard />
-                                            <VoiceCard />
-                                            <VoiceCard />
-                                            <VoiceCard />
-                                            <VoiceCard />
-                                            <VoiceCard />
-                                            <VoiceCard />
-                                            <VoiceCard />
-                                            <VoiceCard />
-                                            <VoiceCard />
-                                            <VoiceCard />
-                                            <VoiceCard />
-                                            <VoiceCard />
-                                            <VoiceCard />
-                                            <VoiceCard />
+                                            {premiumVoices.map(premiumVoice => (
+                                                <div key={premiumVoice.id}>
+                                                    <VoiceCard data={premiumVoice} />
+                                                </div>
+                                            ))}
                                         </div>
                                     ) : active === "Rapid Voice" ? (
                                         <div className="mt-2 flex gap-2 flex-wrap overflow-y-scroll scrollStyle max-h-[400px]">
-                                            <VoiceCard />
-                                            <VoiceCard />
-                                            <VoiceCard />
-                                            <VoiceCard />
-                                            <VoiceCard />
-                                            <VoiceCard />
+                                            {globalVoices.map(globalVoice => (
+                                                <div key={globalVoice.id}>
+                                                    <VoiceCard data={globalVoice} />
+                                                </div>
+                                            ))}
                                         </div>
                                     ) : active === "Global Voice" ? (
                                         <div className="mt-2 flex gap-2 flex-wrap overflow-y-scroll scrollStyle max-h-[400px]">
-                                            <VoiceCard />
-                                            <VoiceCard />
-                                            <VoiceCard />
+                                            {globalVoices.map(globalVoice => (
+                                                <div key={globalVoice.id}>
+                                                    <VoiceCard data={globalVoice} />
+                                                </div>
+                                            ))}
                                         </div>
                                     ) : active === "Voice Cloning" ? (
                                         <div className="mt-2 flex gap-2 flex-wrap overflow-y-scroll scrollStyle max-h-[400px]">
