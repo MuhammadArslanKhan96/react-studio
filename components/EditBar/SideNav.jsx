@@ -16,12 +16,12 @@ export default function SideNav() {
         {
             img: "/images/speakerSelection.svg",
             title: "Speaker Selection",
-            click: <VoiceSelectorModal isOpen={voiceModel} onOpenChange={setVoiceModel} />,
+            click: <></>,
         },
         {
             img: "/images/voiceCloning.svg",
             title: "Voice Cloning",
-            click: <VoiceSelectorModal isOpen={voiceModel} onOpenChange={setVoiceModel} />,
+            click: <></>,
         },
         {
             img: "/images/resources.svg",
@@ -71,6 +71,7 @@ export default function SideNav() {
                         <Image src={item.img} alt="" width={24} height={24} />
                         <p className="text-white text-[10px] flex text-center">{item.title}</p>
                         {modal === idx && item.click}
+                        <VoiceSelectorModal isOpen={voiceModel} onOpenChange={setVoiceModel} />
                     </div>
                 ))}
             </div>
