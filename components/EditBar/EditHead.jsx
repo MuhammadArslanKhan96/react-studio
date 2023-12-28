@@ -16,18 +16,22 @@ export default function EditHead() {
             .filter((a) => a.checked)
             .forEach(async (speaker) => {
                 const speech = await generateSpeech(JSON.stringify({ text: speaker?.actions?.[0]?.data?.name, speaker: speaker?.actions?.[0]?.speaker?.id }));
-                setMockData((pre) => [
-                    ...pre.filter((a) => a.id !== speaker.id),
-                    {
-                        ...speaker,
-                        actions: [
-                            {
-                                ...speaker.actions[0],
-                                data: { ...speaker.actions[0].data, src: speech?.urls?.[0] },
-                            },
-                        ],
-                    },
-                ]);
+                setMockData((pre) =>
+                    [
+                        ...pre.filter((a) => a.id !== speaker.id),
+                        {
+                            ...speaker,
+                            actions: [
+                                {
+                                    ...speaker.actions[0],
+                                    data: { ...speaker.actions[0].data, src: speech?.urls?.[0] },
+                                },
+                            ],
+                        },
+                    ].sort(function (a, b) {
+                        return Number(b.id) - Number(a.id);
+                    })
+                );
             });
     };
 
@@ -39,7 +43,13 @@ export default function EditHead() {
                         <Checkbox
                             isSelected={mockData.filter((a) => a.checked).length === mockData.length}
                             onChange={(e) =>
-                                setMockData((pre) => pre.map((a) => ({ ...a, checked: e.target.checked })))
+                                setMockData((pre) =>
+                                    pre
+                                        .map((a) => ({ ...a, checked: e.target.checked }))
+                                        .sort(function (a, b) {
+                                            return Number(b.id) - Number(a.id);
+                                        })
+                                )
                             }
                         >
                             {mockData.filter((a) => a.checked).length === mockData.length ? "Deselect" : "Select"} All (
@@ -63,8 +73,7 @@ export default function EditHead() {
                             />
                         </Tooltip>
                         <Tooltip showArrow={true} content="Download" className="bg-black rounded-[10px]">
-                            <Button
-                            >
+                            <Button>
                                 <GrDownload size={18} className="cursor-pointer" />
                             </Button>
                         </Tooltip>

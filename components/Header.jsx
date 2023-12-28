@@ -37,8 +37,10 @@ export default function Header() {
     if (router.pathname === "/signin" || router.pathname === "/signup") return;
 
     const logout = () => {
-        signOut(auth);
-        setUser(undefined);
+        signOut(auth).then(() => {
+            localStorage.removeItem("email");
+            setUser(undefined);
+        });
     };
 
     return (

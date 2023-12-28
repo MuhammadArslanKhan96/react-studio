@@ -38,7 +38,11 @@ export default function Card({ project }) {
             className="w-fit max-w-[330px] cursor-pointer min-w-[310px] min-h-[260px] max-h-[270px] border border-[#44444A] rounded-[5px] bg-[#2D2D30]"
             onClick={() => {
                 setSelectedProject(project);
-                setMockData(project.mockData);
+                setMockData(
+                    project.mockData.sort(function (a, b) {
+                        return Number(b.id) - Number(a.id);
+                    })
+                );
                 setMockEffect(project.mockEffect);
                 router.push("/project/" + project.id);
             }}

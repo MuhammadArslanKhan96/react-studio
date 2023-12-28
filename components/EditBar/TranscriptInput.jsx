@@ -24,7 +24,14 @@ function TranscriptInput({ mockData, mockEffect }) {
     const [isLoading, setIsLoading] = useState(false);
     const [play, setPlay] = useState(false);
     const handleCheckboxChange = (e) => {
-        setMockData((pre) => [...pre.filter((a) => a.id !== mockData.id), { ...mockData, checked: e.target.checked }]);
+        setMockData((pre) =>
+            [...pre.filter((a) => a.id !== mockData.id), { ...mockData, checked: e.target.checked }].sort(function (
+                a,
+                b
+            ) {
+                return Number(b.id) - Number(a.id);
+            })
+        );
     };
 
     const downloadFile = async () => {
@@ -37,13 +44,17 @@ function TranscriptInput({ mockData, mockEffect }) {
 
     const handleTextChange = (e) => {
         setDisabled(true);
-        setMockData((pre) => [
-            ...pre.filter((a) => a.id !== mockData.id),
-            {
-                ...mockData,
-                actions: [{ ...mockData.actions[0], data: { ...mockData.actions[0].data, name: e.target.value } }],
-            },
-        ]);
+        setMockData((pre) =>
+            [
+                ...pre.filter((a) => a.id !== mockData.id),
+                {
+                    ...mockData,
+                    actions: [{ ...mockData.actions[0], data: { ...mockData.actions[0].data, name: e.target.value } }],
+                },
+            ].sort(function (a, b) {
+                return Number(b.id) - Number(a.id);
+            })
+        );
         setMockEffect((pre) => ({
             ...pre,
             ["effect" + mockData.id]: { ...pre["effect" + mockData.id], name: e.target.value },
@@ -51,32 +62,40 @@ function TranscriptInput({ mockData, mockEffect }) {
     };
 
     useEffect(() => {
-        setMockData((pre) => [
-            ...pre.filter((a) => a.id !== mockData.id),
-            {
-                ...mockData,
-                actions: [{ ...mockData.actions[0] }],
-                speaker: speakers[0],
-            },
-        ]);
+        setMockData((pre) =>
+            [
+                ...pre.filter((a) => a.id !== mockData.id),
+                {
+                    ...mockData,
+                    actions: [{ ...mockData.actions[0] }],
+                    speaker: speakers[0],
+                },
+            ].sort(function (a, b) {
+                return Number(b.id) - Number(a.id);
+            })
+        );
     }, [speakers]);
 
     const generateAudio = async () => {
         if (!mockEffect?.name.length) return;
         setIsLoading(true);
         const speech = await generateSpeech(JSON.stringify({ text: mockEffect?.name, speaker: mockData?.speaker?.id }));
-        setMockData((pre) => [
-            ...pre.filter((a) => a.id !== mockData.id),
-            {
-                ...mockData,
-                actions: [
-                    {
-                        ...mockData.actions[0],
-                        data: { ...mockData.actions[0].data, src: speech?.urls?.[0] },
-                    },
-                ],
-            },
-        ]);
+        setMockData((pre) =>
+            [
+                ...pre.filter((a) => a.id !== mockData.id),
+                {
+                    ...mockData,
+                    actions: [
+                        {
+                            ...mockData.actions[0],
+                            data: { ...mockData.actions[0].data, src: speech?.urls?.[0] },
+                        },
+                    ],
+                },
+            ].sort(function (a, b) {
+                return Number(b.id) - Number(a.id);
+            })
+        );
         setIsLoading(false);
         setDisabled(false);
     };
@@ -121,7 +140,15 @@ function TranscriptInput({ mockData, mockEffect }) {
                             </DropdownItem>
                             <DropdownItem
                                 key="delete"
-                                onClick={() => setMockData((pre) => pre.filter((a) => a.id !== mockData.id))}
+                                onClick={() =>
+                                    setMockData((pre) =>
+                                        pre
+                                            .filter((a) => a.id !== mockData.id)
+                                            .sort(function (a, b) {
+                                                return Number(b.id) - Number(a.id);
+                                            })
+                                    )
+                                }
                                 className="text-[14px] text-[#F56565]"
                                 startContent={<RiDeleteBin5Line />}
                             >
@@ -139,12 +166,12 @@ function TranscriptInput({ mockData, mockEffect }) {
                     showArrow={true}
                     content="Generate"
                     onClick={() => setDisabled(true)}
-                    disabled={!disabled || !isLoading || mockData?.actions?.[0]?.data?.src}
+                    disabled={!disabled}
                     className="bg-black rounded-[10px]"
                 >
                     <Button
                         onClick={generateAudio}
-                        disabled={!disabled || !isLoading || mockData?.actions?.[0]?.data?.src}
+                        disabled={!disabled}
                         className=" disabled:cursor-not-allowed disabled:opacity-50 enabled:cursor-pointer"
                     >
                         {!isLoading ? (
@@ -156,7 +183,7 @@ function TranscriptInput({ mockData, mockEffect }) {
                 </Tooltip>
                 <Tooltip showArrow={true} content="Play" className="bg-black rounded-[10px]">
                     <Button
-                        disabled={disabled || isLoading || !mockData?.actions?.[0]?.data?.src}
+                        disabled={disabled}
                         onClick={() => {
                             var audio = document.getElementById("audio");
                             if (play) {
@@ -175,7 +202,7 @@ function TranscriptInput({ mockData, mockEffect }) {
                 </Tooltip>
                 <Tooltip showArrow={true} content="Export" className="bg-black rounded-[10px]">
                     <Button
-                        disabled={disabled || isLoading || !mockData?.actions?.[0]?.data?.src}
+                        disabled={disabled}
                         onClick={downloadFile}
                         className=" disabled:cursor-not-allowed disabled:opacity-50 enabled:cursor-pointer"
                     >

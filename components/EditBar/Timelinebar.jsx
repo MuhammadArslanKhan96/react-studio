@@ -12,7 +12,13 @@ export default function Timelinebar() {
                         <div className="truncate max-w-[300px] cursor-grab active:cursor-grabbing">{id}</div>
                     )}
                     editorData={mockData}
-                    onChange={(a) => setMockData(a)}
+                    onChange={(a) =>
+                        setMockData(
+                            a.sort(function (a, b) {
+                                return Number(b.id) - Number(a.id);
+                            })
+                        )
+                    }
                     effects={mockEffect}
                     style={{ width: "100%", maxHeight: "200px" }}
                 />

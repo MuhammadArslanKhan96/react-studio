@@ -10,25 +10,29 @@ export default function Promptbar() {
     const { mockData, mockEffect, setMockData, setMockEffect } = useAppContext();
     const addAnotherMock = () => {
         const editor = mockData.length;
-        setMockData((pre) => [
-            ...pre,
-            {
-                id: `${editor}`,
-                actions: [
-                    {
-                        id: `action${editor}`,
-                        start: 0,
-                        end: 2,
-                        effectId: "effect" + editor,
-                        data: {
-                            src: "/audio/bg.mp3",
-                            name: "",
+        setMockData((pre) =>
+            [
+                ...pre,
+                {
+                    id: `${editor}`,
+                    actions: [
+                        {
+                            id: `action${editor}`,
+                            start: 0,
+                            end: 2,
+                            effectId: "effect" + editor,
+                            data: {
+                                src: "/audio/bg.mp3",
+                                name: "",
+                            },
                         },
-                    },
-                ],
-                checked: false,
-            },
-        ]);
+                    ],
+                    checked: false,
+                },
+            ].sort(function (a, b) {
+                return Number(b.id) - Number(a.id);
+            })
+        );
         setMockEffect((pre) => ({
             ...pre,
             [`effect${editor}`]: {
