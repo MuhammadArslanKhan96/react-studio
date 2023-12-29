@@ -1,12 +1,22 @@
-import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Avatar } from "@nextui-org/react";
+import { Avatar, Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, useDisclosure } from "@nextui-org/react";
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useState } from "react";
 import { FaChevronDown } from "react-icons/fa";
 import { useAppContext } from "./EditBar/EditorContext";
-
-export default function Sidebar({ children, open, setOpen }) {
+// @ts-ignore importMeta is replaced in the loader
+import Image from "next/image";
+import Link from "next/link";
+import { IoIosArrowDown, IoIosArrowUp, IoMdAdd } from "react-icons/io";
+import { PiFolder } from "react-icons/pi";
+import CurrentPlan from "../components/CurrentPlan";
+import Discount from "../components/Discount";
+import InviteMembers from "../components/InviteMembers";
+export default function Sidebar() {
     const router = useRouter();
-    const { user } = useAppContext();
+    const { user, workspaces, setSelectedWorkspace } = useAppContext();
+    const [open, setOpen] = useState(false);
+    const { isOpen, onOpen, onOpenChange } = useDisclosure();
+    const [modal, setModal] = useState(true);
 
     if (router.pathname === "/signin" || router.pathname === "/signup" || router.pathname.includes("/project")) return;
 
@@ -33,13 +43,10 @@ export default function Sidebar({ children, open, setOpen }) {
                                     <div className="flex items-center gap-x-2">
                                         <div>
                                             <Avatar src={user?.photoURL} />
-                                            {/* <p className="bg-[#755EE5] rounded-[50px] px-[18px] py-[10px] text-[12px] text-black font-bold ">
-                                                V
-                                            </p> */}
                                         </div>
                                         <div className="flex flex-col items-start">
                                             <p className="text-[12px] leading-3">{user?.plan || "Free"} Plan</p>
-                                            <p>{user?.displayName || "Vivald"} Team</p>
+                                            <p>{user?.displayName || "Vivald"}</p>
                                         </div>
                                     </div>
                                     <FaChevronDown />
@@ -50,20 +57,98 @@ export default function Sidebar({ children, open, setOpen }) {
                                     <div className="flex items-center bg-[#182C5C] rounded-[10px] gap-x-2 px-3 py-4 w-full">
                                         <div>
                                             <Avatar src={user?.photoURL} />
-                                            {/* <p className="bg-[#755EE5] rounded-[50px] px-[18px] py-[10px] text-[12px] text-black font-bold ">
-                                                V
-                                            </p> */}
                                         </div>
                                         <div>
                                             <p className="text-[12px]">{user?.plan || "Free"} Plan</p>
-                                            <p>{user?.displayName || "Vivald"} Team</p>
+                                            <p>{user?.displayName || "Vivald"}</p>
                                         </div>
                                     </div>
                                 </DropdownItem>
                             </DropdownMenu>
                         </Dropdown>
                     </header>
-                    {children}
+
+                    <CurrentPlan />
+                    <Link
+                        href={"/production"}
+                        className="flex items-center gap-x-2 text-[14px] border-b-2 border-b-[#4D4D51] px-3 py-2 hover:bg-[#39393C] mb-3"
+                    >
+                        <Image src={"/images/production.svg"} alt="" width={20} height={20} />
+                        Production
+                    </Link>
+                    <Button className="flex items-center gap-x-2 text-[14px] border-b-2 border-b-[#4D4D51] px-3 py-2 hover:bg-[#39393C] mb-3">
+                        <div className="flex items-center justify-between w-[100%]">
+                            <div className="flex justify-center items-center gap-3 py-2">
+                                {modal ? (
+                                    <IoIosArrowDown
+                                        size={16}
+                                        // className="(IsRotated, 'rotate180', '')"
+                                        onClick={() => setModal(!modal)}
+                                    />
+                                ) : (
+                                    <IoIosArrowUp
+                                        size={16}
+                                        // className="(IsRotated, 'rotate180', '')"
+                                        onClick={() => setModal(!modal)}
+                                    />
+                                )}
+                                Workspace
+                            </div>
+
+                            <div>
+                                <IoMdAdd size={16} />
+                            </div>
+                        </div>
+                    </Button>
+
+                    {modal &&
+                        workspaces.map(workspace => (
+                            <div
+                                key={workspace.id}
+                                className="flex items-center gap-x-2 text-[14px] border-b-2 border-b-[#4D4D51] px-3 py-2 hover:bg-[#39393C] mb-3"
+                                onClick={() => {
+                                    setSelectedWorkspace(workspace);
+                                    setModal(!modal);
+                                }}
+                            >
+                                <div className="flex justify-center items-center gap-3 pl-[10px]">
+                                    <PiFolder size={20} />
+                                    {workspace?.name}
+                                </div>
+                            </div>
+                        ))}
+
+                    <Link
+                        href={"/pricing"}
+                        className="flex items-center gap-x-2 text-[14px] py-2 px-3 hover:bg-[#39393C] "
+                    >
+                        <Image src={"/images/pricing.svg"} alt="" width={20} height={20} />
+                        Pricing
+                    </Link>
+                    <Link
+                        href={"/setting/subscription"}
+                        className="flex items-center gap-x-2 text-[14px] py-2 px-3 hover:bg-[#39393C] space-y-0"
+                    >
+                        <Image src={"/images/subscription.svg"} alt="" width={20} height={20} />
+                        Subscription
+                    </Link>
+                    <Link
+                        href={"/setting/info"}
+                        className="flex items-center gap-x-2 text-[14px] py-2 px-3 hover:bg-[#39393C] "
+                    >
+                        <Image src={"/images/setting.svg"} alt="" width={20} height={20} />
+                        Setting
+                    </Link>
+                    <Button
+                        onPress={onOpen}
+                        className="flex items-center self-start gap-x-2 text-[14px] py-2 px-3 hover:bg-[#39393C] "
+                    >
+                        <Image src={"/images/invite.svg"} alt="" width={20} height={20} />
+                        Invite Members
+                    </Button>
+                    <InviteMembers isOpen={isOpen} onOpenChange={onOpenChange} />
+
+                    <Discount />
                 </article>
             </section>
             {open ? (

@@ -47,8 +47,12 @@ export default function SignIn() {
                     "Content-Type": "application/json"
                 }
             }).then((r) => r.json());
-            if (addUser.user.signInMethod === "email") {
-                toast.error("Signed In email and password!");
+            if (!addUser.success) {
+                toast.error(addUser.message);
+                return;
+            }
+            if (addUser?.user?.signInMethod === "email") {
+                toast.error("Sign In with email and password!");
                 return;
             }
             localStorage.setItem("email", addUser.user.email);

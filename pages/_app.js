@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
 import { FaArrowAltCircleLeft } from "react-icons/fa";
-import { IoIosArrowUp, IoMdAdd } from "react-icons/io";
+import { IoIosArrowDown, IoIosArrowUp, IoMdAdd } from "react-icons/io";
 import { PiFolder } from "react-icons/pi";
 import { Context } from "../components/Context";
 import CurrentPlan from "../components/CurrentPlan";
@@ -17,15 +17,13 @@ import { SettingsContext } from "../context/settingsContext";
 import "../styles/globals.css";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useRouter } from "next/router";
 
 export default function App({ Component,
     pageProps,
 }) {
+    const [sideModal, setSideModal] = useState(false);
     const [open, setOpen] = useState(false);
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
-    const [modal, setModal] = useState(false);
-    const [sideModal, setSideModal] = useState(false);
     return (
         <SettingsContext>
             <ToastContainer />
@@ -47,147 +45,11 @@ export default function App({ Component,
                                             <FaArrowAltCircleLeft />
                                         </div>
                                         <Sidebar open={open} setOpen={setOpen}>
-                                            <CurrentPlan />
-                                            <Link
-                                                href={"/production"}
-                                                className="flex items-center gap-x-2 text-[14px] border-b-2 border-b-[#4D4D51] px-3 py-2 hover:bg-[#39393C] mb-3"
-                                            >
-                                                <Image src={"/images/production.svg"} alt="" width={20} height={20} />
-                                                Production
-                                            </Link>
-                                            <Button className="flex items-center gap-x-2 text-[14px] border-b-2 border-b-[#4D4D51] px-3 py-2 hover:bg-[#39393C] mb-3">
-                                                <div className="flex items-center justify-between w-[100%]">
-                                                    <div className="flex justify-center items-center gap-3 py-2">
-                                                        <IoIosArrowUp
-                                                            size={16}
-                                                            // className="(IsRotated, 'rotate180', '')"
-                                                            onClick={() => setModal(!modal)}
-                                                        />
-                                                        Workspace
-                                                    </div>
-
-                                                    <div>
-                                                        <IoMdAdd size={16} />
-                                                    </div>
-                                                </div>
-                                            </Button>
-
-                                            {modal && (
-                                                <Link
-                                                    href={"/Workspace"}
-                                                    className="flex items-center gap-x-2 text-[14px] border-b-2 border-b-[#4D4D51] px-3 py-2 hover:bg-[#39393C] mb-3"
-                                                >
-                                                    <div className="flex justify-center items-center gap-3 pl-[10px]">
-                                                        <PiFolder size={20} />
-                                                        My Workspace
-                                                    </div>
-                                                </Link>
-                                            )}
-
-                                            <Link
-                                                href={"/pricing"}
-                                                className="flex items-center gap-x-2 text-[14px] py-2 px-3 hover:bg-[#39393C] "
-                                            >
-                                                <Image src={"/images/pricing.svg"} alt="" width={20} height={20} />
-                                                Pricing
-                                            </Link>
-                                            <Link
-                                                href={"/setting/subscription"}
-                                                className="flex items-center gap-x-2 text-[14px] py-2 px-3 hover:bg-[#39393C] space-y-0"
-                                            >
-                                                <Image src={"/images/subscription.svg"} alt="" width={20} height={20} />
-                                                Subscription
-                                            </Link>
-                                            <Link
-                                                href={"/setting/info"}
-                                                className="flex items-center gap-x-2 text-[14px] py-2 px-3 hover:bg-[#39393C] "
-                                            >
-                                                <Image src={"/images/setting.svg"} alt="" width={20} height={20} />
-                                                Setting
-                                            </Link>
-                                            <Button
-                                                onPress={onOpen}
-                                                className="flex items-center self-start gap-x-2 text-[14px] py-2 px-3 hover:bg-[#39393C] "
-                                            >
-                                                <Image src={"/images/invite.svg"} alt="" width={20} height={20} />
-                                                Invite Members
-                                            </Button>
-                                            <InviteMembers isOpen={isOpen} onOpenChange={onOpenChange} />
-
-                                            <Discount />
                                         </Sidebar>
                                     </>
                                 )}
                                 <div className="max-xl:hidden">
                                     <Sidebar open={open} setOpen={setOpen}>
-                                        <CurrentPlan />
-                                        <Link
-                                            href={"/production"}
-                                            className="flex items-center gap-x-2 text-[14px] border-b-2 border-b-[#4D4D51] px-3 py-2 hover:bg-[#39393C] mb-3"
-                                        >
-                                            <Image src={"/images/production.svg"} alt="" width={20} height={20} />
-                                            Production
-                                        </Link>
-                                        <Button className="flex items-center gap-x-2 text-[14px] border-b-2 border-b-[#4D4D51] px-3 py-2 hover:bg-[#39393C] mb-3">
-                                            <div className="flex items-center justify-between w-[100%]">
-                                                <div className="flex justify-center items-center gap-3">
-                                                    <IoIosArrowUp
-                                                        size={16}
-                                                        // className="(IsRotated, 'rotate180', '')"
-                                                        onClick={() => setModal(!modal)}
-                                                    />
-                                                    Workspace
-                                                </div>
-
-                                                <div>
-                                                    <IoMdAdd size={16} />
-                                                </div>
-                                            </div>
-                                        </Button>
-
-                                        {modal && (
-                                            <Link
-                                                href={"/Workspace"}
-                                                className="flex items-center gap-x-2 text-[14px] border-b-2 border-b-[#4D4D51] px-3 py-2 hover:bg-[#39393C] mb-3"
-                                            >
-                                                <div className="flex justify-center items-center gap-3 pl-[10px]">
-                                                    <PiFolder size={20} />
-                                                    My Workspace
-                                                </div>
-                                            </Link>
-                                        )}
-
-                                        <Link
-                                            href={"/pricing"}
-                                            className="flex items-center gap-x-2 text-[14px] py-2 px-3 hover:bg-[#39393C] "
-                                        >
-                                            <Image src={"/images/pricing.svg"} alt="" width={20} height={20} />
-                                            Pricing
-                                        </Link>
-                                        <Link
-                                            href={"/setting/subscription"}
-                                            className="flex items-center gap-x-2 text-[14px] py-2 px-3 hover:bg-[#39393C] space-y-0"
-                                        >
-                                            <Image src={"/images/subscription.svg"} alt="" width={20} height={20} />
-                                            Subscription
-                                        </Link>
-                                        <Link
-                                            href={"/setting/info"}
-                                            className="flex items-center gap-x-2 text-[14px] py-2 px-3 hover:bg-[#39393C] "
-                                        >
-                                            <Image src={"/images/setting.svg"} alt="" width={20} height={20} />
-                                            Setting
-                                        </Link>
-                                        <Button
-                                            onPress={onOpen}
-                                            className="flex items-center self-start gap-x-2 text-[14px] py-2 px-3 hover:bg-[#39393C] "
-                                        >
-                                            <Image src={"/images/invite.svg"} alt="" width={20} height={20} />
-                                            Invite Members
-                                        </Button>
-                                        <InviteMembers isOpen={isOpen} onOpenChange={onOpenChange} />
-
-                                        <Discount />
                                     </Sidebar>
                                 </div>
                             </div>

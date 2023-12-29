@@ -86,12 +86,14 @@ export default function Header() {
                 >
                     <GiHamburgerMenu size={20} />
                 </div>
-                <Button onClick={() => {
-                    if (router.pathname.includes('/project')) {
-                        saveProject();
-                    }
-                    router.push("/");
-                }}>
+                <Button
+                    onClick={() => {
+                        if (router.pathname.includes("/project")) {
+                            saveProject();
+                        }
+                        router.push("/");
+                    }}
+                >
                     <Image src={"/logo.svg"} alt="" width={111} height={90} />
                 </Button>
                 {router.pathname.includes("/project") && (
@@ -133,10 +135,7 @@ export default function Header() {
                         <Button className="bg-[linear-gradient(90deg,rgb(46,148,255)0%,rgb(64,140,255)32.81%,rgb(61,181,255)71.35%,rgb(46,209,234)100%)] bg-clip-text text-transparent font-semibold text-[14px]">
                             UPGRADE
                         </Button>
-                        <Button
-                            onClick={saveProject}
-                            className="border rounded-[10px] px-2 py-1 text-[14px]"
-                        >
+                        <Button onClick={saveProject} className="border rounded-[10px] px-2 py-1 text-[14px]">
                             Save
                         </Button>
                         <Button className="border rounded-[10px] px-2 py-1 flex gap-x-2 items-center bg-[#EBECF0] text-black text-[14px]">
@@ -173,11 +172,15 @@ export default function Header() {
                                     <div className="flex items-center">
                                         <div>
                                             {/* <Image src={"/images/setting.svg"} alt="" width={20} height={20} /> */}
-                                            <Avatar />
+                                            <Avatar
+                                                src={
+                                                    user?.photoURL || "https://i.pravatar.cc/150?u=a042581f4e29026704d"
+                                                }
+                                            />
                                         </div>
 
                                         <div>
-                                            <p className="font-semibold">Signed in as</p>
+                                            <p className="font-semibold">Signed in as {user?.displayName}</p>
                                             <p className="font-semibold text-[12px] text-[#b6b8bf]">
                                                 {user?.email || "zoey@example.com"}
                                             </p>
