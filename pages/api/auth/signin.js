@@ -13,7 +13,7 @@ export default async function handler(req, res) {
             return;
         }
         const user = docSnap.data();
-        if (user.password !== req.body.password) {
+        if (req.body.password !== undefined && user.password !== req.body.password) {
             res.status(400).json({ message: "Invalid email or password", success: false });
             return;
         }

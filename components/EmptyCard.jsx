@@ -2,17 +2,19 @@ import React, { useState } from "react";
 import { FaPlus } from "react-icons/fa";
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure } from "@nextui-org/react";
 import { useAppContext } from "./EditBar/EditorContext";
+import { useRouter } from "next/router";
 
 export default function EmptyCard() {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
-    const { projects, setProjects, initMockEffect, initMockData, user } = useAppContext();
+    const { projects, setProjects, initMockEffect, initMockData, user, selectedWorkspace } = useAppContext();
     const [active, setActive] = useState("simple");
+    const router = useRouter();
 
     const createProject = async (onClose) => {
         const { project: newProject } = await fetch(`/api/projects/add-project`, {
             method: "POST",
             headers: {
-                "Content-Type": "application/json",
+                "Content-Type": "application/json"
             },
             body: JSON.stringify({
                 mockData: initMockData,
@@ -21,10 +23,14 @@ export default function EmptyCard() {
                 lastModified: new Date().toDateString(),
                 description: "",
                 userId: user?.email,
-            }),
+                workspaceId: selectedWorkspace.id,
+                isBasic: active === 'simple'
+            })
         }).then((res) => res.json());
         const newProjects = [...projects, newProject];
         setProjects(newProjects);
+
+        router.push(`/project/${newProject.id}`);
         onClose();
     };
 

@@ -178,11 +178,15 @@ export default function Header() {
                                     <div className="flex items-center">
                                         <div>
                                             {/* <Image src={"/images/setting.svg"} alt="" width={20} height={20} /> */}
-                                            <Avatar />
+                                            <Avatar
+                                                src={
+                                                    user?.photoURL || "https://i.pravatar.cc/150?u=a042581f4e29026704d"
+                                                }
+                                            />
                                         </div>
 
                                         <div>
-                                            <p className="font-semibold">Signed in as</p>
+                                            <p className="font-semibold">Signed in as {user?.displayName}</p>
                                             <p className="font-semibold text-[12px] text-[#b6b8bf]">
                                                 {user?.email || "zoey@example.com"}
                                             </p>

@@ -1,5 +1,5 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import { collection, query, where, getDocs } from "firebase/firestore";
+import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../../constants/firebaseConfigs";
 
 
@@ -8,9 +8,7 @@ export default async function handler(req, res) {
     try {
 
         let projects = [];
-        const q = query(collection(db, "projects"), where("userId", "==", req.query.email));
-
-        const querySnapshot = await getDocs(q);
+        const querySnapshot = await getDocs(collection(db, "projects"));
         querySnapshot.forEach((doc) => {
             projects.push({ ...doc.data(), id: doc.id });
         });

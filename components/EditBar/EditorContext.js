@@ -77,8 +77,10 @@ export const AppContextProvider = ({ children }) => {
     const [voiceModel, setVoiceModel] = useState(false);
     const [projects, setProjects] = useState([]);
     const [selectedProject, setSelectedProject] = useState({});
-
+    const [workspaces, setWorkspaces] = useState([]);
+    const [selectedWorkspace, setSelectedWorkspace] = useState({});
     const [inviteMembers, setInviteMembers] = useState([]);
+    const [workspaceProjects, setWorkspaceProjects] = useState([]);
 
 
     const getData = async () => {
@@ -94,13 +96,14 @@ export const AppContextProvider = ({ children }) => {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const getProjects = useCallback(async (email) => {
-        const projects = await fetch('/api/projects/get-projects?email=' + email).then(r => r.json()).then(r => r.projects);
+        const projects = await fetch('/api/projects/get-projects').then(r => r.json()).then(r => r.projects);
         setProjects(projects);
     }, []);
 
     const getMembers = useCallback(async (email) => {
-        const members = await fetch('/api/members/get-members?email=' + email).then(r => r.json()).then(r => r.members);
-        setInviteMembers(members);
+        const workspaces = await fetch('/api/workspaces/get-workspaces?email=' + email).then(r => r.json()).then(r => r.workspaces);
+        setWorkspaces(workspaces);
+        setSelectedWorkspace(workspaces?.[0] || {});
     }, []);
 
     useEffect(() => {
@@ -116,10 +119,17 @@ export const AppContextProvider = ({ children }) => {
         if (!user?.email && (router.pathname !== '/signin' || router.pathname !== '/signup')) {
             router.push('/signin')
         } else if (user?.email && (router.pathname === '/signin' || router.pathname === '/signup')) {
-            router.push('/')
+            router.push(`/`)
+            getProjects(user?.email);
+            getMembers(user?.email);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [user]);
+
+    useEffect(() => {
+        setInviteMembers(selectedWorkspace?.members || []);
+        setWorkspaceProjects(projects.filter(project => project.workspaceId === selectedWorkspace?.id));
+    }, [selectedWorkspace, projects])
 
     return (
         <>
@@ -145,7 +155,12 @@ export const AppContextProvider = ({ children }) => {
                     setSelectedProject,
                     inviteMembers,
                     setInviteMembers,
-                    getProjects
+                    getProjects,
+                    selectedWorkspace,
+                    setSelectedWorkspace,
+                    workspaces,
+                    setWorkspaces,
+                    workspaceProjects
                 }}
             >
                 {children}
