@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unescaped-entities */
-import { Button, Tooltip } from "@nextui-org/react";
+import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Tooltip } from "@nextui-org/react";
 import Image from "next/image";
 import React from "react";
 import { TbClockHour12 } from "react-icons/tb";
@@ -7,6 +7,9 @@ import { IoIosArrowDown } from "react-icons/io";
 import { MdOutlineUploadFile, MdOutlineFileDownload } from "react-icons/md";
 import { CiText, CiShare2 } from "react-icons/ci";
 import { Slider } from "antd";
+import { TbRewindBackward15, TbRewindForward15 } from "react-icons/tb";
+import { FaPlayCircle } from "react-icons/fa";
+import { IoPlayForwardSharp } from "react-icons/io5";
 
 export default function SimpleMode() {
     return (
@@ -55,7 +58,7 @@ export default function SimpleMode() {
                     </div>
                     {/* paragraph */}
                     <div className="py-4 border-b border-b-[#44444A]">
-                        <textarea className="text-[#EFEFEF] text-base bg-transparent w-full">
+                        <textarea className="text-[#EFEFEF] text-base bg-transparent w-full resize-none scrollStyle">
                             Hi there, welcome to Genny. The Simple mode is perfect for creating single speaker short
                             voiceovers. Simply pick your preferred speaker, type or copy and paste your script. Then,
                             click the 'Generate' button to generate your voiceover in seconds. You will see the
@@ -73,7 +76,7 @@ export default function SimpleMode() {
                         Generate
                     </Button>
                 </div>
-                <div className="w-2/5 p-4">
+                <div className="w-2/5 p-4 flex flex-col gap-4">
                     <div>
                         <p className="text-white text-base font-semibold">Recent Generation</p>
                     </div>
@@ -105,13 +108,44 @@ export default function SimpleMode() {
                             <Slider defaultValue={0} />
                         </div>
                         <div className="flex items-center justify-between">
-                            <div>
-                                <p>0:00</p>
-                                <p>/</p>
-                                <p>0:33</p>
+                            <div className="flex gap-1">
+                                <p className="text-[#DADCE0] text-sm">0:00</p>
+                                <p className="text-[#DADCE0] text-sm">/</p>
+                                <p className="text-[#8C8C96] text-sm"> 0:33</p>
                             </div>
-                            <div></div>
-                            <div></div>
+                            <div className="flex items-center gap-4">
+                                <Button className="flex gap-x-[5px] items-center text-[12px] hover:bg-[#353538] p-2 rounded-[5px]">
+                                    <TbRewindBackward15 size={24} />
+                                </Button>
+                                <FaPlayCircle size={32} className="cursor-pointer" />
+                                <Button className="flex gap-x-[5px] items-center text-[12px] hover:bg-[#353538] p-2 rounded-[5px]">
+                                    <TbRewindForward15 size={24} />
+                                </Button>
+                            </div>
+                            <Dropdown className="border border-[#44444A] rounded-[0.25rem] bg-[#242427]">
+                                <DropdownTrigger>
+                                    <Button variant="bordered" className="flex gap-2">
+                                        <IoPlayForwardSharp />
+                                        <p>x1</p>
+                                    </Button>
+                                </DropdownTrigger>
+                                <DropdownMenu aria-label="Static Actions">
+                                    <DropdownItem key="new">x0.5</DropdownItem>
+                                    <DropdownItem key="copy">x1</DropdownItem>
+                                    <DropdownItem key="edit">x1.5</DropdownItem>
+                                    <DropdownItem key="delete">x2</DropdownItem>
+                                </DropdownMenu>
+                            </Dropdown>
+                        </div>
+                    </div>
+                    <div className="flex flex-col h-full">
+                        <div>
+                            <p className="text-white text-base font-semibold">Generation History</p>
+                        </div>
+                        <div className="flex justify-center items-center h-full">
+                            <p className="text-[#B6B8Bf] text-xs">
+                                Generated audio files will be listed here, so you can come back and listen anytime.
+                            </p>
                         </div>
                     </div>
                 </div>
