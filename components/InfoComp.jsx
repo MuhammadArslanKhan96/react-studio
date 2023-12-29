@@ -59,7 +59,7 @@ export default function InfoComp() {
 
     async function handleFileChange(e) {
         const file = e.target.files[0];
-        const profileRef = ref(storage, `${name}/profile.jpg`);
+        const profileRef = ref(storage, `${name}/team-profile.${file.name.split('.')[1]}`);
 
         uploadBytes(profileRef, file).then(async (snapshot) => {
             const url = await getDownloadURL(snapshot.ref);

@@ -44,11 +44,11 @@ export default function Sidebar() {
                                 <Button className="flex items-center justify-between p-[16px] rounded-[10px] bg-transparent hover:bg-[#353538] w-full ">
                                     <div className="flex items-center gap-x-2">
                                         <div>
-                                            <Avatar src={user?.photoURL} />
+                                            <Avatar src={user?.team?.photoURL} />
                                         </div>
                                         <div className="flex flex-col items-start">
                                             <p className="text-[12px] leading-3">{user?.plan || "Free"} Plan</p>
-                                            <p>{user?.displayName || "Vivald"}</p>
+                                            <p>{user?.team?.title || "Vivald"}</p>
                                         </div>
                                     </div>
                                     <FaChevronDown />
@@ -58,11 +58,11 @@ export default function Sidebar() {
                                 <DropdownItem>
                                     <div className="flex items-center bg-[#182C5C] rounded-[10px] gap-x-2 px-3 py-4 w-full">
                                         <div>
-                                            <Avatar src={user?.photoURL} />
+                                            <Avatar src={user?.team?.photoURL} />
                                         </div>
                                         <div>
                                             <p className="text-[12px]">{user?.plan || "Free"} Plan</p>
-                                            <p>{user?.displayName || "Vivald"}</p>
+                                            <p>{user?.team?.title || "Vivald"}</p>
                                         </div>
                                     </div>
                                 </DropdownItem>
