@@ -21,7 +21,6 @@ export default function EmptyCard() {
                 mockEffect: initMockEffect,
                 name: "",
                 lastModified: new Date().toDateString(),
-                description: "",
                 userId: user?.email,
                 workspaceId: selectedWorkspace.id,
                 isBasic: active === 'simple'

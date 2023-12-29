@@ -2,10 +2,12 @@ import Image from "next/image";
 import React from "react";
 import { FaSearch } from "react-icons/fa";
 import { Select, SelectItem, Button } from "@nextui-org/react";
+import { useRouter } from "next/router";
 
 export default function ProductionComp() {
+    const router = useRouter();
     return (
-        <div className="flex flex-col p-[24px] bg-[#242427] w-full">
+        <div className="flex flex-col p-[24px] overflow-hidden h-full bg-[#242427] w-full">
             <h4 className="text-2xl font-bold">Production</h4>
             <div className="flex flex-wrap items-center py-[24px]">
                 <div className="relative mt-2 rounded-md shadow-sm">
@@ -37,13 +39,13 @@ export default function ProductionComp() {
                 </p>
                 <Image
                     src={"/images/prod-img.png"}
-                    className="w-full max-w-[656px] h-full"
+                    className="w-full max-w-[656px] max-h-[351px] h-full"
                     width={656}
                     height={351}
                     alt=""
                 />
 
-                <Button className="bg-blue-500 hover:bg-blue-700 text-white font-bold text-[16px] py-2 px-4 rounded">
+                <Button onClick={() => router.push('/')} className="bg-blue-500 hover:bg-blue-700 text-white font-bold text-[16px] py-2 px-4 rounded">
                     Go to Project
                 </Button>
             </div>

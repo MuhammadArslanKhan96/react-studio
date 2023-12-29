@@ -10,7 +10,6 @@ const getSpeakers = () => {
                 resolve(data.filter((a) => a.speakerStyles.filter((s) => !s.deprecated).length));
             })
             .catch((err) => {
-                console.log(err)
                 reject(err);
             });
     });

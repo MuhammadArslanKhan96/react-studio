@@ -1,10 +1,9 @@
-import { Button, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader } from "@nextui-org/react";
-import React, { useContext, useState } from "react";
-import { Context } from "./Context";
-import { AiOutlineMail } from "react-icons/ai";
-import Image from "next/image";
+import { Input, Modal, ModalBody, ModalContent, ModalHeader } from "@nextui-org/react";
 import { Avatar } from "antd";
+import React, { useState } from "react";
+import { AiOutlineMail } from "react-icons/ai";
 import { useAppContext } from "./EditBar/EditorContext";
+import { toast } from "react-toastify";
 
 export default function InviteMembers({ isOpen, onOpenChange }) {
     const { selectedWorkspace, inviteMembers, setInviteMembers, setWorkspaces, setSelectedWorkspace } = useAppContext();
@@ -12,17 +11,28 @@ export default function InviteMembers({ isOpen, onOpenChange }) {
     const [memberEmailInput, setMemberEmailInput] = useState("");
 
     const addUser = async () => {
-        if (!memberEmailInput?.trim()?.length) {
+        if (!memberEmailInput?.trim()?.length || !selectedWorkspace) {
             return;
         }
 
+        if (inviteMembers.filter((a) => a.email === memberEmailInput).length) {
+            toast.error("Can't invite a member twice");
+            return;
+        }
         await fetch(`/api/workspaces/update-workspace?id=${selectedWorkspace?.id}`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                members: [...selectedWorkspace?.members, { email: memberEmailInput, accepted: false, role: "Member" }]
+                members: [
+                    ...selectedWorkspace?.members.map((a) => ({
+                        email: a.email,
+                        accepted: a.accepted,
+                        role: a.role
+                    })),
+                    { email: memberEmailInput, accepted: false, role: "Member" }
+                ]
             })
         }).then((res) => res.json());
         setWorkspaces((pre) => [

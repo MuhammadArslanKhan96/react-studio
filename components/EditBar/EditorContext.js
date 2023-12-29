@@ -100,11 +100,11 @@ export const AppContextProvider = ({ children }) => {
         setProjects(projects);
     }, []);
 
-    const getMembers = useCallback(async (email) => {
+    const getMembers = async (email) => {
         const workspaces = await fetch('/api/workspaces/get-workspaces?email=' + email).then(r => r.json()).then(r => r.workspaces);
         setWorkspaces(workspaces);
         setSelectedWorkspace(workspaces?.[0] || {});
-    }, []);
+    };
 
     useEffect(() => {
         const email = localStorage.getItem('email');
@@ -119,7 +119,10 @@ export const AppContextProvider = ({ children }) => {
         if (!user?.email && (router.pathname !== '/signin' || router.pathname !== '/signup')) {
             router.push('/signin')
         } else if (user?.email && (router.pathname === '/signin' || router.pathname === '/signup')) {
-            router.push(`/`)
+            getProjects(user?.email);
+            getMembers(user?.email);
+            router.push(`/`);
+        } else if(user) {
             getProjects(user?.email);
             getMembers(user?.email);
         }
@@ -127,9 +130,11 @@ export const AppContextProvider = ({ children }) => {
     }, [user]);
 
     useEffect(() => {
-        setInviteMembers(selectedWorkspace?.members || []);
-        setWorkspaceProjects(projects.filter(project => project.workspaceId === selectedWorkspace?.id));
-    }, [selectedWorkspace, projects])
+        if (selectedWorkspace.id) {
+            setInviteMembers(selectedWorkspace?.members || []);
+            setWorkspaceProjects(projects.filter(project => project.workspaceId === selectedWorkspace?.id));
+        }
+    }, [selectedWorkspace, projects, user])
 
     return (
         <>

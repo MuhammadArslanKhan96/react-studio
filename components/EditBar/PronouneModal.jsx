@@ -17,11 +17,9 @@ import { TiPlus } from "react-icons/ti";
 export default function PronouneModal({ setModal, isOpen, onOpenChange }) {
     const handleButtonClick = (e) => {
         message.info("Click on left button.");
-        console.log("click left button", e);
     };
     const handleMenuClick = (e) => {
         message.info("Click on menu item.");
-        console.log("click", e);
     };
     const items = [
         {

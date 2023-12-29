@@ -40,7 +40,6 @@ export default function PriceCompare() {
 
     const onChange = (checked) => {
         setSwitchActive(!switchactive);
-        console.log(`switch to ${checked}`);
     };
 
     const image = [

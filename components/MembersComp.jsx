@@ -27,7 +27,6 @@ export default function MembersComp() {
         }
     ];
 
-    console.log(user);
     return (
         <div className="flex flex-col gap-4">
             {/* pending */}

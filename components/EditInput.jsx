@@ -9,6 +9,7 @@ export default function EditInput({ isWorkspace }) {
     const [edit, setEdit] = useState(false);
 
     const handleWorkspaceName = async (e) => {
+        if (!selectedWorkspace) return;
         const newName = e.target.value;
         setWorkspaces((pre) => [
             ...pre.filter((a) => a.id !== selectedWorkspace.id),

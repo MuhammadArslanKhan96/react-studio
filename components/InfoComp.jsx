@@ -9,39 +9,51 @@ import { storage } from "../constants/firebaseConfigs";
 export default function InfoComp() {
     const inputref = useRef();
     const { user, setUser } = useAppContext();
-    const [name, setName] = useState(user?.displayName || "");
+    const [name, setName] = useState(user?.title || "");
 
     const handlePlanChange = async () => {
         setUser((prevUser) => ({
             ...prevUser,
-            displayName: name,
+            team: {
+                ...(prevUser.team || {}),
+                title: name
+            }
         }));
 
         await fetch(`/api/users/update-user?email=${user?.email}`, {
             method: "POST",
             body: JSON.stringify({
-                displayName: name,
+                team: {
+                    ...(user.team || {}),
+                    title: name
+                }
             }),
             headers: {
-                "Content-Type": "application/json",
-            },
+                "Content-Type": "application/json"
+            }
         });
     };
 
     const removePhoto = async () => {
         setUser((prevUser) => ({
             ...prevUser,
-            photoURL: null,
+            team: {
+                ...(prevUser.team || {}),
+                photoURL: null
+            }
         }));
 
         await fetch(`/api/users/update-user?email=${user?.email}`, {
             method: "POST",
             body: JSON.stringify({
-                photoURL: null,
+                team: {
+                    ...(user.team || {}),
+                    photoURL: null
+                }
             }),
             headers: {
-                "Content-Type": "application/json",
-            },
+                "Content-Type": "application/json"
+            }
         });
     };
 
@@ -53,17 +65,23 @@ export default function InfoComp() {
             const url = await getDownloadURL(snapshot.ref);
             setUser((prevUser) => ({
                 ...prevUser,
-                photoURL: url,
+                team: {
+                    ...(prevUser.team || {}),
+                    photoURL: url
+                }
             }));
 
             await fetch(`/api/users/update-user?email=${user?.email}`, {
                 method: "POST",
                 body: JSON.stringify({
-                    photoURL: url,
+                    team: {
+                        ...(user.team || {}),
+                        photoURL: url
+                    }
                 }),
                 headers: {
-                    "Content-Type": "application/json",
-                },
+                    "Content-Type": "application/json"
+                }
             });
         });
     }
@@ -79,7 +97,7 @@ export default function InfoComp() {
                     <p className="text-[#EFEFEF] font-semibold">Logo</p>
                     <div className="flex gap-x-2 items-center">
                         <div>
-                            <Avatar src={user?.photoURL} />
+                            <Avatar src={user?.team?.photoURL} />
                         </div>
                         <div>
                             <div className="flex items-center gap-x-2">
@@ -89,7 +107,7 @@ export default function InfoComp() {
                                 >
                                     Upload Photo
                                 </Button>
-                                {user?.photoURL && (
+                                {user?.team?.photoURL && (
                                     <RiDeleteBin5Line onClick={removePhoto} className="text-[#C53030] cursor-pointer" />
                                 )}
                             </div>
@@ -105,7 +123,7 @@ export default function InfoComp() {
                     <div className="flex gap-x-2">
                         <Input
                             placeholder="Enter name"
-                            defaultValue={user?.displayName}
+                            defaultValue={user?.team?.title}
                             onChange={(e) => setName(e.target.value)}
                             value={name}
                             className="border rounded-[10px]"
