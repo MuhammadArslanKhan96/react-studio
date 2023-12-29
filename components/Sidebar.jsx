@@ -11,12 +11,14 @@ import { PiFolder } from "react-icons/pi";
 import CurrentPlan from "../components/CurrentPlan";
 import Discount from "../components/Discount";
 import InviteMembers from "../components/InviteMembers";
+import WordSpaceModal from "./EditBar/WordSpaceModal";
 export default function Sidebar() {
     const router = useRouter();
     const { user, workspaces, setSelectedWorkspace } = useAppContext();
     const [open, setOpen] = useState(false);
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const [modal, setModal] = useState(true);
+    const [workSpaceModal, setWorkSpaceModal] = useState(false);
 
     if (router.pathname === "/signin" || router.pathname === "/signup" || router.pathname.includes("/project")) return;
 
@@ -96,7 +98,7 @@ export default function Sidebar() {
                             </div>
 
                             <div>
-                                <IoMdAdd size={16} />
+                                <IoMdAdd size={16} onClick={e => setWorkSpaceModal(true)} />
                             </div>
                         </div>
                     </Button>
@@ -158,6 +160,7 @@ export default function Sidebar() {
                     }}
                 ></section>
             ) : null}
+            <WordSpaceModal isOpen={workSpaceModal} onOpenChange={setWorkSpaceModal} />
         </main>
     );
 }
