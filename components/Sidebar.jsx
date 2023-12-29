@@ -79,7 +79,7 @@ export default function Sidebar() {
                     <Button className="flex items-center gap-x-2 text-[14px] border-b-2 border-b-[#4D4D51] px-3 py-2 hover:bg-[#39393C] mb-3">
                         <div className="flex items-center justify-between w-[100%]">
                             <div className="flex justify-center items-center gap-3 py-2">
-                                {modal ? (
+                                {!modal ? (
                                     <IoIosArrowDown
                                         size={16}
                                         // className="(IsRotated, 'rotate180', '')"
@@ -105,7 +105,7 @@ export default function Sidebar() {
                         workspaces.map(workspace => (
                             <div
                                 key={workspace.id}
-                                className="flex items-center gap-x-2 text-[14px] border-b-2 border-b-[#4D4D51] px-3 py-2 hover:bg-[#39393C] mb-3"
+                                className="flex items-center cursor-pointer gap-x-2 text-[14px] border-b-2 border-b-[#4D4D51] px-3 py-2 hover:bg-[#39393C] mb-3"
                                 onClick={() => {
                                     setSelectedWorkspace(workspace);
                                     setModal(!modal);

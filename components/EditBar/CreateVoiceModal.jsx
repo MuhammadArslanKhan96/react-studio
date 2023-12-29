@@ -11,12 +11,6 @@ import { Slider } from "antd";
 export default function CreateVoiceModal({ isOpen, onOpenChange }) {
     const ref = useRef();
 
-    const onChange = (value) => {
-        console.log("onChange: ", value);
-    };
-    const onChangeComplete = (value) => {
-        console.log("onChangeComplete: ", value);
-    };
     return (
         <div>
             <Modal
@@ -144,8 +138,6 @@ export default function CreateVoiceModal({ isOpen, onOpenChange }) {
                                                 </div>
                                                 <Slider
                                                     defaultValue={30}
-                                                    onChange={onChange}
-                                                    onChangeComplete={onChangeComplete}
                                                 />
                                             </div>
                                         </div>
