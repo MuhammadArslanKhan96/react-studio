@@ -5,11 +5,12 @@ import Promptbar from "../../components/EditBar/Promptbar";
 import TimelineEditor from "../../components/player";
 import { useRouter } from "next/router";
 import { useAppContext } from "../../components/EditBar/EditorContext";
+import SimpleMode from "../../components/SimpleMode";
 
 export default function Project() {
     const router = useRouter();
     const { id } = router.query;
-    const { projects, setSelectedProject, setMockData, setMockEffect } = useAppContext();
+    const { projects, setSelectedProject, setMockData, setMockEffect, selectedProject } = useAppContext();
     React.useEffect(() => {
         if (projects) {
             const project = projects.find((project) => project.id === id);
@@ -17,8 +18,10 @@ export default function Project() {
             setMockData(project?.mockData || []);
             setMockEffect(project?.mockEffect || []);
         }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [projects, id]);
+
+    if (selectedProject?.isBasic) return <SimpleMode />;
 
     return (
         <div className="flex bg-[#242427] w-full">

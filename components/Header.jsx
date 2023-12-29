@@ -18,7 +18,7 @@ import {
 } from "@nextui-org/react";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { Context } from "./Context";
 import EditInput from "./EditInput";
@@ -27,12 +27,14 @@ import { useAppContext } from "./EditBar/EditorContext";
 import { signOut } from "firebase/auth";
 import { auth } from "../constants/firebaseConfigs";
 import { toast } from "react-toastify";
+import APIKey from "./APIKey";
 
 export default function Header() {
     const router = useRouter();
     const { setSideModal } = useContext(Context);
     const { setUser, user, mockData, mockEffect, setSelectedProject, selectedProject, setProjects } = useAppContext();
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
+    const [modal, setModal] = useState(false);
 
     if (router.pathname === "/signin" || router.pathname === "/signup") return;
 
@@ -48,7 +50,7 @@ export default function Header() {
             ...selectedProject,
             mockData,
             mockEffect,
-            lastModified: new Date().toDateString()
+            lastModified: new Date().toDateString(),
         });
         setProjects((pre) => [
             ...pre.filter((a) => a.id !== selectedProject?.id),
@@ -56,8 +58,8 @@ export default function Header() {
                 ...selectedProject,
                 mockData,
                 mockEffect,
-                lastModified: new Date().toDateString()
-            }
+                lastModified: new Date().toDateString(),
+            },
         ]);
         await fetch(`/api/projects/update-project?id=${selectedProject?.id}`, {
             method: "PUT",
@@ -65,15 +67,17 @@ export default function Header() {
                 ...selectedProject,
                 mockData,
                 mockEffect,
-                lastModified: new Date().toDateString()
+                lastModified: new Date().toDateString(),
             }),
             headers: {
-                "Content-Type": "application/json"
-            }
+                "Content-Type": "application/json",
+            },
         });
 
         toast.success("Saved successfully");
     };
+
+    console.log(modal);
 
     return (
         <div className="flex justify-between items-center px-[16px] py-[8px] bg-[#242427] border-b border-b-[#44444A]">
@@ -148,7 +152,9 @@ export default function Header() {
                     <Image src={"/images/invite.svg"} alt="" width={20} height={20} />
                     Invite
                 </Button>
-                <InviteMembers isOpen={isOpen} onOpenChange={onOpenChange} />
+                {!modal && <InviteMembers isOpen={isOpen} onOpenChange={onOpenChange} />}
+                {modal && <APIKey isOpen={isOpen} onOpenChange={onOpenChange} setModal={setModal} />}
+
                 <Navbar className="w-fit">
                     <NavbarContent as="div" justify="end">
                         <Dropdown placement="bottom-end">
@@ -222,7 +228,13 @@ export default function Header() {
                                 </DropdownItem>
 
                                 <DropdownItem key="view_api_key">
-                                    <div className="flex items-center gap-2">
+                                    <div
+                                        onClick={() => {
+                                            onOpen();
+                                            setModal(true);
+                                        }}
+                                        className="flex items-center gap-2"
+                                    >
                                         <IoKeyOutline />
                                         View API key
                                     </div>
