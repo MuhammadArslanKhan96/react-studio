@@ -1,10 +1,12 @@
-import { Button, useDisclosure } from "@nextui-org/react";
+import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, useDisclosure } from "@nextui-org/react";
 import Image from "next/image";
 import React, { useState } from "react";
 import PronouneModal from "./PronouneModal";
 import VoiceSelectorModal from "./VoiceSelectorModal";
 import ResourceModal from "./ResourceModal";
 import { useAppContext } from "./EditorContext";
+import { FaRegCircleQuestion } from "react-icons/fa6";
+import { FaDiscord } from "react-icons/fa";
 
 export default function SideNav() {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -75,7 +77,36 @@ export default function SideNav() {
                 <VoiceSelectorModal isOpen={voiceModel} onOpenChange={setVoiceModel} />
             </div>
             <div>
-                <Image src={"/images/questionmark.svg"} alt="" width={24} height={24} />
+                <Dropdown className="border border-[#44444A] rounded-[0.25rem] bg-[#242427]">
+                    <DropdownTrigger>
+                        <Button variant="bordered">
+                            <Image src={"/images/questionmark.svg"} alt="" width={24} height={24} />
+                        </Button>
+                    </DropdownTrigger>
+                    <DropdownMenu aria-label="Dynamic Actions">
+                        <DropdownItem>
+                            <p className="text-[#B6B8BF] text-xs">Help & Support</p>
+                        </DropdownItem>
+                        <DropdownItem>
+                            <p className="text-sm">Tutorials</p>
+                        </DropdownItem>
+                        <DropdownItem>
+                            <p className="text-sm">FAQ</p>
+                        </DropdownItem>
+                        <DropdownItem>
+                            <p className="text-sm">Blog</p>
+                        </DropdownItem>
+                        <DropdownItem>
+                            <p className="text-sm">Send feedback</p>
+                        </DropdownItem>
+                        <DropdownItem>
+                            <p className="text-sm">Terms of Services</p>
+                        </DropdownItem>
+                        <DropdownItem>
+                            <p className="text-sm flex items-center gap-[7px]"><FaDiscord size={17} /> Join Discord</p>
+                        </DropdownItem>
+                    </DropdownMenu>
+                </Dropdown>
             </div>
         </div>
     );
