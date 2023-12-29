@@ -28,6 +28,7 @@ import { signOut } from "firebase/auth";
 import { auth } from "../constants/firebaseConfigs";
 import { toast } from "react-toastify";
 import APIKey from "./APIKey";
+import AccountModal from "./EditBar/AccountModel";
 
 export default function Header() {
     const router = useRouter();
@@ -35,6 +36,7 @@ export default function Header() {
     const { setUser, user, mockData, mockEffect, setSelectedProject, selectedProject, setProjects } = useAppContext();
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const [modal, setModal] = useState(false);
+    const [accountModal, setAccountModal] = React.useState(false)
 
     if (router.pathname === "/signin" || router.pathname === "/signup") return;
 
@@ -194,8 +196,8 @@ export default function Header() {
                                     </div>
                                 </DropdownItem>
 
-                                <DropdownItem key="my_account">
-                                    <div className="flex items-center gap-2">
+                                <DropdownItem key="my_account" onClick={e => setAccountModal(true)}>
+                                    <div className="flex items-center gap-2" >
                                         <Image
                                             src={"/images/mayaccount.svg"}
                                             alt=""
@@ -263,6 +265,7 @@ export default function Header() {
                         </Dropdown>
                     </NavbarContent>
                 </Navbar>
+                <AccountModal isOpen={accountModal} onOpenChange={setAccountModal} />
             </div>
         </div>
     );
