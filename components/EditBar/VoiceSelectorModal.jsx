@@ -9,7 +9,7 @@ import { FaCaretDown, FaPlus } from "react-icons/fa";
 import CreateVoiceModal from "./CreateVoiceModal";
 import { useAppContext } from "./EditorContext";
 
-export default function VoiceSelectorModal({ isOpen, onOpenChange }) {
+export default function VoiceSelectorModal({ isOpen, onOpenChange, callback }) {
     const { onOpen } = useDisclosure();
 
     const [active, setActive] = useState("Pro Voice");
@@ -149,7 +149,7 @@ export default function VoiceSelectorModal({ isOpen, onOpenChange }) {
                 onOpenChange={onOpenChange}
                 backdrop="opaque"
                 classNames={{
-                    backdrop: "bg-gradient-to-t from-zinc-900 to-zinc-900/10 backdrop-opacity-20",
+                    backdrop: "bg-gradient-to-t from-zinc-900 to-zinc-900/10 backdrop-opacity-20"
                 }}
             >
                 <ModalContent className="bg-[#242427] border border-[#44444A] rounded-[10px] min-w-[1000px]">
@@ -167,10 +167,11 @@ export default function VoiceSelectorModal({ isOpen, onOpenChange }) {
                                         <div
                                             key={idx}
                                             onClick={() => setActive(item.title)}
-                                            className={`${active === item.title
-                                                ? "bg-[#182C5C] border border-[#375C8D]"
-                                                : "bg-transparent"
-                                                } px-4 py-3 flex flex-col justify-center items-center hover:bg-[#44444A] rounded-[10px] cursor-pointer`}
+                                            className={`${
+                                                active === item.title
+                                                    ? "bg-[#182C5C] border border-[#375C8D]"
+                                                    : "bg-transparent"
+                                            } px-4 py-3 flex flex-col justify-center items-center hover:bg-[#44444A] rounded-[10px] cursor-pointer`}
                                         >
                                             <Image src={item.img} alt="" width={24} height={24} />
                                             <p className="text-[12px] flex text-center">{item.title}</p>
@@ -207,15 +208,17 @@ export default function VoiceSelectorModal({ isOpen, onOpenChange }) {
                                             </Radio.Group> */}
                                             <div className="flex border border-[#44444A] w-fit rounded-[5px]">
                                                 <p
-                                                    className={`${activeTab === "male" ? "bg-[#44444A]" : "bg-transparent"
-                                                        } px-3 py-[3px] text-[#EFEFEF] cursor-pointer border-r border-r-[#44444A]`}
+                                                    className={`${
+                                                        activeTab === "male" ? "bg-[#44444A]" : "bg-transparent"
+                                                    } px-3 py-[3px] text-[#EFEFEF] cursor-pointer border-r border-r-[#44444A]`}
                                                     onClick={() => setActiveTab("male")}
                                                 >
                                                     Male
                                                 </p>
                                                 <p
-                                                    className={`${activeTab === "female" ? "bg-[#44444A]" : "bg-transparent"
-                                                        } px-3 py-[3px] text-[#EFEFEF] cursor-pointer`}
+                                                    className={`${
+                                                        activeTab === "female" ? "bg-[#44444A]" : "bg-transparent"
+                                                    } px-3 py-[3px] text-[#EFEFEF] cursor-pointer`}
                                                     onClick={() => setActiveTab("female")}
                                                 >
                                                     Female
@@ -306,25 +309,25 @@ export default function VoiceSelectorModal({ isOpen, onOpenChange }) {
                                     </div>
                                     {active === "Pro Voice" ? (
                                         <div className="mt-2 flex gap-2 flex-wrap overflow-y-scroll scrollStyle max-h-[400px]">
-                                            {premiumVoices.map(premiumVoice => (
+                                            {premiumVoices.map((premiumVoice) => (
                                                 <div key={premiumVoice.id}>
-                                                    <VoiceCard data={premiumVoice} />
+                                                    <VoiceCard data={premiumVoice} callback={callback} />
                                                 </div>
                                             ))}
                                         </div>
                                     ) : active === "Rapid Voice" ? (
                                         <div className="mt-2 flex gap-2 flex-wrap overflow-y-scroll scrollStyle max-h-[400px]">
-                                            {globalVoices.map(globalVoice => (
+                                            {emotionalVoices.map((globalVoice) => (
                                                 <div key={globalVoice.id}>
-                                                    <VoiceCard data={globalVoice} />
+                                                    <VoiceCard data={globalVoice} callback={callback} />
                                                 </div>
                                             ))}
                                         </div>
                                     ) : active === "Global Voice" ? (
                                         <div className="mt-2 flex gap-2 flex-wrap overflow-y-scroll scrollStyle max-h-[400px]">
-                                            {globalVoices.map(globalVoice => (
+                                            {globalVoices.map((globalVoice) => (
                                                 <div key={globalVoice.id}>
-                                                    <VoiceCard data={globalVoice} />
+                                                    <VoiceCard data={globalVoice} callback={callback} />
                                                 </div>
                                             ))}
                                         </div>

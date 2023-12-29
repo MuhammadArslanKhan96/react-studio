@@ -77,8 +77,6 @@ export default function Header() {
         toast.success("Saved successfully");
     };
 
-    console.log(modal);
-
     return (
         <div className="flex justify-between items-center px-[16px] py-[8px] bg-[#242427] border-b border-b-[#44444A]">
             <div className="flex gap-x-2 items-center">

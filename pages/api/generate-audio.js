@@ -14,6 +14,7 @@ export function generateSpeech(body) {
     })
       .then((response) => response.json())
       .then(async data => {
+        console.log(data)
         const blob = await fetch(data?.data?.[0]?.urls?.[0]).then(r => r.blob());
         await blobToBase64(blob, async (base64) => {
           resolve({ ...data?.data?.[0], urls: [`data:audio/mpeg;base64,${base64}`] });

@@ -113,7 +113,6 @@ export default function MembersComp() {
                                                             }
                                                         ]);
 
-                                                        console.log("Invite Accepted");
                                                     }}
                                                 >
                                                     Accept

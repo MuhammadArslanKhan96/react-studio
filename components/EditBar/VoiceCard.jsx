@@ -5,7 +5,7 @@ import { HiOutlineSpeakerWave } from "react-icons/hi2";
 import { IoMdPlay } from "react-icons/io";
 import { useAppContext } from "./EditorContext";
 
-export default function VoiceCard({ data }) {
+export default function VoiceCard({ data,callback }) {
     const { setMockData, setVoiceModel, voiceModel } = useAppContext();
 
     return (
@@ -39,6 +39,8 @@ export default function VoiceCard({ data }) {
                             speaker: data,
                         },
                     ]);
+
+                    callback && callback(data);
                     setVoiceModel(false);
                 }}
                 className="flex items-center w-full bg-[#255BB8] rounded-[5px] mt-1 text-[10px] py-1 group/edit invisible group-hover/item:visible"
