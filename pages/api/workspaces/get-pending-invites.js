@@ -15,7 +15,7 @@ export default async function handler(req, res) {
         }));
         const querySnapshot = await getDocs(q);
         (querySnapshot).forEach(async (document) => {
-            workspaces.push({ ...document.data(), members: filtermembers, id: document.id });
+            workspaces.push({ ...document.data(), id: document.id });
         });
         res.status(200).json({ pending: workspaces, success: true })
     } catch (error) {
