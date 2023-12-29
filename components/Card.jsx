@@ -92,7 +92,7 @@ export default function Card({ project }) {
                 </div>
             </div>
             {/* <hr /> */}
-            <div className="px-[12px] py-[4px] relative">
+            <div className="px-[12px] max-h-[11rem] h-full py-[4px] relative">
                 <p className="text-white">
                     {project?.mockData?.[0]?.actions?.[0]?.data?.name ||
                         `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the

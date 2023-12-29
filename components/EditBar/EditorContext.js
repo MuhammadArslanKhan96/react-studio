@@ -78,6 +78,7 @@ export const AppContextProvider = ({ children }) => {
     const [projects, setProjects] = useState([]);
     const [selectedProject, setSelectedProject] = useState({});
     const [workspaces, setWorkspaces] = useState([]);
+    const [pendingInvites, setPendingInvites] = useState([]);
     const [selectedWorkspace, setSelectedWorkspace] = useState({});
     const [inviteMembers, setInviteMembers] = useState([]);
     const [workspaceProjects, setWorkspaceProjects] = useState([]);
@@ -102,6 +103,13 @@ export const AppContextProvider = ({ children }) => {
 
     const getMembers = async (email) => {
         const workspaces = await fetch('/api/workspaces/get-workspaces?email=' + email).then(r => r.json()).then(r => r.workspaces);
+        const pending = await fetch('/api/workspaces/get-pending-invites?email=' + email).then(r => r.json()).then(r => r.pending);
+        setPendingInvites([]);
+        await pending.forEach(async (workspace) => {
+            const members = workspace.members;
+            const getAllMembers = await Promise.all(members.map(async a => await fetch(`/api/auth/get-user?email=${a.email}`).then(r => r.json()).then(r => ({ ...r.user, ...a }))));
+            setPendingInvites(pre => ([...pre, { ...workspace, members: getAllMembers }]));
+        });
         setWorkspaces(workspaces);
         setSelectedWorkspace(workspaces?.[0] || {});
     };
@@ -122,7 +130,7 @@ export const AppContextProvider = ({ children }) => {
             getProjects(user?.email);
             getMembers(user?.email);
             router.push(`/`);
-        } else if(user) {
+        } else if (user) {
             getProjects(user?.email);
             getMembers(user?.email);
         }
@@ -165,7 +173,9 @@ export const AppContextProvider = ({ children }) => {
                     setSelectedWorkspace,
                     workspaces,
                     setWorkspaces,
-                    workspaceProjects
+                    workspaceProjects,
+                    setPendingInvites,
+                    pendingInvites,
                 }}
             >
                 {children}

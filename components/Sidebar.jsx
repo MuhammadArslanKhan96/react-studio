@@ -108,7 +108,6 @@ export default function Sidebar() {
                                 className="flex items-center cursor-pointer gap-x-2 text-[14px] border-b-2 border-b-[#4D4D51] px-3 py-2 hover:bg-[#39393C] mb-3"
                                 onClick={() => {
                                     setSelectedWorkspace(workspace);
-                                    setModal(!modal);
                                 }}
                             >
                                 <div className="flex justify-center items-center gap-3 pl-[10px]">
@@ -141,7 +140,7 @@ export default function Sidebar() {
                     </Link>
                     <Button
                         onPress={onOpen}
-                        className="flex items-center self-start gap-x-2 text-[14px] py-2 px-3 hover:bg-[#39393C] "
+                        className="flex items-center justify-start gap-x-2 text-[14px] py-2 px-3 hover:bg-[#39393C] "
                     >
                         <Image src={"/images/invite.svg"} alt="" width={20} height={20} />
                         Invite Members

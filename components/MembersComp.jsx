@@ -9,7 +9,7 @@ import InviteMembers from "./InviteMembers";
 import { useAppContext } from "./EditBar/EditorContext";
 
 export default function MembersComp() {
-    const { user, inviteMembers } = useAppContext();
+    const { inviteMembers, pendingInvites, user, setPendingInvites, setWorkspaces } = useAppContext();
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
     const items = [
@@ -34,18 +34,118 @@ export default function MembersComp() {
                 <div>
                     <p className="text-[20px] text-[#EFEFEF] font-semibold">Pending</p>
                 </div>
-                <div className="border border-[#44444A] rounded-[10px] mt-4">
-                    <p className="text-[14px] text-[#B6B8BF] px-[24px] py-[16px] border-b border-b-[#44444A]">Name</p>
-                    <p className="text-[12px] text-[#8C8C96] px-[24px] py-[16px] border-t border-t-[#44444A]">
-                        There are no pending invitations
-                    </p>
+                {/* Table */}
+                <div className="relative mt-4 overflow-x-auto rounded-[10px] border border-[#44444A]">
+                    <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 ">
+                        <thead className="text-xs text-gray-700 uppercase bg-[#242427 dark:text-gray-400 border-b border-b-[#44444A]">
+                            <tr>
+                                <th scope="col" className="px-6 py-3 text-[14px]">
+                                    Name
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {pendingInvites.map((invite, idx) => {
+                                const inviter = invite?.members.filter((a) => a.accepted)[0];
+
+                                return (
+                                    <tr className="bg-[#242427] dark:border-gray-700" key={idx}>
+                                        <th
+                                            scope="row"
+                                            className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                                        >
+                                            <div className="flex gap-x-[3px] items-center">
+                                                <div>
+                                                    <Avatar src={inviter?.photoURL} />
+                                                </div>
+                                                <div>
+                                                    <p>{inviter?.displayName || "Pending"}</p>
+                                                    <p>{inviter?.email}</p>
+                                                </div>
+                                            </div>
+                                        </th>
+                                        <td className="px-6 py-4 text-white">
+                                            <div className="flex gap-x-2">
+                                                <Button
+                                                    className="text-[14px] bg-[#2871DE] text-white rounded-[5px] px-[12px] py-[6px] flex items-center"
+                                                    onClick={async () => {
+                                                        await fetch(
+                                                            `/api/workspaces/update-workspace?id=${invite.id}`,
+                                                            {
+                                                                method: "PUT",
+                                                                headers: {
+                                                                    "Content-Type": "application/json"
+                                                                },
+                                                                body: JSON.stringify({
+                                                                    ...invite,
+                                                                    members: [
+                                                                        ...invite.members.filter(
+                                                                            (a) => a.email !== user.email
+                                                                        ),
+                                                                        {
+                                                                            accepted: true,
+                                                                            email: user.email,
+                                                                            role: "Member"
+                                                                        }
+                                                                    ]
+                                                                })
+                                                            }
+                                                        );
+
+                                                        setPendingInvites((pre) =>
+                                                            pre.filter((a) => a.id !== invite.id)
+                                                        );
+
+                                                        setWorkspaces((pre) => [
+                                                            ...pre,
+                                                            {
+                                                                ...invite,
+                                                                members: [
+                                                                    ...invite.members.filter(
+                                                                        (a) => a.email !== user.email
+                                                                    ),
+                                                                    {
+                                                                        accepted: true,
+                                                                        email: user.email,
+                                                                        role: "Member"
+                                                                    }
+                                                                ]
+                                                            }
+                                                        ]);
+
+                                                        console.log("Invite Accepted");
+                                                    }}
+                                                >
+                                                    Accept
+                                                </Button>
+                                                <Button
+                                                    className="text-[14px] bg-[#2871DE] text-white rounded-[5px] px-[12px] py-[6px] flex items-center"
+                                                    onClick={() => {
+                                                        console.log("reject");
+                                                    }}
+                                                >
+                                                    Reject
+                                                </Button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                );
+                            })}
+
+                            {!pendingInvites.length && (
+                                <tr>
+                                    <td className="px-6 py-4 text-white text-center">No Pending Invites</td>
+                                </tr>
+                            )}
+                        </tbody>
+                    </table>
                 </div>
             </div>
             {/* members */}
             <div className="flex flex-col gap-4">
                 <div>
                     <p className="text-[20px] text-[#EFEFEF] font-semibold">
-                        Members <span className="text-[#8C8C96] text-[16px]">({inviteMembers.length + 1})</span>
+                        Members <span className="text-[#8C8C96] text-[16px]">({inviteMembers.length})</span>
                     </p>
                 </div>
                 <div className="flex justify-between items-center">
@@ -108,26 +208,6 @@ export default function MembersComp() {
                             </tr>
                         </thead>
                         <tbody>
-                            <tr className="bg-[#242427] dark:border-gray-700">
-                                <th
-                                    scope="row"
-                                    className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                                >
-                                    <div className="flex gap-x-[3px] items-center">
-                                        <div>
-                                            <Avatar src={user?.photoURL} />
-                                        </div>
-                                        <div>
-                                            <p>{user?.displayName}</p>
-                                            <p>{user?.email}</p>
-                                        </div>
-                                    </div>
-                                </th>
-                                <td className="px-6 py-4 text-white">Owner</td>
-                                <td className="px-6 py-4 text-white">
-                                    {new Date(Number(user?.metadata?.createdAt) || new Date().getTime()).toDateString()}
-                                </td>
-                            </tr>
                             {inviteMembers.map((member, idx) => (
                                 <tr className="bg-[#242427] dark:border-gray-700" key={idx}>
                                     <th
@@ -139,12 +219,12 @@ export default function MembersComp() {
                                                 <Avatar src={member?.photoURL} />
                                             </div>
                                             <div>
-                                                <p>{member?.displayName}</p>
+                                                <p>{member?.displayName || "Pending"}</p>
                                                 <p>{member?.email}</p>
                                             </div>
                                         </div>
                                     </th>
-                                    <td className="px-6 py-4 text-white">Owner</td>
+                                    <td className="px-6 py-4 text-white">{member?.role}</td>
                                     <td className="px-6 py-4 text-white">
                                         {member?.metadata?.createdAt
                                             ? new Date(
@@ -154,6 +234,12 @@ export default function MembersComp() {
                                     </td>
                                 </tr>
                             ))}
+
+                            {!pendingInvites.length && (
+                                <tr >
+                                    <td colSpan={3} className="px-6 py-4 text-white text-center">No Members</td>
+                                </tr>
+                            )}
                         </tbody>
                     </table>
                 </div>
