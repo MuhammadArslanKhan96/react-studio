@@ -9,11 +9,16 @@ import { generateSpeech } from "../helpers/generate-audio";
 import AudioCard from "./AudioCard";
 import { useAppContext } from "./EditBar/EditorContext";
 import VoiceSelectorModal from "./EditBar/VoiceSelectorModal";
+import ShareModal from "./EditBar/ShareModal";
+import ViewModal from "./EditBar/ViewModal";
 
 export default function SimpleMode() {
     const { setVoiceModel, voiceModel, speakers, selectedProject, setSelectedProject, setProjects } = useAppContext();
     const [text, setText] = useState("");
     const [speaker, setSpeaker] = useState(speakers[0]);
+    const [speech, setSpeech] = useState();
+    const [shareModal, setShareModal] = useState();
+    const [viewModal, setViewModal] = useState();
     const ref = useRef();
 
     const handleTextFileChange = (e) => {
@@ -176,19 +181,38 @@ export default function SimpleMode() {
                     <div>
                         <p className="text-white text-base font-semibold">Recent Generation</p>
                     </div>
-                    <AudioCard data={selectedProject?.data?.sort((a, b) => b.time - a.time)[0]} />
+                    <AudioCard
+                        setShareModal={setShareModal}
+                        setViewModal={setViewModal}
+                        data={selectedProject?.data?.sort((a, b) => b.time - a.time)[0]}
+                    />
                     <div className="flex flex-col h-full">
                         <div>
                             <p className="text-white text-base font-semibold">Generation History</p>
                         </div>
-                        <div className="flex justify-center items-center h-full">
-                            <p className="text-[#B6B8Bf] text-xs">
-                                Generated audio files will be listed here, so you can come back and listen anytime.
-                            </p>
+                        <div className="flex flex-col text-center overflow-y-scroll scrollStyle max-h-[70vh] gap-4 mt-4 h-full">
+                            {selectedProject?.data.length > 1 &&
+                                selectedProject?.data
+                                    ?.sort((a, b) => b.time - a.time)
+                                    .map((project, idx) => (
+                                        <AudioCard
+                                            key={idx}
+                                            setShareModal={setShareModal}
+                                            setViewModal={setViewModal}
+                                            data={project}
+                                        />
+                                    ))}
+                            {selectedProject?.data.length <= 1 && (
+                                <p className="text-[#B6B8Bf] text-xs">
+                                    Generated audio files will be listed here, so you can come back and listen anytime.
+                                </p>
+                            )}
                         </div>
                     </div>
                 </div>
             </div>
+            <ShareModal isOpen={shareModal} onOpenChange={setShareModal} />
+            <ViewModal isOpen={viewModal} onOpenChange={setViewModal} />
         </div>
     );
 }

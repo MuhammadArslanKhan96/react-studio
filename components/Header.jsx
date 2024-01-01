@@ -136,7 +136,7 @@ export default function Header() {
                                 </div>
                             </Button>
                         </Tooltip>
-                        <Button className="bg-[linear-gradient(90deg,rgb(46,148,255)0%,rgb(64,140,255)32.81%,rgb(61,181,255)71.35%,rgb(46,209,234)100%)] bg-clip-text text-transparent font-semibold text-[14px]">
+                        <Button onClick={e => router.push('/pricing')} className="bg-[linear-gradient(90deg,rgb(46,148,255)0%,rgb(64,140,255)32.81%,rgb(61,181,255)71.35%,rgb(46,209,234)100%)] bg-clip-text text-transparent font-semibold text-[14px]">
                             UPGRADE
                         </Button>
                         <Button onClick={saveProject} className="border rounded-[10px] px-2 py-1 text-[14px]">
