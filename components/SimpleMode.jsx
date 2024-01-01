@@ -13,12 +13,16 @@ import { IoPlayForwardSharp } from "react-icons/io5";
 import { useAppContext } from "./EditBar/EditorContext";
 import VoiceSelectorModal from "./EditBar/VoiceSelectorModal";
 import { generateSpeech } from "../helpers/generate-audio";
+import ShareModal from "./EditBar/ShareModal";
+import ViewModal from "./EditBar/ViewModal";
 
 export default function SimpleMode() {
     const { setVoiceModel, voiceModel, speakers } = useAppContext();
     const [text, setText] = useState("");
     const [speaker, setSpeaker] = useState(speakers[0]);
     const [speech, setSpeech] = useState();
+    const [shareModal, setShareModal] = useState();
+    const [viewModal, setViewModal] = useState();
     const ref = useRef();
 
     const handleTextFileChange = (e) => {
@@ -137,7 +141,7 @@ export default function SimpleMode() {
                             <div className="flex gap-1 items-center">
                                 <Tooltip showArrow={true} content="View text" className="bg-black rounded-[10px]">
                                     <Button className="flex gap-x-[5px] items-center text-[12px] hover:bg-[#353538] px-2 rounded-[5px]">
-                                        <CiText size={24} />
+                                        <CiText size={24} onClick={e => setViewModal(true)} />
                                     </Button>
                                 </Tooltip>
                                 <Tooltip showArrow={true} content="Download" className="bg-black rounded-[10px]">
@@ -146,7 +150,7 @@ export default function SimpleMode() {
                                     </Button>
                                 </Tooltip>
                                 <Tooltip showArrow={true} content="Share" className="bg-black rounded-[10px]">
-                                    <Button className="flex gap-x-[5px] items-center text-[12px] hover:bg-[#353538] px-2 rounded-[5px]">
+                                    <Button onClick={e => setShareModal(true)} className="flex gap-x-[5px] items-center text-[12px] hover:bg-[#353538] px-2 rounded-[5px]">
                                         <CiShare2 size={24} />
                                     </Button>
                                 </Tooltip>
@@ -205,6 +209,8 @@ export default function SimpleMode() {
                     </div>
                 </div>
             </div>
+            <ShareModal isOpen={shareModal} onOpenChange={setShareModal} />
+            <ViewModal isOpen={viewModal} onOpenChange={setViewModal}/>
         </div>
     );
 }
