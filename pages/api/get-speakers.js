@@ -6,8 +6,8 @@ const getSpeakers = () => {
             method: "GET",
         })
             .then((response) => response.json())
-            .then(({ data }) => {
-                resolve(data.filter((a) => a.speakerStyles.filter((s) => !s.deprecated).length));
+            .then((data) => {
+                resolve(data?.data?.filter((a) => a.speakerStyles.filter((s) => !s.deprecated).length) || []);
             })
             .catch((err) => {
                 reject(err);

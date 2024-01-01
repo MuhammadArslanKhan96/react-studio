@@ -1,9 +1,7 @@
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { apiOptions } from "../../constants";
-
-async function blobToBase64(blob, callback) {
-  const base64 = Buffer.from(await blob.arrayBuffer()).toString('base64');
-  callback(base64);
-}
+import { storage } from '../../constants/firebaseConfigs';
+import { v4 } from "uuid";
 
 export function generateSpeech(body) {
   return new Promise(async function (resolve, reject) {
@@ -14,10 +12,14 @@ export function generateSpeech(body) {
     })
       .then((response) => response.json())
       .then(async data => {
-        console.log(data)
         const blob = await fetch(data?.data?.[0]?.urls?.[0]).then(r => r.blob());
-        await blobToBase64(blob, async (base64) => {
-          resolve({ ...data?.data?.[0], urls: [`data:audio/mpeg;base64,${base64}`] });
+        const storageRef = ref(storage, `speeches/${v4()}.mp3`);
+
+        // 'file' comes from the Blob or File API
+        uploadBytes(storageRef, blob).then((snapshot) => {
+          getDownloadURL(snapshot.ref).then(url => {
+            resolve({ ...data?.data?.[0], urls: [url], id: v4() });
+          });
         });
       })
       .catch((err) => reject(err));

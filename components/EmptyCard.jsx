@@ -23,7 +23,44 @@ export default function EmptyCard() {
                 lastModified: new Date().toDateString(),
                 userId: user?.email,
                 workspaceId: selectedWorkspace.id,
-                isBasic: active === 'simple'
+                isBasic: active === "simple",
+                data: [
+                    {
+                        text: "Hi there, welcome to Genny. The Simple mode is perfect for creating single speaker short voiceovers. Simply pick your preferred speaker, type or copy and paste your script. Then, click the 'Generate' button to generate your voiceover in seconds. You will see the voiceover output on the right for you to freely share or download. For more advanced capabilities, video editing, or longer multi-speaker voiceover production, please checkout the Advanced mode instead.",
+                        time: 1704095445817,
+                        speaker: {
+                            imageUrl: "https://cdn.lovo.ai/f5349e2d/Aadesh+Madar.jpeg",
+                            gender: "male",
+                            id: "63b4094b241a82001d51c5fc",
+                            speakerStyles: [
+                                {
+                                    id: "63b4094b241a82001d51c5fd",
+                                    sampleTtsUrl:
+                                        "https://cdn.lovo.ai/speaker-tts-samples/prod/kn-IN-GaganNeural-default.wav",
+                                    deprecated: false,
+                                    displayName: "Default"
+                                }
+                            ],
+                            displayName: "Aadesh Madar",
+                            speakerType: "global",
+                            locale: "kn-IN"
+                        },
+                        speech: {
+                            id: "be73e283-665d-4870-b26b-d3775d7ee52c",
+                            pronunciations: [],
+                            emphasis: [],
+                            status: "succeeded",
+                            speaker: "63b4094b241a82001d51c5fc",
+                            speed: 1,
+                            text: "Hi there, welcome to Genny. The Simple mode is perfect for creating single speaker short voiceovers. Simply pick your preferred speaker, type or copy and paste your script. Then, click the 'Generate' button to generate your voiceover in seconds. You will see the voiceover output on the right for you to freely share or download. For more advanced capabilities, video editing, or longer multi-speaker voiceover production, please checkout the Advanced mode instead.",
+                            pause: [],
+                            urls: [
+                                "https://firebasestorage.googleapis.com/v0/b/vivald-45d17.appspot.com/o/speeches%2Fd17e9b02-e529-414f-8a9b-305b0f40a058.mp3?alt=media&token=d1c441dc-4841-495c-b449-b967401a4407"
+                            ],
+                            speakerStyle: "63b4094b241a82001d51c5fd"
+                        }
+                    }
+                ]
             })
         }).then((res) => res.json());
         const newProjects = [...projects, newProject];
