@@ -29,6 +29,7 @@ import { auth } from "../constants/firebaseConfigs";
 import { toast } from "react-toastify";
 import APIKey from "./APIKey";
 import AccountModal from "./EditBar/AccountModel";
+import ExportModal from "./ExportModal";
 
 export default function Header() {
     const router = useRouter();
@@ -36,7 +37,7 @@ export default function Header() {
     const { setUser, user, mockData, mockEffect, setSelectedProject, selectedProject, setProjects } = useAppContext();
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const [modal, setModal] = useState(false);
-    const [accountModal, setAccountModal] = React.useState(false)
+    const [accountModal, setAccountModal] = React.useState(false);
 
     if (router.pathname === "/signin" || router.pathname === "/signup") return;
 
@@ -136,13 +137,22 @@ export default function Header() {
                                 </div>
                             </Button>
                         </Tooltip>
-                        <Button onClick={e => router.push('/pricing')} className="bg-[linear-gradient(90deg,rgb(46,148,255)0%,rgb(64,140,255)32.81%,rgb(61,181,255)71.35%,rgb(46,209,234)100%)] bg-clip-text text-transparent font-semibold text-[14px]">
+                        <Button
+                            onClick={(e) => router.push("/pricing")}
+                            className="bg-[linear-gradient(90deg,rgb(46,148,255)0%,rgb(64,140,255)32.81%,rgb(61,181,255)71.35%,rgb(46,209,234)100%)] bg-clip-text text-transparent font-semibold text-[14px]"
+                        >
                             UPGRADE
                         </Button>
                         <Button onClick={saveProject} className="border rounded-[10px] px-2 py-1 text-[14px]">
                             Save
                         </Button>
-                        <Button className="border rounded-[10px] px-2 py-1 flex gap-x-2 items-center bg-[#EBECF0] text-black text-[14px]">
+                        <Button
+                            className="border rounded-[10px] px-2 py-1 flex gap-x-2 items-center bg-[#EBECF0] text-black text-[14px]"
+                            onClick={() => {
+                                onOpen();
+                                setModal("export");
+                            }}
+                        >
                             Export
                             <RiShareForward2Fill />
                         </Button>
@@ -152,8 +162,9 @@ export default function Header() {
                     <Image src={"/images/invite.svg"} alt="" width={20} height={20} />
                     Invite
                 </Button>
+                {modal === "export" && <ExportModal isOpen={isOpen} onOpenChange={onOpenChange} />}
                 {!modal && <InviteMembers isOpen={isOpen} onOpenChange={onOpenChange} />}
-                {modal && <APIKey isOpen={isOpen} onOpenChange={onOpenChange} setModal={setModal} />}
+                {modal === true && <APIKey isOpen={isOpen} onOpenChange={onOpenChange} setModal={setModal} />}
 
                 <Navbar className="w-fit">
                     <NavbarContent as="div" justify="end">
@@ -194,8 +205,8 @@ export default function Header() {
                                     </div>
                                 </DropdownItem>
 
-                                <DropdownItem key="my_account" onClick={e => setAccountModal(true)}>
-                                    <div className="flex items-center gap-2" >
+                                <DropdownItem key="my_account" onClick={(e) => setAccountModal(true)}>
+                                    <div className="flex items-center gap-2">
                                         <Image
                                             src={"/images/mayaccount.svg"}
                                             alt=""
