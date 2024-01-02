@@ -136,19 +136,25 @@ export default function Header() {
                                 </div>
                             </Button>
                         </Tooltip>
-                        <Button onClick={e => router.push('/pricing')} className="bg-[linear-gradient(90deg,rgb(46,148,255)0%,rgb(64,140,255)32.81%,rgb(61,181,255)71.35%,rgb(46,209,234)100%)] bg-clip-text text-transparent font-semibold text-[14px]">
+                        <Button
+                            onClick={(e) => router.push("/pricing")}
+                            className="bg-[linear-gradient(90deg,rgb(46,148,255)0%,rgb(64,140,255)32.81%,rgb(61,181,255)71.35%,rgb(46,209,234)100%)] bg-clip-text text-transparent font-semibold text-[14px]"
+                        >
                             UPGRADE
                         </Button>
                         <Button onClick={saveProject} className="border rounded-[10px] px-2 py-1 text-[14px]">
                             Save
                         </Button>
-                        <Button className="border rounded-[10px] px-2 py-1 flex gap-x-2 items-center bg-[#EBECF0] text-black text-[14px]">
+                        <Button className="border lg:flex hidden rounded-[10px] px-2 py-1 gap-x-2 items-center bg-[#EBECF0] text-black text-[14px]">
                             Export
                             <RiShareForward2Fill />
                         </Button>
                     </>
                 )}
-                <Button className="w-fit border rounded-[5px] h-fit gap-x-2 px-4 py-1 text-white " onPress={onOpen}>
+                <Button
+                    className="w-fit lg:flex hidden border rounded-[5px] h-fit gap-x-2 px-4 py-1 text-white "
+                    onPress={onOpen}
+                >
                     <Image src={"/images/invite.svg"} alt="" width={20} height={20} />
                     Invite
                 </Button>
@@ -194,8 +200,8 @@ export default function Header() {
                                     </div>
                                 </DropdownItem>
 
-                                <DropdownItem key="my_account" onClick={e => setAccountModal(true)}>
-                                    <div className="flex items-center gap-2" >
+                                <DropdownItem key="my_account" onClick={(e) => setAccountModal(true)}>
+                                    <div className="flex items-center gap-2">
                                         <Image
                                             src={"/images/mayaccount.svg"}
                                             alt=""

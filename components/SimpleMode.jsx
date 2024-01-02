@@ -38,6 +38,7 @@ export default function SimpleMode() {
             speaker: speaker.id
         };
         const speech = await generateSpeech(JSON.stringify(data));
+        if(!speech?.urls?.length) return;
         setSelectedProject((pre) => ({
             ...pre,
             data: [
@@ -94,8 +95,8 @@ export default function SimpleMode() {
 
     return (
         <div className="bg-[#242427] w-full">
-            <div className="flex w-full">
-                <div className="w-3/5 py-6 px-4 border-r border-r-[#44444A]">
+            <div className="flex flex-col lg:flex-row w-full">
+                <div className="w-full lg:w-3/5 py-6 px-4 border-r border-r-[#44444A]">
                     <div>
                         <div className="flex items-center gap-2">
                             <div className="flex cursor-pointer gap-2 items-center" onClick={() => setVoiceModel(true)}>
@@ -177,7 +178,7 @@ export default function SimpleMode() {
                         onOpenChange={setVoiceModel}
                     />
                 </div>
-                <div className="w-2/5 p-4 flex flex-col gap-4">
+                <div className="w-full lg:w-2/5 p-4 flex flex-col gap-4">
                     <div>
                         <p className="text-white text-base font-semibold">Recent Generation</p>
                     </div>
