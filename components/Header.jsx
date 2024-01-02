@@ -147,7 +147,7 @@ export default function Header() {
                             Save
                         </Button>
                         <Button
-                            className="border rounded-[10px] px-2 py-1 flex gap-x-2 items-center bg-[#EBECF0] text-black text-[14px]"
+                            className="border lg:flex hidden rounded-[10px] px-2 py-1 gap-x-2 items-center bg-[#EBECF0] text-black text-[14px]"
                             onClick={() => {
                                 onOpen();
                                 setModal("export");
@@ -158,7 +158,10 @@ export default function Header() {
                         </Button>
                     </>
                 )}
-                <Button className="w-fit border rounded-[5px] h-fit gap-x-2 px-4 py-1 text-white " onPress={onOpen}>
+                <Button
+                    className="w-fit lg:flex hidden border rounded-[5px] h-fit gap-x-2 px-4 py-1 text-white "
+                    onPress={onOpen}
+                >
                     <Image src={"/images/invite.svg"} alt="" width={20} height={20} />
                     Invite
                 </Button>
