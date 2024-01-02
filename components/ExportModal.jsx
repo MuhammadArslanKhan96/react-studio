@@ -16,9 +16,13 @@ import { LuMusic4, LuDownload } from "react-icons/lu";
 import { CiShare2 } from "react-icons/ci";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import DownloadModal from "./DownloadModal";
+import ShareModal from "./EditBar/ShareModal";
 
 export default function ExportModal({ isOpen, onOpenChange }) {
-    const { onOpen } = useDisclosure();
+    // const { onOpen } = useDisclosure();
+    const [modal, setModal] = useState(false);
+    const [shareModal, setShareModal] = useState(false);
+    const [exportModal, setExportModal] = useState(false);
     const [value, setValue] = useState("Untitled");
     const [list, setList] = useState("");
     return (
@@ -56,7 +60,7 @@ export default function ExportModal({ isOpen, onOpenChange }) {
                             </ModalHeader>
                             <hr className="border border-[#44444A]" />
 
-                            {/* <ModalBody className="flex flex-col justify-center items-center">
+                            <ModalBody className="flex flex-col justify-center items-center">
                                 <p className="text-[#EFEFEF] text-base">Create and render content in projects.</p>
                                 <p className="text-[#EFEFEF] text-base">
                                     The generated media files will be stored here.
@@ -68,12 +72,15 @@ export default function ExportModal({ isOpen, onOpenChange }) {
                                     height={351}
                                     className="mt-2"
                                 />
-                                <Button className="bg-[#2871DE] px-4 py-2 rounded-lg mt-4" onPress={onOpen}>
+                                <Button
+                                    className="bg-[#2871DE] px-4 py-2 rounded-lg mt-4"
+                                    onPress={() => setExportModal(true)}
+                                >
                                     Export Project
                                 </Button>
-                            </ModalBody> */}
+                            </ModalBody>
 
-                            <ModalBody>
+                            {/* <ModalBody>
                                 <div className="flex h-[80vh]">
                                     <div className="flex flex-col w-1/2 p-4 border-r border-r-[#44444A]">
                                         <div className="border-b border-b-[#44444A] p-2">
@@ -105,13 +112,16 @@ export default function ExportModal({ isOpen, onOpenChange }) {
                                                 <div className="flex items-center gap-x-4">
                                                     <Button
                                                         className="flex gap-x-4 border border-white rounded-lg px-3 py-2"
-                                                        onPress={onOpen}
+                                                        onPress={() => setModal(true)}
                                                     >
                                                         {" "}
                                                         <LuDownload size={16} className="w-4" />
                                                         Download
                                                     </Button>
-                                                    <Button className="flex gap-x-4 bg-white text-black rounded-lg px-3 py-2">
+                                                    <Button
+                                                        onPress={() => setShareModal(true)}
+                                                        className="flex gap-x-4 bg-white text-black rounded-lg px-3 py-2"
+                                                    >
                                                         {" "}
                                                         <CiShare2 size={16} className="w-4" />
                                                         Share
@@ -122,9 +132,7 @@ export default function ExportModal({ isOpen, onOpenChange }) {
                                                 </div>
                                             </div>
                                         </div>
-                                        {/* video */}
                                         <div></div>
-                                        {/* detail */}
                                         <div className="mt-4 flex flex-col gap-2">
                                             <p className="text-[#F5F6F7] text-sm">Detail</p>
                                             <div className="flex gap-4">
@@ -150,13 +158,14 @@ export default function ExportModal({ isOpen, onOpenChange }) {
                                         </div>
                                     </div>
                                 </div>
-                            </ModalBody>
+                            </ModalBody> */}
                         </>
                     )}
                 </ModalContent>
             </Modal>
-            {/* {<DownloadModal isOpen={isOpen} onOpenChange={onOpenChange} />} */}
-            {/* {<ExportDialogBox isOpen={isOpen} onOpenChange={onOpenChange} />} */}
+            <DownloadModal isOpen={modal} onOpenChange={setModal} />
+            <ShareModal isOpen={shareModal} onOpenChange={setShareModal} />
+            <ExportDialogBox isOpen={exportModal} onOpenChange={setExportModal} />
         </div>
     );
 }

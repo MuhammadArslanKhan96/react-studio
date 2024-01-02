@@ -160,14 +160,17 @@ export default function Header() {
                 )}
                 <Button
                     className="w-fit lg:flex hidden border rounded-[5px] h-fit gap-x-2 px-4 py-1 text-white "
-                    onPress={onOpen}
+                    onPress={() => {
+                        setModal("invite");
+                        onOpen();
+                    }}
                 >
                     <Image src={"/images/invite.svg"} alt="" width={20} height={20} />
                     Invite
                 </Button>
                 {modal === "export" && <ExportModal isOpen={isOpen} onOpenChange={onOpenChange} />}
-                {!modal && <InviteMembers isOpen={isOpen} onOpenChange={onOpenChange} />}
-                {modal === true && <APIKey isOpen={isOpen} onOpenChange={onOpenChange} setModal={setModal} />}
+                {modal === "invite" && <InviteMembers isOpen={isOpen} onOpenChange={onOpenChange} />}
+                {modal === "api" && <APIKey isOpen={isOpen} onOpenChange={onOpenChange} />}
 
                 <Navbar className="w-fit">
                     <NavbarContent as="div" justify="end">
@@ -245,7 +248,7 @@ export default function Header() {
                                     <div
                                         onClick={() => {
                                             onOpen();
-                                            setModal(true);
+                                            setModal("api");
                                         }}
                                         className="flex items-center gap-2"
                                     >
