@@ -5,7 +5,6 @@ import PronouneModal from "./PronouneModal";
 import VoiceSelectorModal from "./VoiceSelectorModal";
 import ResourceModal from "./ResourceModal";
 import { useAppContext } from "./EditorContext";
-import { FaRegCircleQuestion } from "react-icons/fa6";
 import { FaDiscord } from "react-icons/fa";
 
 export default function SideNav() {
@@ -29,31 +28,31 @@ export default function SideNav() {
             title: "Resource",
             click: <ResourceModal isOpen={isOpen} onOpenChange={onOpenChange} />,
         },
-        {
-            img: "/images/subtitles.svg",
-            title: "Subtitles",
-            click: <ResourceModal isOpen={isOpen} onOpenChange={onOpenChange} />,
-        },
-        {
-            img: "/images/aiwriter.svg",
-            title: "AI Writer",
-            click: <ResourceModal isOpen={isOpen} onOpenChange={onOpenChange} />,
-        },
-        {
-            img: "/images/aiartist.svg",
-            title: "AI Artist",
-            click: <ResourceModal isOpen={isOpen} onOpenChange={onOpenChange} />,
-        },
-        {
-            img: "/images/pronoune.svg",
-            title: "Pronunciation",
-            click: <PronouneModal isOpen={isOpen} onOpenChange={onOpenChange} />,
-        },
-        {
-            img: "/images/setting.svg",
-            title: "Project Settings",
-            click: <PronouneModal isOpen={isOpen} onOpenChange={onOpenChange} />,
-        },
+        // {
+        //     img: "/images/subtitles.svg",
+        //     title: "Subtitles",
+        //     click: <ResourceModal isOpen={isOpen} onOpenChange={onOpenChange} />,
+        // },
+        // {
+        //     img: "/images/aiwriter.svg",
+        //     title: "AI Writer",
+        //     click: <ResourceModal isOpen={isOpen} onOpenChange={onOpenChange} />,
+        // },
+        // {
+        //     img: "/images/aiartist.svg",
+        //     title: "AI Artist",
+        //     click: <ResourceModal isOpen={isOpen} onOpenChange={onOpenChange} />,
+        // },
+        // {
+        //     img: "/images/pronoune.svg",
+        //     title: "Pronunciation",
+        //     click: <PronouneModal isOpen={isOpen} onOpenChange={onOpenChange} />,
+        // },
+        // {
+        //     img: "/images/setting.svg",
+        //     title: "Project Settings",
+        //     click: <PronouneModal isOpen={isOpen} onOpenChange={onOpenChange} />,
+        // },
     ];
 
     return (

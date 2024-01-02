@@ -1,5 +1,4 @@
 import { Timeline } from "@xzdarcy/react-timeline-editor";
-import { cloneDeep } from "lodash";
 import React, { useEffect, useRef, useState } from "react";
 import { CustomRender0, CustomRender1 } from "./custom";
 import { scale, scaleWidth, startLeft } from "./mock";
