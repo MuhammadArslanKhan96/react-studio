@@ -9,7 +9,7 @@ export default async function handler(req, res) {
         const docRef = doc(db, "users", req.body.email);
         const docSnap = await getDoc(docRef);
         if (!docSnap.exists()) {
-            res.status(400).json({ message: "Invalid email or password", success: false });
+            res.status(400).json({ message: "No user found!", success: false });
             return;
         }
         const user = docSnap.data();
