@@ -1,6 +1,6 @@
 import { Avatar, Button } from "@nextui-org/react";
 import React from "react";
-import { CiBookmark } from "react-icons/ci";
+import { CiBookmark} from "react-icons/ci";
 import { HiOutlineSpeakerWave } from "react-icons/hi2";
 import { IoMdPlay } from "react-icons/io";
 import { useAppContext } from "./EditorContext";
@@ -32,6 +32,7 @@ export default function VoiceCard({ data,callback }) {
             </div>
             <Button
                 onClick={() => {
+                    if (typeof voiceModel === "string") {
                     setMockData((pre) => [
                         ...pre.filter((a) => a.id !== voiceModel),
                         {
@@ -39,8 +40,8 @@ export default function VoiceCard({ data,callback }) {
                             speaker: data,
                         },
                     ]);
-
                     callback && callback(data);
+                    }
                     setVoiceModel(false);
                 }}
                 className="flex items-center w-full bg-[#255BB8] rounded-[5px] mt-1 text-[10px] py-1 group/edit invisible group-hover/item:visible"

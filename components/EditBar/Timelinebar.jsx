@@ -5,18 +5,6 @@ import { useAppContext } from "./EditorContext";
 export default function Timelinebar() {
     const { mockData, mockEffect, setMockData } = useAppContext();
     
-    console.log(mockData);
-    
-    // let crunker = new Crunker();
-
-    // crunker
-    //     .fetchAudio("/voice.mp3", "/background.mp3")
-    //     .then((buffers) => crunker.mergeAudio(buffers))
-    //     .then((merged) => crunker.export(merged, "audio/mp3"))
-    //     .then((output) => crunker.download(output.blob))
-    //     .catch((error) => {
-    //         throw new Error(error);
-    //     });
     return (
         <div>
             <div className="[&>div>div>div>div>div>div>div]:flex [&>div>div>div>div>div>div>div]:items-center [&>div>div>div>div>div>div>div]:justify-around">

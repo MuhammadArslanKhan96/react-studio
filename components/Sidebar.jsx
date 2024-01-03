@@ -1,4 +1,12 @@
-import { Avatar, Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, useDisclosure } from "@nextui-org/react";
+import {
+    Avatar,
+    Button,
+    Dropdown,
+    DropdownItem,
+    DropdownMenu,
+    DropdownTrigger,
+    useDisclosure,
+} from "@nextui-org/react";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { FaChevronDown } from "react-icons/fa";
@@ -20,7 +28,13 @@ export default function Sidebar() {
     const [modal, setModal] = useState(true);
     const [workSpaceModal, setWorkSpaceModal] = useState(false);
 
-    if (router.pathname === "/signin" || router.pathname === "/signup" || router.pathname.includes("/project")) return;
+    if (
+        router.pathname === "/signin" ||
+        router.pathname === "/signup" ||
+        router.pathname.includes("/project") ||
+        router.pathname.includes("/share")
+    )
+        return;
 
     return (
         <main
@@ -98,13 +112,13 @@ export default function Sidebar() {
                             </div>
 
                             <div>
-                                <IoMdAdd size={16} onClick={e => setWorkSpaceModal(true)} />
+                                <IoMdAdd size={16} onClick={(e) => setWorkSpaceModal(true)} />
                             </div>
                         </div>
                     </Button>
 
                     {modal &&
-                        workspaces.map(workspace => (
+                        (workspaces||[])?.map((workspace) => (
                             <div
                                 key={workspace.id}
                                 className="flex items-center cursor-pointer gap-x-2 text-[14px] border-b-2 border-b-[#4D4D51] px-3 py-2 hover:bg-[#39393C] mb-3"

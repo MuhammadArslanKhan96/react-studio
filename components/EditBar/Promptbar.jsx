@@ -5,6 +5,7 @@ import { TbClockHour12 } from "react-icons/tb";
 import TranscriptInput from "./TranscriptInput";
 import { useAppContext } from "./EditorContext";
 import audioControl from "../player/audioControl";
+import { useMemo } from "react";
 
 export default function Promptbar() {
     const { mockData, mockEffect, setMockData, setMockEffect } = useAppContext();
@@ -65,6 +66,10 @@ export default function Promptbar() {
         }));
     };
 
+    const sortedMockData = useMemo(() => {
+        return [...mockData].sort((a, b) => a.id - b.id);
+    }, [mockData]);
+
     return (
         <div className="flex justify-center mt-4">
             <div className="flex flex-col">
@@ -101,7 +106,7 @@ export default function Promptbar() {
                     </div>
                 </div>
                 <div className="flex flex-col gap-4">
-                    {mockData.map((item) => {
+                    {sortedMockData.map((item) => {
                         return (
                             <TranscriptInput
                                 mockData={item}

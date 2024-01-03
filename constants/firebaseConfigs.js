@@ -1,20 +1,25 @@
-import { initializeApp } from "firebase/app";
+import { getApps, initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyBSrwBgTu10dlJwXwmLJP_IMqzLlAp0_60",
-    authDomain: "vivald-45d17.firebaseapp.com",
-    projectId: "vivald-45d17",
-    storageBucket: "vivald-45d17.appspot.com",
-    messagingSenderId: "813966239757",
-    appId: "1:813966239757:web:da6b34a6328c1414fd0d44",
-    measurementId: "G-NK54BSYJ9Q"
+    apiKey: "AIzaSyC_YJcUyyhbwIhW1CPJ2qpfeJSzJTedX6I",
+    authDomain: "new-vivald.firebaseapp.com",
+    projectId: "new-vivald",
+    storageBucket: "new-vivald.appspot.com",
+    messagingSenderId: "885720779272",
+    appId: "1:885720779272:web:0ea443a58926d37c831fbd",
+    measurementId: "G-FQC64P70C8"
 };
 
+let app = null;
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
+if (!getApps().length) {
+    app = initializeApp(firebaseConfig);
+} else {
+    app = getApps()[0];
+}
 const db = getFirestore(app);
 const auth = getAuth(app);
 const storage = getStorage(app);

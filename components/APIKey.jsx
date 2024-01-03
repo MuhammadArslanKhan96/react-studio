@@ -28,30 +28,31 @@ import { IoCopyOutline } from "react-icons/io5";
 import CreateApiModal from "./EditBar/CreateApiModel";
 import { toast } from "react-toastify";
 
-
-export default function APIKey({ isOpen, onOpenChange, setModal }) {
-
+export default function APIKey({ isOpen, onOpenChange }) {
     const [scrollBehavior, setScrollBehavior] = React.useState("inside");
     const [childModelIsOpen, setChildModelOpen] = React.useState(false);
 
     const [apiKeys, setApiKeys] = React.useState([]);
     const [passwordVisibility, setPasswordVisibility] = React.useState({});
 
-    const togglePasswordVisibility = index => {
-        setPasswordVisibility(prev => ({
+    const togglePasswordVisibility = (index) => {
+        setPasswordVisibility((prev) => ({
             ...prev,
-            [index]: !prev[index]
+            [index]: !prev[index],
         }));
     };
 
     const handleCopyButton = (key) => {
-        navigator.clipboard.writeText(key).then(function () {
-            console.log('API Key copied to clipboard');
-        }, function (err) {
-            console.error('Could not copy text: ', err);
-        });
-        toast.success("Copy successfully")
-    }
+        navigator.clipboard.writeText(key).then(
+            function () {
+                console.log("API Key copied to clipboard");
+            },
+            function (err) {
+                console.error("Could not copy text: ", err);
+            }
+        );
+        toast.success("Copy successfully");
+    };
 
     return (
         <div>
@@ -86,7 +87,12 @@ export default function APIKey({ isOpen, onOpenChange, setModal }) {
                                 <div>
                                     <div className="flex justify-between items-center">
                                         <p className="text-base text-[#EFEFEF]">API Key Management</p>
-                                        <Button className="flex bg-[#2871DE] px-4 py-2 gap-2 rounded-lg" onClick={e => { setChildModelOpen(true) }}>
+                                        <Button
+                                            className="flex bg-[#2871DE] px-4 py-2 gap-2 rounded-lg"
+                                            onClick={(e) => {
+                                                setChildModelOpen(true);
+                                            }}
+                                        >
                                             <FaPlus />
                                             Create new API key
                                         </Button>
@@ -105,55 +111,60 @@ export default function APIKey({ isOpen, onOpenChange, setModal }) {
                                             </TableHeader>
 
                                             <TableBody className="p-0 m-0">
-                                                {
-                                                    apiKeys.map((data, index) => (
-                                                        <TableRow key={index}>
-                                                            <TableCell className="text-xs">
-                                                                <Input
-                                                                    value={data?.name}
-                                                                />
-                                                            </TableCell>
-                                                            <TableCell className="text-xs">
-                                                                <div className="flex gap-3 select-none">
-                                                                    <input
-                                                                        className="select-none bg-transparent border-0 outline-0"
-                                                                        type={passwordVisibility[index] ? 'text' : 'password'}
-                                                                        value={data?.key}
-                                                                        readOnly
-                                                                    />
-                                                                    {passwordVisibility[index] ?
-                                                                        <FaEyeSlash onClick={() => togglePasswordVisibility(index)} /> :
-                                                                        <FaRegEye onClick={() => togglePasswordVisibility(index)} />
+                                                {apiKeys.map((data, index) => (
+                                                    <TableRow key={index}>
+                                                        <TableCell className="text-xs">
+                                                            <Input value={data?.name} />
+                                                        </TableCell>
+                                                        <TableCell className="text-xs">
+                                                            <div className="flex gap-3 select-none">
+                                                                <input
+                                                                    className="select-none bg-transparent border-0 outline-0"
+                                                                    type={
+                                                                        passwordVisibility[index] ? "text" : "password"
                                                                     }
-                                                                    <IoCopyOutline onClick={() => handleCopyButton(data?.key)} />
-                                                                </div>
-                                                            </TableCell>
-                                                            <TableCell className="text-xs">Dec 29, 2023 10:51:22</TableCell>
-                                                            <TableCell>
-                                                                <p className="text-[#38A169] text-xs border rounded-[20px] border-[#38A169] h-fit w-fit px-2 py-1">
-                                                                    Active
-                                                                </p>
-                                                            </TableCell>
-                                                            <TableCell>
-                                                                <Dropdown className="border border-[#44444A] rounded-[0.25rem] bg-[#242427]">
-                                                                    <DropdownTrigger>
-                                                                        <Button>
-                                                                            <CiMenuKebab />
-                                                                        </Button>
-                                                                    </DropdownTrigger>
-                                                                    <DropdownMenu aria-label="Dynamic Actions">
-                                                                        <DropdownItem>
-                                                                            <p className="text-[#B6B8BF]">Deactivate Key</p>
-                                                                        </DropdownItem>
-                                                                        <DropdownItem>
-                                                                            <p className="text-[#E53E3E]">Delete Key</p>
-                                                                        </DropdownItem>
-                                                                    </DropdownMenu>
-                                                                </Dropdown>
-                                                            </TableCell>
-                                                        </TableRow>
-                                                    ))
-                                                }
+                                                                    value={data?.key}
+                                                                    readOnly
+                                                                />
+                                                                {passwordVisibility[index] ? (
+                                                                    <FaEyeSlash
+                                                                        onClick={() => togglePasswordVisibility(index)}
+                                                                    />
+                                                                ) : (
+                                                                    <FaRegEye
+                                                                        onClick={() => togglePasswordVisibility(index)}
+                                                                    />
+                                                                )}
+                                                                <IoCopyOutline
+                                                                    onClick={() => handleCopyButton(data?.key)}
+                                                                />
+                                                            </div>
+                                                        </TableCell>
+                                                        <TableCell className="text-xs">Dec 29, 2023 10:51:22</TableCell>
+                                                        <TableCell>
+                                                            <p className="text-[#38A169] text-xs border rounded-[20px] border-[#38A169] h-fit w-fit px-2 py-1">
+                                                                Active
+                                                            </p>
+                                                        </TableCell>
+                                                        <TableCell>
+                                                            <Dropdown className="border border-[#44444A] rounded-[0.25rem] bg-[#242427]">
+                                                                <DropdownTrigger>
+                                                                    <Button>
+                                                                        <CiMenuKebab />
+                                                                    </Button>
+                                                                </DropdownTrigger>
+                                                                <DropdownMenu aria-label="Dynamic Actions">
+                                                                    <DropdownItem>
+                                                                        <p className="text-[#B6B8BF]">Deactivate Key</p>
+                                                                    </DropdownItem>
+                                                                    <DropdownItem>
+                                                                        <p className="text-[#E53E3E]">Delete Key</p>
+                                                                    </DropdownItem>
+                                                                </DropdownMenu>
+                                                            </Dropdown>
+                                                        </TableCell>
+                                                    </TableRow>
+                                                ))}
                                             </TableBody>
                                         </Table>
                                     </div>
@@ -186,7 +197,7 @@ export default function APIKey({ isOpen, onOpenChange, setModal }) {
                                     color="danger"
                                     variant="light"
                                     className="bg-[#EBECF0] text-[#242427] px-4 py-2 h-fit rounded-lg"
-                                    onClick={() => setModal(false)}
+                                    onClick={onOpenChange}
                                 >
                                     Close
                                 </Button>

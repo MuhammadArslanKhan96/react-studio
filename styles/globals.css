@@ -104,7 +104,6 @@ input[type="number"] {
 }
  .timeline-editor-engine .timeline-editor-action-effect-effect0 {
 	 background-color: #cd9541;
-	 background-image: url("/assets/soundWave.png");
 }
  .timeline-editor-engine .timeline-editor-action-effect-effect1 {
 	 background-color: #7846a7;
@@ -287,7 +286,6 @@ input[type="number"] {
       border-radius:4px;
       &-effect-effect0 {
         background-color: #cd9541;
-        background-image: url("/assets/soundWave.png");
       }    
       
       &-effect-effect1 {

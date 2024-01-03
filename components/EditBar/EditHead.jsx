@@ -9,7 +9,6 @@ import { generateSpeech } from "../../helpers/generate-audio";
 
 export default function EditHead() {
     const { mockData, setMockData, initMockData } = useAppContext();
-    console.log("🚀 ~ file: EditHead.jsx:12 ~ EditHead ~ mockData:", mockData)
 
     const generateAudio = async () => {
         mockData

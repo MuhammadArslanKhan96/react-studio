@@ -137,9 +137,9 @@ export default function VoiceSelectorModal({ isOpen, onOpenChange, callback }) {
         }
     ];
 
-    const globalVoices = speakers.filter((speaker) => speaker.speakerType === "global");
-    const premiumVoices = speakers.filter((speaker) => speaker.speakerType === "premium");
-    const emotionalVoices = speakers.filter((speaker) => speaker.speakerType === "emotional");
+    const globalVoices = (speakers||[])?.filter((speaker) => speaker.speakerType === "global");
+    const premiumVoices = (speakers||[])?.filter((speaker) => speaker.speakerType === "premium");
+    const emotionalVoices = (speakers||[])?.filter((speaker) => speaker.speakerType === "emotional");
 
     return (
         <div>

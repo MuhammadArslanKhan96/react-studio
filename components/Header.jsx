@@ -29,6 +29,7 @@ import { auth } from "../constants/firebaseConfigs";
 import { toast } from "react-toastify";
 import APIKey from "./APIKey";
 import AccountModal from "./EditBar/AccountModel";
+import ExportModal from "./ExportModal";
 
 export default function Header() {
     const router = useRouter();
@@ -36,7 +37,7 @@ export default function Header() {
     const { setUser, user, mockData, mockEffect, setSelectedProject, selectedProject, setProjects } = useAppContext();
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const [modal, setModal] = useState(false);
-    const [accountModal, setAccountModal] = React.useState(false)
+    const [accountModal, setAccountModal] = React.useState(false);
 
     if (router.pathname === "/signin" || router.pathname === "/signup") return;
 
@@ -145,7 +146,13 @@ export default function Header() {
                         <Button onClick={saveProject} className="border rounded-[10px] px-2 py-1 text-[14px]">
                             Save
                         </Button>
-                        <Button className="border lg:flex hidden rounded-[10px] px-2 py-1 gap-x-2 items-center bg-[#EBECF0] text-black text-[14px]">
+                        <Button
+                            className="border lg:flex hidden rounded-[10px] px-2 py-1 gap-x-2 items-center bg-[#EBECF0] text-black text-[14px]"
+                            onClick={() => {
+                                onOpen();
+                                setModal("export");
+                            }}
+                        >
                             Export
                             <RiShareForward2Fill />
                         </Button>
@@ -153,13 +160,17 @@ export default function Header() {
                 )}
                 <Button
                     className="w-fit lg:flex hidden border rounded-[5px] h-fit gap-x-2 px-4 py-1 text-white "
-                    onPress={onOpen}
+                    onPress={() => {
+                        setModal("invite");
+                        onOpen();
+                    }}
                 >
                     <Image src={"/images/invite.svg"} alt="" width={20} height={20} />
                     Invite
                 </Button>
-                {!modal && <InviteMembers isOpen={isOpen} onOpenChange={onOpenChange} />}
-                {modal && <APIKey isOpen={isOpen} onOpenChange={onOpenChange} setModal={setModal} />}
+                {modal === "export" && <ExportModal isOpen={isOpen} onOpenChange={onOpenChange} />}
+                {modal === "invite" && <InviteMembers isOpen={isOpen} onOpenChange={onOpenChange} />}
+                {modal === "api" && <APIKey isOpen={isOpen} onOpenChange={onOpenChange} />}
 
                 <Navbar className="w-fit">
                     <NavbarContent as="div" justify="end">
@@ -237,7 +248,7 @@ export default function Header() {
                                     <div
                                         onClick={() => {
                                             onOpen();
-                                            setModal(true);
+                                            setModal("api");
                                         }}
                                         className="flex items-center gap-2"
                                     >

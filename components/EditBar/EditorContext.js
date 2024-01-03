@@ -86,7 +86,7 @@ export const AppContextProvider = ({ children }) => {
 
     const getData = async () => {
         const data = await getSpeakers();
-        setSpeakers(data);
+        setSpeakers(data || []);
     };
 
     useEffect(() => {
@@ -98,19 +98,19 @@ export const AppContextProvider = ({ children }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const getProjects = useCallback(async (email) => {
         const projects = await fetch('/api/projects/get-projects').then(r => r.json()).then(r => r.projects);
-        setProjects(projects);
+        setProjects(projects || []);
     }, []);
 
     const getMembers = async (email) => {
         const workspaces = await fetch('/api/workspaces/get-workspaces?email=' + email).then(r => r.json()).then(r => r.workspaces);
         const pending = await fetch('/api/workspaces/get-pending-invites?email=' + email).then(r => r.json()).then(r => r.pending);
         setPendingInvites([]);
-        await pending.forEach(async (workspace) => {
+        await (pending||[])?.forEach(async (workspace) => {
             const members = workspace.members;
             const getAllMembers = await Promise.all(members.map(async a => await fetch(`/api/auth/get-user?email=${a.email}`).then(r => r.json()).then(r => ({ ...r.user, ...a }))));
             setPendingInvites(pre => ([...pre, { ...workspace, members: getAllMembers }]));
         });
-        setWorkspaces(workspaces);
+        setWorkspaces(workspaces||[]);
         setSelectedWorkspace(workspaces?.[0] || {});
     };
 
