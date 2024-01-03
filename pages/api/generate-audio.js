@@ -12,6 +12,18 @@ export function generateSpeech(body) {
     })
       .then((response) => response.json())
       .then(async data => {
+        let originalData = data;
+        while (originalData === 'in_progress') {
+          await fetch("https://api.genny.lovo.ai/api/v1/tts/" + data.id, {
+            ...apiOptions,
+            method: "GET",
+          })
+            .then((response) => response.json())
+            .then(async data2 => {
+              console.log(data2);
+              originalData = data2
+            })
+        }
         console.log(data)
         const blob = await fetch(data?.data?.[0]?.urls?.[0]).then(r => r.blob());
         const storageRef = ref(storage, `speeches/${v4()}.mp3`);
