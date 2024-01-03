@@ -18,129 +18,128 @@ export default function VoiceSelectorModal({ isOpen, onOpenChange, callback }) {
     const [styleModel, setStyleModel] = useState(false);
     const [caseModel, setCaseModel] = useState(false);
 
-    const { speakers } = useAppContext();
+    const { speakers, user } = useAppContext();
 
     const voices = [
         {
             img: "/images/diamond.svg",
-            title: "Pro Voice",
+            title: "Pro Voice"
         },
         {
             img: "/images/rapidvoice.svg",
-            title: "Rapid Voice",
+            title: "Rapid Voice"
         },
         {
             img: "/images/world.svg",
-            title: "Global Voice",
+            title: "Global Voice"
         },
         {
             img: "/images/voiceCloning.svg",
-            title: "Voice Cloning",
+            title: "Voice Cloning"
         },
-        {
-            img: "/images/collectiblevoice.svg",
-            title: "Colletibe Voice",
-        },
+        // {
+        //     img: "/images/collectiblevoice.svg",
+        //     title: "Colletibe Voice",
+        // },
         {
             img: "/images/bookmark.svg",
-            title: "Bookmarked",
-        },
+            title: "Bookmarked"
+        }
     ];
 
     const stlyelist = [
         {
-            title: "😍 Admiration",
+            title: "😍 Admiration"
         },
         {
-            title: "😲 Amazed",
+            title: "😲 Amazed"
         },
         {
-            title: "😠 Annoyed",
+            title: "😠 Annoyed"
         },
         {
-            title: "😰 Apprehensive",
+            title: "😰 Apprehensive"
         },
         {
-            title: "😑 Boredom",
+            title: "😑 Boredom"
         },
         {
-            title: "😎 Confident",
+            title: "😎 Confident"
         },
         {
-            title: "📖 Default",
+            title: "📖 Default"
         },
         {
-            title: "😞 Disappointed",
+            title: "😞 Disappointed"
         },
         {
-            title: "👎 Disapproval",
+            title: "👎 Disapproval"
         },
         {
-            title: "🤢 Disgusted",
+            title: "🤢 Disgusted"
         },
         {
-            title: "🤤 Drunken - Happy",
+            title: "🤤 Drunken - Happy"
         },
         {
-            title: "😥 Drunken - Sad",
+            title: "😥 Drunken - Sad"
         },
         {
-            title: "🤩 Ecstatic",
+            title: "🤩 Ecstatic"
         },
         {
-            title: "🤵 Flirty",
+            title: "🤵 Flirty"
         },
         {
-            title: "😡 Furious",
+            title: "😡 Furious"
         },
         {
-            title: "😭 Grief",
+            title: "😭 Grief"
         },
         {
-            title: "🤫 Hesitant",
+            title: "🤫 Hesitant"
         },
         {
-            title: "💖 Intimate",
+            title: "💖 Intimate"
         },
         {
-            title: "📖 Narrative",
+            title: "📖 Narrative"
         },
         {
-            title: "🧑‍💼 Presenting",
+            title: "🧑‍💼 Presenting"
         },
         {
-            title: "🤪 Sarcastic",
+            title: "🤪 Sarcastic"
         },
         {
-            title: "😌 Serene",
+            title: "😌 Serene"
         },
         {
-            title: "🧐 Serious",
+            title: "🧐 Serious"
         },
         {
-            title: "🤒 Sick",
+            title: "🤒 Sick"
         },
         {
-            title: "🤤 Sleepy - Happy",
+            title: "🤤 Sleepy - Happy"
         },
         {
-            title: "😪 Sleepy - Frustrated",
+            title: "😪 Sleepy - Frustrated"
         },
         {
-            title: "😱 Terrified",
+            title: "😱 Terrified"
         },
         {
-            title: "😫 Tired",
+            title: "😫 Tired"
         },
         {
-            title: "⏱ Urgent",
-        },
+            title: "⏱ Urgent"
+        }
     ];
 
-    const globalVoices = speakers.filter(speaker => speaker.speakerType === 'global');
-    const premiumVoices = speakers.filter(speaker => speaker.speakerType === 'premium');
-    const emotionalVoices = speakers.filter(speaker => speaker.speakerType === 'emotional');
-
+    const globalVoices = speakers.filter((speaker) => speaker.speakerType === "global");
+    const premiumVoices = speakers.filter((speaker) => speaker.speakerType === "premium");
+    const emotionalVoices = speakers.filter((speaker) => speaker.speakerType === "emotional");
 
     return (
         <div>
@@ -349,6 +348,16 @@ export default function VoiceSelectorModal({ isOpen, onOpenChange, callback }) {
                                                     </CardBody>
                                                 </Card>
                                             </div>
+                                        </div>
+                                    ) : active === "Bookmarked" ? (
+                                        <div className="mt-2 flex gap-2 flex-wrap overflow-y-scroll scrollStyle max-h-[400px]">
+                                            {speakers
+                                                .filter((a) => a.bookmarks.find(user?.email))
+                                                .map((globalVoice) => (
+                                                    <div key={globalVoice.id}>
+                                                        <VoiceCard data={globalVoice} callback={callback} />
+                                                    </div>
+                                                ))}
                                         </div>
                                     ) : null}
                                 </div>

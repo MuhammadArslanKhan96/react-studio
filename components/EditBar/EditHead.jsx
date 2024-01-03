@@ -3,13 +3,13 @@ import Image from "next/image";
 import React from "react";
 import { HiOutlineArrowUturnLeft, HiOutlineArrowUturnRight } from "react-icons/hi2";
 import { GrDownload } from "react-icons/gr";
-// import { RiSpeedUpLine } from "react-icons/ri";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { useAppContext } from "./EditorContext";
 import { generateSpeech } from "../../helpers/generate-audio";
 
 export default function EditHead() {
     const { mockData, setMockData, initMockData } = useAppContext();
+    console.log("🚀 ~ file: EditHead.jsx:12 ~ EditHead ~ mockData:", mockData)
 
     const generateAudio = async () => {
         mockData

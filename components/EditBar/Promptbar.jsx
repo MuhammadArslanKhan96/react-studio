@@ -8,6 +8,7 @@ import audioControl from "../player/audioControl";
 
 export default function Promptbar() {
     const { mockData, mockEffect, setMockData, setMockEffect } = useAppContext();
+    
     const addAnotherMock = () => {
         const editor = mockData.length;
         setMockData((pre) =>

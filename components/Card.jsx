@@ -93,13 +93,11 @@ export default function Card({ project }) {
             </div>
             {/* <hr /> */}
             <div className="px-[12px] max-h-[11rem] h-full py-[4px] relative">
-                <p className="text-white">
+                <p className="text-white line-clamp-5">
                     {project?.isBasic
                         ? project?.data?.sort((a, b) => b?.time - a?.time)?.[0]?.speech?.text
                         : project?.mockData?.[0]?.actions?.[0]?.data?.name ||
-                          `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
-                    industry standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
-                    scrambled it to make a type specimen book.`}
+                          ``}
                 </p>
                 {user?.photoURL ? (
                     <Avatar

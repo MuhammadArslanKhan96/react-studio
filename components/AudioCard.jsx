@@ -172,7 +172,7 @@ function AudioCard({ data, setViewModal, setShareModal }) {
                                     <DropdownItem
                                         onClick={() => {
                                             setRate(1);
-                                            sound.rate(1, soundId);
+                                            sound.rate(1.0, soundId);
                                         }}
                                         key="copy"
                                     >
@@ -190,7 +190,7 @@ function AudioCard({ data, setViewModal, setShareModal }) {
                                     <DropdownItem
                                         onClick={() => {
                                             setRate(2);
-                                            sound.rate(2, soundId);
+                                            sound.rate(2.0, soundId);
                                         }}
                                         key="delete"
                                     >

@@ -18,12 +18,15 @@
         "@nextui-org/react": "^2.2.9",
         "@xzdarcy/react-timeline-editor": "^0.1.9",
         "antd": "^5.12.5",
+        "canvas": "^2.11.2",
         "cloudinary": "^1.41.1",
+        "crunker": "^2.3.0",
         "event-emitter": "^0.3.5",
         "ffmpeg.js": "^4.2.9003",
         "file-saver": "^2.0.5",
         "firebase": "^10.7.1",
         "framer-motion": "^10.16.16",
+        "gif-encoder": "^0.7.2",
         "howler": "^2.2.4",
         "lodash": "^4.17.21",
         "lottie-web": "^5.12.2",
@@ -40,15 +43,15 @@
         "uuidv4": "^6.2.13"
     },
     "devDependencies": {
+        "@types/event-emitter": "^0.3.5",
+        "@types/file-saver": "^2.0.7",
         "@types/node": "20.10.5",
+        "@types/uuid": "^9.0.7",
         "autoprefixer": "^10.0.1",
         "eslint": "^8",
         "eslint-config-next": "14.0.4",
         "postcss": "^8",
         "postcss-nesting": "^12.0.2",
-        "tailwindcss": "^3.3.0",
-        "@types/event-emitter": "^0.3.5",
-        "@types/file-saver": "^2.0.7",
-        "@types/uuid": "^9.0.7"
+        "tailwindcss": "^3.3.0"
     }
 }
