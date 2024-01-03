@@ -120,7 +120,9 @@ function TranscriptInput({ mockData, mockEffect }) {
                     onChange={handleTextChange}
                     value={mockEffect?.name}
                     cols="50"
-                    className="bg-transparent resize-none border border-[#44444A] rounded-[5px] p-2"
+                    className="bg-transparent resize-none border border-[#44444A] rounded-[5px] p-2 scrollStyle"
+                    maxLength={400}
+                    max={400}
                 ></textarea>
                 <div className="absolute top-2 right-2 hover:bg-[#353538] p-2 rounded-[5px] cursor-pointer">
                     <Dropdown>
