@@ -168,6 +168,7 @@ export default function SignIn() {
                         <Input
                             onChange={handleChange}
                             name="password"
+                            type="password"
                             className="bg-[#2D2D30] border border-[#505057] rounded-[5px] py-2"
                             placeholder="Password"
                             labelPlacement="outside"

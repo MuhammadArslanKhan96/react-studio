@@ -69,9 +69,9 @@ export default function SignUp() {
     async function signUpWithEmailAndPassword() {
         try {
             var minNumberofChars = 6;
-            var regularExpression = /^[a-zA-Z0-9!@#$%^&*]{6,16}$/;
+            var regularExpression = /^[a-zA-Z0-9!@#$%^&*]{6,}$/;
             if (credentials.password.length < minNumberofChars) {
-                toast.error("Password should be between 6 to 16 characters");
+                toast.error("Password should be minimum 6 characters");
                 return;
             }
             if (!regularExpression.test(credentials.password)) {
@@ -188,6 +188,7 @@ export default function SignUp() {
                             className="bg-[#2D2D30] border border-[#505057] rounded-[5px] py-2"
                             placeholder="Password"
                             labelPlacement="outside"
+                            type="password"
                             onChange={handleChange}
                             name="password"
                             startContent={
@@ -210,6 +211,7 @@ export default function SignUp() {
                         className="bg-[#2D2D30] border border-[#505057] rounded-[5px] py-2"
                         placeholder="Confirm Password"
                         labelPlacement="outside"
+                            type="password"
                         onChange={handleChange}
                         name="confirmpassword"
                         startContent={
