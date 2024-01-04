@@ -13,10 +13,9 @@ import ShareModal from "./EditBar/ShareModal";
 import ViewModal from "./EditBar/ViewModal";
 
 export default function SimpleMode() {
-    const { setVoiceModel, voiceModel, speakers, selectedProject, setSelectedProject, setProjects } = useAppContext();
+    const { setVoiceModel, voiceModel, speakers, selectedProject, setSelectedProject, setProjects, selectedSpeaker } = useAppContext();
     const [text, setText] = useState("");
-    const [speaker, setSpeaker] = useState(speakers[0]);
-    const [speech, setSpeech] = useState();
+    const [speaker, setSpeaker] = useState(selectedSpeaker);
     const [shareModal, setShareModal] = useState();
     const [viewModal, setViewModal] = useState();
     const ref = useRef();
@@ -51,40 +50,6 @@ export default function SimpleMode() {
                 }
             ]
         }));
-
-        await fetch(`/api/projects/update-project?id=${selectedProject?.id}`, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                data: [
-                    ...(selectedProject.data || []),
-                    {
-                        speaker,
-                        text,
-                        speech,
-                        time: Date.now()
-                    }
-                ]
-            })
-        });
-
-        setProjects((pre) => [
-            ...pre.filter((a) => a.id !== selectedProject.id),
-            {
-                ...selectedProject,
-                data: [
-                    ...(selectedProject.data || []),
-                    {
-                        speaker,
-                        text,
-                        speech,
-                        time: Date.now()
-                    }
-                ]
-            }
-        ]);
 
         setText("");
     };
@@ -172,6 +137,7 @@ export default function SimpleMode() {
                     </Button>
                     <VoiceSelectorModal
                         callback={function (data) {
+                            console.log(data)
                             setSpeaker(data);
                         }}
                         isOpen={voiceModel}

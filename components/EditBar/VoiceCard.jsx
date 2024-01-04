@@ -6,7 +6,7 @@ import { IoMdPlay } from "react-icons/io";
 import { useAppContext } from "./EditorContext";
 
 export default function VoiceCard({ data,callback }) {
-    const { setMockData, setVoiceModel, voiceModel } = useAppContext();
+    const { setMockData, setVoiceModel, voiceModel, setSelectedSpeaker } = useAppContext();
 
     return (
         <div className="max-w-[270px] bg-[#2D2D30] border border-[#38383D] hover:border-[#EFEFEF] rounded-[10px] p-[16px] relative group/item">
@@ -40,9 +40,12 @@ export default function VoiceCard({ data,callback }) {
                             speaker: data,
                         },
                     ]);
-                    callback && callback(data);
-                    }
+                    } else {
+                        setSelectedSpeaker(data);
+                        
+                }
                     setVoiceModel(false);
+                if(callback) {callback(data)};
                 }}
                 className="flex items-center w-full bg-[#255BB8] rounded-[5px] mt-1 text-[10px] py-1 group/edit invisible group-hover/item:visible"
             >

@@ -16,13 +16,16 @@ import { RiDeleteBin5Line } from "react-icons/ri";
 import { VscPulse } from "react-icons/vsc";
 import { useAppContext } from "./EditorContext";
 import { useEffect, useState } from "react";
+import { toast } from 'react-toastify';
 import { generateSpeech } from "../../helpers/generate-audio";
 
-function TranscriptInput({ mockData, mockEffect }) {
-    const { setMockData, setMockEffect, speakers, setVoiceModel } = useAppContext();
+function TranscriptInput({ mockData, mockEffect,length }) {
+    const { setMockData, setMockEffect, setVoiceModel, initMockData } = useAppContext();
     const [disabled, setDisabled] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
-    const [play, setPlay] = useState(false);
+    const [soundId, setSoundId] = useState();
+    const [isPlaying, setIsPlaying] = useState(false);
+    const [sound, setSound] = useState();
     const handleCheckboxChange = (e) => {
         setMockData((pre) =>
             [...pre.filter((a) => a.id !== mockData.id), { ...mockData, checked: e.target.checked }].sort(function (
@@ -33,6 +36,36 @@ function TranscriptInput({ mockData, mockEffect }) {
             })
         );
     };
+
+    useEffect(() => {
+        if (mockData?.actions?.[0]?.data?.src) {
+            setSound(
+                new Howl({
+                    src: [mockData?.actions?.[0]?.data?.src],
+                    html5: true,
+                    onload: function (soundId) {
+                        setSoundId(soundId);
+                    },
+                    onplay: function () {
+                        setIsPlaying(true);
+                    },
+                    onpause: function () {
+                        setIsPlaying(false);
+                    },
+                    onend: function () {
+                        setIsPlaying(false);
+                    },
+                    onseek: function () {
+                        setCurrentTime(Math.round(this.seek(soundId)));
+                    }
+                })
+            );
+
+            if (mockData?.actions?.[0]?.data?.src === '/audio/bg.mp3') {
+                setDisabled(true)
+            } 
+        }
+    }, [mockData]);
 
     const downloadFile = async () => {
         const downloadLink = document.createElement("a");
@@ -61,24 +94,14 @@ function TranscriptInput({ mockData, mockEffect }) {
         }));
     };
 
-    useEffect(() => {
-        setMockData((pre) =>
-            [
-                ...pre.filter((a) => a.id !== mockData.id),
-                {
-                    ...mockData,
-                    speaker: speakers[0],
-                },
-            ].sort(function (a, b) {
-                return Number(b.id) - Number(a.id);
-            })
-        );
-    }, [speakers]);
-
     const generateAudio = async () => {
         if (!mockEffect?.name.length) return;
         setIsLoading(true);
         const speech = await generateSpeech(JSON.stringify({ text: mockEffect?.name, speaker: mockData?.speaker?.id }));
+        if (!speech?.urls?.[0]) {
+        setIsLoading(false);
+            return toast.error('Something went wrong')
+        };
         setMockData((pre) =>
             [
                 ...pre.filter((a) => a.id !== mockData.id),
@@ -98,6 +121,8 @@ function TranscriptInput({ mockData, mockEffect }) {
         setIsLoading(false);
         setDisabled(false);
     };
+
+
     return (
         <div className="flex items-start gap-x-2">
             <div className="flex gap-2 items-center">
@@ -140,13 +165,19 @@ function TranscriptInput({ mockData, mockEffect }) {
                             <DropdownItem
                                 key="delete"
                                 onClick={() =>
-                                    setMockData((pre) =>
+                                {
+                                    if (length) {
+                                        setMockData((pre) =>
                                         pre
-                                            .filter((a) => a.id !== mockData.id)
-                                            .sort(function (a, b) {
-                                                return Number(b.id) - Number(a.id);
-                                            })
-                                    )
+                                        .filter((a) => a.id !== mockData.id)
+                                        .sort(function (a, b) {
+                                            return Number(b.id) - Number(a.id);
+                                        })
+                                        )
+                                    } else {
+                                        setMockData(initMockData);
+                                    }
+                                    }
                                 }
                                 className="text-[14px] text-[#F56565]"
                                 startContent={<RiDeleteBin5Line />}
@@ -184,19 +215,16 @@ function TranscriptInput({ mockData, mockEffect }) {
                     <Button
                         disabled={disabled}
                         onClick={() => {
-                            var audio = document.getElementById("audio");
-                            if (play) {
-                                audio.pause();
+                            if (isPlaying) {
+                                sound.pause(soundId);
                             } else {
-                                audio.play();
+                                sound.play(soundId);
                             }
-                            setPlay(!play);
+                            setIsPlaying(!isPlaying);
                         }}
                         className=" disabled:cursor-not-allowed disabled:opacity-50 enabled:cursor-pointer"
                     >
-                        {play ? <FaPause size={20} /> : <FaPlay size={20} />}
-
-                        <audio id="audio" className="hidden" src={mockData?.actions?.[0]?.data?.src} controls />
+                        {isPlaying ? <FaPause size={20} /> : <FaPlay size={20} />}
                     </Button>
                 </Tooltip>
                 <Tooltip showArrow={true} content="Export" className="bg-black rounded-[10px]">

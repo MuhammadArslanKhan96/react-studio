@@ -8,7 +8,7 @@ import audioControl from "../player/audioControl";
 import { useMemo } from "react";
 
 export default function Promptbar() {
-    const { mockData, mockEffect, setMockData, setMockEffect } = useAppContext();
+    const { mockData, mockEffect, setMockData, setMockEffect, selectedSpeaker } = useAppContext();
     
     const addAnotherMock = () => {
         const editor = mockData.length;
@@ -30,6 +30,7 @@ export default function Promptbar() {
                         },
                     ],
                     checked: false,
+                    speaker: selectedSpeaker
                 },
             ].sort(function (a, b) {
                 return Number(b.id) - Number(a.id);
@@ -110,6 +111,7 @@ export default function Promptbar() {
                         return (
                             <TranscriptInput
                                 mockData={item}
+                                length={mockData.length>1}
                                 mockEffect={mockEffect[`effect${item.id}`]}
                                 key={item.id}
                             />

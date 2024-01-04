@@ -13,7 +13,7 @@ export function generateSpeech(body) {
       .then((response) => response.json())
       .then(async data => {
         let originalData = data;
-        while (originalData === 'in_progress') {
+        while (originalData.status === 'in_progress') {
           await fetch("https://api.genny.lovo.ai/api/v1/tts/" + data.id, {
             ...apiOptions,
             method: "GET",
