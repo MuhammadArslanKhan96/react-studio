@@ -7,6 +7,7 @@ import { MdOutlineUploadFile } from "react-icons/md";
 import { TbClockHour12 } from "react-icons/tb";
 import { generateSpeech } from "../helpers/generate-audio";
 import AudioCard from "./AudioCard";
+import { toast } from 'react-toastify';
 import { useAppContext } from "./EditBar/EditorContext";
 import VoiceSelectorModal from "./EditBar/VoiceSelectorModal";
 import ShareModal from "./EditBar/ShareModal";
@@ -17,6 +18,7 @@ export default function SimpleMode() {
     const [text, setText] = useState("");
     const [speaker, setSpeaker] = useState(selectedSpeaker);
     const [shareModal, setShareModal] = useState();
+    const [isLoading, setIsLoading] = useState(false);
     const [viewModal, setViewModal] = useState();
     const ref = useRef();
 
@@ -32,12 +34,16 @@ export default function SimpleMode() {
         reader.readAsText(file);
     };
     const handleGenerate = async () => {
+        setIsLoading(true);
         const data = {
             text: text,
             speaker: speaker.id
         };
         const speech = await generateSpeech(JSON.stringify(data));
-        if(!speech?.urls?.length) return;
+        if (!speech?.urls?.[0]) {
+        setIsLoading(false);
+            return toast.error('Something went wrong')
+        };
         setSelectedProject((pre) => ({
             ...pre,
             data: [
@@ -51,6 +57,7 @@ export default function SimpleMode() {
             ]
         }));
 
+        setIsLoading(false);
         setText("");
     };
 
@@ -129,11 +136,19 @@ export default function SimpleMode() {
                         </div>
                     </div>
                     <Button
+                        disabled={isLoading}
                         onClick={handleGenerate}
                         className="bg-[#2871DE] w-full py-2 rounded-xl font-semibold mt-4 items-center gap-2"
                     >
-                        <Image src={"/images/generate.svg"} alt="" width={20} height={20} />
-                        Generate
+                        {!isLoading ? (
+                            
+                                <>
+                            <Image src={"/images/generate.svg"} alt="" width={20} height={20} />
+                                Generate
+                            </>
+                        ) : (
+                            <div className="loadingButton"></div>
+                        )}
                     </Button>
                     <VoiceSelectorModal
                         callback={function (data) {
