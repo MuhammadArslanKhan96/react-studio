@@ -67,7 +67,7 @@ export default function SignIn() {
     const handleChange = (e) => {
         setCredentials((pre) => ({
             ...pre,
-            [e.target.name]: e.target.value
+            [e.target.id]: e.target.value
         }));
     };
 
@@ -150,12 +150,13 @@ export default function SignIn() {
                         <p className="text-[#B2B2B8]">or</p>
                         <div className="h-[1px] bg-[#B2B2B8] w-full"></div>
                     </div>
-                    <div className="flex flex-col w-full mt-4 mb-4 gap-4">
+                    <div
+                    className="flex flex-col w-full mt-4 mb-4 gap-4">
                         <Input
                             className="bg-[#2D2D30] border border-[#505057] rounded-[5px] py-2"
                             type="email"
                             onChange={handleChange}
-                            name="email"
+                            id="email"
                             placeholder="you@example.com"
                             labelPlacement="outside"
                             startContent={
@@ -167,7 +168,7 @@ export default function SignIn() {
                         />
                         <Input
                             onChange={handleChange}
-                            name="password"
+                            id="password"
                             type="password"
                             className="bg-[#2D2D30] border border-[#505057] rounded-[5px] py-2"
                             placeholder="Password"
