@@ -24,7 +24,7 @@ export default async function handler(req, res) {
         });
         await setDoc(doc(db, "users", req.body.email), {
             ...req.body, members: [], plan: "Free", slug: req.body.displayName.toLowerCase().split(' ').join('-'), team: {
-                title: "",
+                title: req.body?.displayName,
                 photoURL: null,
             }
         });
