@@ -135,21 +135,21 @@ export default function Sidebar() {
 
                     <Link
                         href={"/pricing"}
-                        className="flex items-center gap-x-2 text-[14px] py-2 px-3 hover:bg-[#39393C] "
+                        className={(router.pathname === '/pricing' ?"bg-[#182C5C] hover:!bg-[#182C5C]" : "")+ " flex items-center gap-x-2 text-[14px] py-2 px-3 hover:bg-[#39393C] "}
                     >
                         <Image src={"/images/pricing.svg"} alt="" width={20} height={20} />
                         Pricing
                     </Link>
                     <Link
                         href={"/setting/subscription"}
-                        className="flex items-center gap-x-2 text-[14px] py-2 px-3 hover:bg-[#39393C] space-y-0"
+                        className={(router.pathname === '/setting/subscription' ?"bg-[#182C5C] hover:!bg-[#182C5C]" : "")+" flex items-center gap-x-2 text-[14px] py-2 px-3 hover:bg-[#39393C] space-y-0"}
                     >
                         <Image src={"/images/subscription.svg"} alt="" width={20} height={20} />
                         Subscription
                     </Link>
                     <Link
                         href={"/setting/info"}
-                        className="flex items-center gap-x-2 text-[14px] py-2 px-3 hover:bg-[#39393C] "
+                        className={(router.pathname === '/setting/info' ?"bg-[#182C5C] hover:!bg-[#182C5C]" : "") + " flex items-center gap-x-2 text-[14px] py-2 px-3 hover:bg-[#39393C] "}
                     >
                         <Image src={"/images/setting.svg"} alt="" width={20} height={20} />
                         Setting

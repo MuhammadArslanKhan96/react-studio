@@ -7,11 +7,13 @@ import { RxCross2 } from "react-icons/rx";
 import { FaArrowDownLong } from "react-icons/fa6";
 import ComparePlans from "./ComparePlans";
 import { useAppContext } from "../EditBar/EditorContext";
+import { useRouter } from "next/router";
 
 export default function PriceCompare() {
     const [switchactive, setSwitchActive] = useState(true);
     const [count, setcount] = useState(1);
     const { setUser, user } = useAppContext();
+    const router = useRouter();
 
     const handlePlanChange = async (name) => {
         setUser((prevUser) => ({
@@ -174,7 +176,7 @@ export default function PriceCompare() {
                 <p className="text-[#2871DE] text-[14px] flex justify-center mt-2">SAVE UP TO 50% WITH YEARLY</p>
             </div>
             <div>
-                <div className="flex gap-[1px]">
+                <div className="flex lg:grid w-full  lg:grid-cols-4 gap-[1px]">
                     {plans.map((item, idx) => (
                         <div key={idx} className="flex flex-col">
                             <div className="p-2">
@@ -278,7 +280,7 @@ export default function PriceCompare() {
                 </div>
             </div>
             <div className="flex justify-center my-2">
-                <Button className="flex items-center gap-x-2 text-[#EFEFEF] hover:bg-[#353538] rounded-[5px] px-4 py-2">
+                <Button onClick={() => router.push('/pricing#pricing-policy-table')} className="flex items-center gap-x-2 text-[#EFEFEF] hover:bg-[#353538] rounded-[5px] px-4 py-2">
                     See all features <FaArrowDownLong />
                 </Button>
             </div>

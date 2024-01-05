@@ -243,8 +243,7 @@ export default function ComparePlans({ switchactive, inc, dec, count }) {
         },
     ];
 
-    return (
-        <div className="scrollStyle">
+    return <div className="scrollStyle" id="pricing-policy-table">
             <p className="text-[24px] text-[#EFEFEF] mt-4 font-bold pl-4">Compare plans</p>
             {/* Ai Voice */}
             <div>
@@ -257,26 +256,28 @@ export default function ComparePlans({ switchactive, inc, dec, count }) {
                         <TableColumn className="text-[14px] font-bold text-[#B794F4]">Pro +</TableColumn>
                     </TableHeader>
                     <TableBody>
-                        {aivoice.map((item, idx) => (
-                            <TableRow key={idx} className="border-b border-b-[#44444A]">
+                        {aivoice.map((item, idx) => <TableRow key={idx} className="border-b border-b-[#44444A]">
                                 <TableCell className="flex gap-x-2 items-center text-[14px] text-[#F5F6F7]">
                                     {item.voice}
-                                    <Tooltip
-                                        showArrow={true}
-                                        content={item.tooltip}
-                                        className="bg-black rounded-[10px] text-[10px] max-w-[200px]"
-                                    >
+                                    <Tooltip showArrow={true} content={item.tooltip} className="bg-black rounded-[10px] text-[10px] max-w-[200px]">
                                         <Button>
                                             <AiOutlineQuestionCircle />
                                         </Button>
                                     </Tooltip>
                                 </TableCell>
-                                <TableCell className="text-[14px] text-[#F5F6F7]">{item.free}</TableCell>
-                                <TableCell className="text-[14px] text-[#F5F6F7]">{item.basic}</TableCell>
-                                <TableCell className="text-[14px] text-[#F5F6F7]">{item.pro}</TableCell>
-                                <TableCell className="text-[14px] text-[#F5F6F7]">{item.proplus}</TableCell>
-                            </TableRow>
-                        ))}
+                                <TableCell className="text-[14px] text-[#F5F6F7]">
+                                    {item.free}
+                                </TableCell>
+                                <TableCell className="text-[14px] text-[#F5F6F7]">
+                                    {item.basic}
+                                </TableCell>
+                                <TableCell className="text-[14px] text-[#F5F6F7]">
+                                    {item.pro}
+                                </TableCell>
+                                <TableCell className="text-[14px] text-[#F5F6F7]">
+                                    {item.proplus}
+                                </TableCell>
+                            </TableRow>)}
                     </TableBody>
                 </Table>
             </div>
@@ -291,26 +292,28 @@ export default function ComparePlans({ switchactive, inc, dec, count }) {
                         <TableColumn className="text-[14px] font-bold text-[#B794F4]">Pro +</TableColumn>
                     </TableHeader>
                     <TableBody>
-                        {editing.map((item, idx) => (
-                            <TableRow key={idx} className="border-b border-b-[#44444A]">
+                        {editing.map((item, idx) => <TableRow key={idx} className="border-b border-b-[#44444A]">
                                 <TableCell className="flex gap-x-2 items-center text-[14px] text-[#F5F6F7]">
                                     {item.voice}
-                                    <Tooltip
-                                        showArrow={true}
-                                        content={item.tooltip}
-                                        className="bg-black rounded-[10px] text-[10px] max-w-[200px]"
-                                    >
+                                    <Tooltip showArrow={true} content={item.tooltip} className="bg-black rounded-[10px] text-[10px] max-w-[200px]">
                                         <Button>
                                             <AiOutlineQuestionCircle />
                                         </Button>
                                     </Tooltip>
                                 </TableCell>
-                                <TableCell className="text-[14px] text-[#F5F6F7]">{item.free}</TableCell>
-                                <TableCell className="text-[14px] text-[#F5F6F7]">{item.basic}</TableCell>
-                                <TableCell className="text-[14px] text-[#F5F6F7]">{item.pro}</TableCell>
-                                <TableCell className="text-[14px] text-[#F5F6F7]">{item.proplus}</TableCell>
-                            </TableRow>
-                        ))}
+                                <TableCell className="text-[14px] text-[#F5F6F7]">
+                                    {item.free}
+                                </TableCell>
+                                <TableCell className="text-[14px] text-[#F5F6F7]">
+                                    {item.basic}
+                                </TableCell>
+                                <TableCell className="text-[14px] text-[#F5F6F7]">
+                                    {item.pro}
+                                </TableCell>
+                                <TableCell className="text-[14px] text-[#F5F6F7]">
+                                    {item.proplus}
+                                </TableCell>
+                            </TableRow>)}
                     </TableBody>
                 </Table>
             </div>
@@ -325,26 +328,28 @@ export default function ComparePlans({ switchactive, inc, dec, count }) {
                         <TableColumn className="text-[14px] font-bold text-[#B794F4]">Pro +</TableColumn>
                     </TableHeader>
                     <TableBody>
-                        {feature.map((item, idx) => (
-                            <TableRow key={idx} className="border-b border-b-[#44444A]">
+                        {feature.map((item, idx) => <TableRow key={idx} className="border-b border-b-[#44444A]">
                                 <TableCell className="flex gap-x-2 items-center text-[14px] text-[#F5F6F7]">
                                     {item.voice}
-                                    <Tooltip
-                                        showArrow={true}
-                                        content={item.tooltip}
-                                        className="bg-black rounded-[10px] text-[10px] max-w-[200px]"
-                                    >
+                                    <Tooltip showArrow={true} content={item.tooltip} className="bg-black rounded-[10px] text-[10px] max-w-[200px]">
                                         <Button>
                                             <AiOutlineQuestionCircle />
                                         </Button>
                                     </Tooltip>
                                 </TableCell>
-                                <TableCell className="text-[14px] text-[#F5F6F7]">{item.free}</TableCell>
-                                <TableCell className="text-[14px] text-[#F5F6F7]">{item.basic}</TableCell>
-                                <TableCell className="text-[14px] text-[#F5F6F7]">{item.pro}</TableCell>
-                                <TableCell className="text-[14px] text-[#F5F6F7]">{item.proplus}</TableCell>
-                            </TableRow>
-                        ))}
+                                <TableCell className="text-[14px] text-[#F5F6F7]">
+                                    {item.free}
+                                </TableCell>
+                                <TableCell className="text-[14px] text-[#F5F6F7]">
+                                    {item.basic}
+                                </TableCell>
+                                <TableCell className="text-[14px] text-[#F5F6F7]">
+                                    {item.pro}
+                                </TableCell>
+                                <TableCell className="text-[14px] text-[#F5F6F7]">
+                                    {item.proplus}
+                                </TableCell>
+                            </TableRow>)}
                     </TableBody>
                 </Table>
             </div>
@@ -359,7 +364,7 @@ export default function ComparePlans({ switchactive, inc, dec, count }) {
                         <TableColumn className="text-[14px] font-bold text-[#B794F4]">Pro +</TableColumn>
                     </TableHeader>
                     <TableBody>
-                        {collaboration.map((item, idx) => (
+                        {collaboration.map((item, idx) =>
                             <TableRow key={idx} className="border-b border-b-[#44444A]">
                                 <TableCell className="flex gap-x-2 items-center text-[14px] text-[#F5F6F7]">
                                     {item.voice}
@@ -373,12 +378,20 @@ export default function ComparePlans({ switchactive, inc, dec, count }) {
                                         </Button>
                                     </Tooltip>
                                 </TableCell>
-                                <TableCell className="text-[14px] text-[#F5F6F7]">{item.free}</TableCell>
-                                <TableCell className="text-[14px] text-[#F5F6F7]">{item.basic}</TableCell>
-                                <TableCell className="text-[14px] text-[#F5F6F7]">{item.pro}</TableCell>
-                                <TableCell className="text-[14px] text-[#F5F6F7]">{item.proplus}</TableCell>
+                                <TableCell className="text-[14px] text-[#F5F6F7]">
+                                    {item.free}
+                                </TableCell>
+                                <TableCell className="text-[14px] text-[#F5F6F7]">
+                                    {item.basic}
+                                </TableCell>
+                                <TableCell className="text-[14px] text-[#F5F6F7]">
+                                    {item.pro}
+                                </TableCell>
+                                <TableCell className="text-[14px] text-[#F5F6F7]">
+                                    {item.proplus}
+                                </TableCell>
                             </TableRow>
-                        ))}
+                        )}
                     </TableBody>
                 </Table>
             </div>
@@ -393,26 +406,28 @@ export default function ComparePlans({ switchactive, inc, dec, count }) {
                         <TableColumn className="text-[14px] font-bold text-[#B794F4]">Pro +</TableColumn>
                     </TableHeader>
                     <TableBody>
-                        {support.map((item, idx) => (
-                            <TableRow key={idx} className="border-b border-b-[#44444A]">
+                        {support.map((item, idx) => <TableRow key={idx} className="border-b border-b-[#44444A]">
                                 <TableCell className="flex gap-x-2 items-center text-[14px] text-[#F5F6F7]">
                                     {item.voice}
-                                    <Tooltip
-                                        showArrow={true}
-                                        content={item.tooltip}
-                                        className="bg-black rounded-[10px] text-[10px] max-w-[200px]"
-                                    >
+                                    <Tooltip showArrow={true} content={item.tooltip} className="bg-black rounded-[10px] text-[10px] max-w-[200px]">
                                         <Button>
                                             <AiOutlineQuestionCircle />
                                         </Button>
                                     </Tooltip>
                                 </TableCell>
-                                <TableCell className="text-[14px] text-[#F5F6F7]">{item.free}</TableCell>
-                                <TableCell className="text-[14px] text-[#F5F6F7]">{item.basic}</TableCell>
-                                <TableCell className="text-[14px] text-[#F5F6F7]">{item.pro}</TableCell>
-                                <TableCell className="text-[14px] text-[#F5F6F7]">{item.proplus}</TableCell>
-                            </TableRow>
-                        ))}
+                                <TableCell className="text-[14px] text-[#F5F6F7]">
+                                    {item.free}
+                                </TableCell>
+                                <TableCell className="text-[14px] text-[#F5F6F7]">
+                                    {item.basic}
+                                </TableCell>
+                                <TableCell className="text-[14px] text-[#F5F6F7]">
+                                    {item.pro}
+                                </TableCell>
+                                <TableCell className="text-[14px] text-[#F5F6F7]">
+                                    {item.proplus}
+                                </TableCell>
+                            </TableRow>)}
                     </TableBody>
                 </Table>
             </div>
@@ -429,7 +444,7 @@ export default function ComparePlans({ switchactive, inc, dec, count }) {
                     </TableHeader>
                     <TableBody>
                         <TableRow className="">
-                            <TableCell className="flex gap-x-2 items-center text-[14px] text-[#F5F6F7]"></TableCell>
+                            <TableCell className="flex gap-x-2 items-center text-[14px] text-[#F5F6F7]" />
                             <TableCell className="text-[14px] text-[#F5F6F7]">
                                 <div className="p-2">
                                     <p className={`${"text-[#F5F6F7]"} text-[14px]`}>Free</p>
@@ -438,7 +453,7 @@ export default function ComparePlans({ switchactive, inc, dec, count }) {
                                     <p className="text-[#F5F6F7] text-[14px]">
                                         Fully experience the product before committing
                                     </p>
-                                    <Button onClick={() => handlePlanChange('Free')}  className="bg-[#2871DE] text-[14px] rounded-[10px] w-full py-2 mt-2">
+                                    <Button onClick={() => handlePlanChange("Free")} className="bg-[#2871DE] text-[14px] rounded-[10px] w-full py-2 mt-2">
                                         Change Plan
                                     </Button>
                                 </div>
@@ -452,8 +467,10 @@ export default function ComparePlans({ switchactive, inc, dec, count }) {
                                     <p className="text-[#8C8C96] text-[14px]">
                                         Billed US$ {switchactive ? "348" : "36"} monthly
                                     </p>
-                                    <p className="text-[#F5F6F7] text-[14px]">Essential for creating awesome content</p>
-                                    <Button onClick={() => handlePlanChange('Basic')}  className="bg-[#2871DE] text-[14px] rounded-[10px] w-full py-2 mt-2">
+                                    <p className="text-[#F5F6F7] text-[14px]">
+                                        Essential for creating awesome content
+                                    </p>
+                                    <Button onClick={() => handlePlanChange("Basic")} className="bg-[#2871DE] text-[14px] rounded-[10px] w-full py-2 mt-2">
                                         Change Plan
                                     </Button>
                                 </div>
@@ -476,17 +493,13 @@ export default function ComparePlans({ switchactive, inc, dec, count }) {
                                         <div className="flex gap-x-2 items-center w-full">
                                             <button onclick={dec}>-</button>
 
-                                            <input
-                                                type="number"
-                                                value={count}
-                                                // onChange={(e) => setcount(e.target.value)}
-                                                className="bg-[#242427] border border-[#44444A] rounded-[5px] px-2 w-full"
-                                            />
+                                            <input type="number" value={count} // onChange={(e) => setcount(e.target.value)}
+                                                className="bg-[#242427] border border-[#44444A] rounded-[5px] px-2 w-full" />
 
                                             <button onclick={inc}>+</button>
                                         </div>
                                     </div>
-                                    <Button onClick={() => handlePlanChange('Pro')}  className="bg-[#2871DE] text-[14px] rounded-[10px] w-full py-2 mt-2">
+                                    <Button onClick={() => handlePlanChange("Pro")} className="bg-[#2871DE] text-[14px] rounded-[10px] w-full py-2 mt-2">
                                         Change Plan
                                     </Button>
                                 </div>
@@ -509,17 +522,13 @@ export default function ComparePlans({ switchactive, inc, dec, count }) {
                                         <div className="flex gap-x-2 items-center w-full">
                                             <button onclick={dec}>-</button>
 
-                                            <input
-                                                type="number"
-                                                value={count}
-                                                // onChange={(e) => setcount(e.target.value)}
-                                                className="bg-[#242427] border border-[#44444A] rounded-[5px] px-2 w-full"
-                                            />
+                                            <input type="number" value={count} // onChange={(e) => setcount(e.target.value)}
+                                                className="bg-[#242427] border border-[#44444A] rounded-[5px] px-2 w-full" />
 
                                             <button onclick={inc}>+</button>
                                         </div>
                                     </div>
-                                    <Button onClick={() => handlePlanChange('Pro +')} className="bg-[#2871DE] text-[14px] rounded-[10px] w-full py-2 mt-2">
+                                    <Button onClick={() => handlePlanChange("Pro +")} className="bg-[#2871DE] text-[14px] rounded-[10px] w-full py-2 mt-2">
                                         Change Plan
                                     </Button>
                                 </div>
@@ -528,6 +537,5 @@ export default function ComparePlans({ switchactive, inc, dec, count }) {
                     </TableBody>
                 </Table>
             </div>
-        </div>
-    );
+        </div>;
 }
