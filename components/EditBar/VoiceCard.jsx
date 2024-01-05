@@ -1,32 +1,105 @@
 import { Avatar, Button } from "@nextui-org/react";
-import React from "react";
+import React, { useState } from "react";
 import { CiBookmark} from "react-icons/ci";
 import { HiOutlineSpeakerWave } from "react-icons/hi2";
 import { IoMdPlay } from "react-icons/io";
 import { useAppContext } from "./EditorContext";
+import { FaPause,FaBookmark  } from "react-icons/fa";
 
 export default function VoiceCard({ data,callback }) {
-    const { setMockData, setVoiceModel, voiceModel, setSelectedSpeaker } = useAppContext();
+    const { setMockData, setVoiceModel, voiceModel, setSelectedSpeaker, user, setSpeakers,selectedSpeaker } = useAppContext();
+    const [isPlaying, setIsPlaying] = useState(false);
+    const sound = new Howl({
+                    src: [(data?.speakerStyles?.[0]?.sampleTtsUrl)] || [],
+                    html5: true,
+                    onload: function (soundId) {
+                        setSoundId(soundId);
+                    },
+                    onplay: function () {
+                        setIsPlaying(true);
+                    },
+                    onpause: function () {
+                        setIsPlaying(false);
+                    },
+                    onend: function () {
+                        setIsPlaying(false);
+                    }
+                });
+    const [soundId, setSoundId] = useState();
+    
+    
+    const updateBookmark = async () => {
+        const bookmarked = data?.bookmarks?.includes(user?.email);
+
+        setSpeakers((pre) => [
+            ...pre.filter((a) => a.id !== data?.id),
+            {
+                ...data,
+                bookmarks: bookmarked
+                    ? data?.bookmarks?.filter((a) => a !== user?.email)
+                    : [...data?.bookmarks, user?.email],
+            },
+        ]);
+        
+        if (selectedSpeaker?.id === data?.id) {
+            setSelectedSpeaker({
+                ...data,
+                bookmarks: bookmarked
+                    ? data?.bookmarks?.filter((a) => a !== user?.email)
+                    : [...data?.bookmarks, user?.email],
+            });
+        }
+
+
+        await fetch(`/api/speakers/update-speaker?id=${data?.id}`, {
+            method: "PUT",
+            body: JSON.stringify({
+                bookmarks: bookmarked
+                    ? data?.bookmarks?.filter((a) => a !== user?.email)
+                    : [...data?.bookmarks, user?.email],
+            }),
+            headers: {
+                'Content-Type': "application/json"
+            }
+        })
+
+    }
 
     return (
-        <div className="max-w-[270px] bg-[#2D2D30] border border-[#38383D] hover:border-[#EFEFEF] rounded-[10px] p-[16px] relative group/item">
-            <CiBookmark className="absolute right-4 top-4 cursor-pointer" />
+        <div className="max-w-[270px] w-full min-w-[269px] bg-[#2D2D30] border border-[#38383D] hover:border-[#EFEFEF] rounded-[10px] p-[16px] relative group/item">
+            {data?.bookmarks?.includes(user?.email) ? (
+                <FaBookmark className="absolute right-4 top-4 cursor-pointer" onClick={updateBookmark} />
+            ) : (
+                <CiBookmark className="absolute right-4 top-4 cursor-pointer" onClick={updateBookmark} />
+            )}
             <div className="flex gap-x-2 items-center">
                 <div className="rounded-[50px] relative">
                     <Avatar src={data?.imageUrl} size="24" />
-                    <IoMdPlay className="absolute top-[40%] right-[30%] invisible group-hover/item:visible" />
+                    {isPlaying ? (
+                                    <FaPause
+                            onClick={() => {
+                                sound.pause(soundId);
+                                            setIsPlaying(!isPlaying);
+                                        }}
+                                         className="absolute top-[40%] right-[30%] invisible group-hover/item:visible" 
+                                    />
+                                ) : (
+                                    <IoMdPlay
+                                onClick={() => {
+                                    sound.play(soundId);
+                                        setIsPlaying(!isPlaying);
+                                    }}
+                                className="absolute top-[40%] right-[30%] invisible group-hover/item:visible"
+                            />
+                                )}
                     <HiOutlineSpeakerWave className="absolute bottom-0 right-0 visible group-hover/item:invisible" />
                 </div>
                 <div className="flex flex-col">
                     <p>{data?.displayName ?? ""}</p>
                     <div className="flex gap-1 flex-wrap">
-                        <p className="text-[10px] leading-3 bg-[#2F855A] text-white p-1 rounded-[5px]">Top Rated</p>
-                        <p className="text-[10px] leading-3 text-white bg-[linear-gradient(90deg,rgb(46,148,255)0%,rgb(64,140,255)32.81%,rgb(61,181,255)71.35%,rgb(46,209,234)100%)] p-1 rounded-[5px]">
-                            Pro
-                        </p>
-                        <p className="text-[10px] leading-3 text-white bg-[#606069] p-1 rounded-[5px]">us English-US</p>
-                        <p className="text-[10px] leading-3 text-white bg-[#606069] p-1 rounded-[5px]">Young Adult</p>
-                        <p className="text-[10px] leading-3 text-white bg-[#606069] p-1 rounded-[5px]">Marketing</p>
+                        {data?.speakerStyles?.map(a => a?.displayName)?.slice(0,5)?.map((a,idx) => (
+                        <p key={idx} className="text-[10px] leading-3 text-white bg-[#606069] p-1 rounded-[5px]">{a}</p>
+                        ))}
                     </div>
                 </div>
             </div>

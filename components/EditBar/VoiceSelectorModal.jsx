@@ -352,7 +352,7 @@ export default function VoiceSelectorModal({ isOpen, onOpenChange, callback }) {
                                     ) : active === "Bookmarked" ? (
                                         <div className="mt-2 flex gap-2 flex-wrap overflow-y-scroll scrollStyle max-h-[400px]">
                                             {speakers
-                                                .filter((a) => a.bookmarks.find(user?.email))
+                                                .filter((a) => a.bookmarks.includes(user?.email))
                                                 .map((globalVoice) => (
                                                     <div key={globalVoice.id}>
                                                         <VoiceCard data={globalVoice} callback={callback} />
