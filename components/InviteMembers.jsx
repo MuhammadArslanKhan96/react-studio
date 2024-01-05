@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 
 export default function InviteMembers({ isOpen, onOpenChange }) {
     const { selectedWorkspace, inviteMembers, setInviteMembers, setWorkspaces, setSelectedWorkspace } = useAppContext();
-
+    
     const [memberEmailInput, setMemberEmailInput] = useState("");
 
     const addUser = async () => {
@@ -96,7 +96,10 @@ export default function InviteMembers({ isOpen, onOpenChange }) {
                                     <button
                                         onClick={addUser}
                                         className="text-[#FFF] bg-[#606069] text-[16px]  px-[16px] py-[8px] rounded-[0.25rem] disabled:text-[#999]"
-                                        disabled={!memberEmailInput?.trim()?.length}
+                                        disabled={!memberEmailInput?.trim()?.length || !memberEmailInput.toLowerCase()
+    .match(
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    )}
                                     >
                                         Invite
                                     </button>

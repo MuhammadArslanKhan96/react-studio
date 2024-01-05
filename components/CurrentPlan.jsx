@@ -16,7 +16,7 @@ export default function CurrentPlan() {
                 </div>
                 <div>
                     <Link
-                        href={"/"}
+                        href={"/pricing"}
                         className="bg-[linear-gradient(90deg,rgb(46,148,255)0%,rgb(64,140,255)32.81%,rgb(61,181,255)71.35%,rgb(46,209,234)100%)] bg-clip-text text-transparent font-semibold text-[14px]"
                     >
                         UPGRADE
