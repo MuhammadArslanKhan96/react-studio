@@ -107,28 +107,31 @@ export default function Promptbar() {
                     </div>
                 </div>
                 <div className="flex flex-col gap-4">
-                    {sortedMockData.map((item) => {
+                    {sortedMockData.map((item,idx) => {
                         return (
-                            <TranscriptInput
-                                mockData={item}
-                                length={mockData.length>1}
-                                mockEffect={mockEffect[`effect${item.id}`]}
-                                key={item.id}
-                            />
+                            <div className="group" key={idx}>
+                                <TranscriptInput
+                                    mockData={item}
+                                    length={mockData.length > 1}
+                                    mockEffect={mockEffect[`effect${item.id}`]}
+                                    key={item.id}
+                                />
+                                {/* add new block */}
+                                <div className="flex items-center w-full justify-between cursor-pointer opacity-0 group-hover:opacity-100">
+                                    <div className="bg-[#343438] h-[1px] w-full"></div>
+                                    <Button
+                                        onClick={addAnotherMock}
+                                        className="flex rounded-[10px] w-full gap-x-2 bg-[#44444A] px-2  text-[10px] text-[#EFEFEF]"
+                                    >
+                                        <FaPlus size={10} />
+                                        Add a new block
+                                    </Button>
+                                    <div className="bg-[#343438] h-[1px] w-full"></div>
+                                </div>
+                            </div>
                         );
                     })}
-                    {/* add new block */}
-                    <div className="flex items-center w-full justify-between cursor-pointer opacity-0 hover:opacity-100">
-                        <div className="bg-[#343438] h-[1px] w-full"></div>
-                        <Button
-                            onClick={addAnotherMock}
-                            className="flex rounded-[10px] w-full gap-x-2 bg-[#44444A] px-2  text-[10px] text-[#EFEFEF]"
-                        >
-                            <FaPlus size={10} />
-                            Add a new block
-                        </Button>
-                        <div className="bg-[#343438] h-[1px] w-full"></div>
-                    </div>
+                    
                 </div>
             </div>
         </div>

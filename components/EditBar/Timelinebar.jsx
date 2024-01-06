@@ -16,7 +16,7 @@ export default function Timelinebar() {
                     onChange={(a) =>
                         setMockData(
                             a.sort(function (a, b) {
-                                return Number(b.id) - Number(a.id);
+                                return Number(a.id) - Number(b.id);
                             })
                         )
                     }

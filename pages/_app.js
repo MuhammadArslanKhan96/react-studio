@@ -1,29 +1,32 @@
 // @ts-ignore importMeta is replaced in the loader
-import { Button, NextUIProvider, useDisclosure } from "@nextui-org/react";
-import Image from "next/image";
-import Link from "next/link";
-import React, { useState } from "react";
-import { FaArrowAltCircleLeft } from "react-icons/fa";
-import { IoIosArrowDown, IoIosArrowUp, IoMdAdd } from "react-icons/io";
-import { PiFolder } from "react-icons/pi";
+import { NextUIProvider, useDisclosure } from "@nextui-org/react";
+import React, { useEffect, useState } from "react";
+import { FaArrowAltCircleLeft, FaSpinner } from "react-icons/fa";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { Context } from "../components/Context";
-import CurrentPlan from "../components/CurrentPlan";
-import Discount from "../components/Discount";
 import { AppContextProvider } from "../components/EditBar/EditorContext";
 import Header from "../components/Header";
-import InviteMembers from "../components/InviteMembers";
 import Sidebar from "../components/Sidebar";
 import { SettingsContext } from "../context/settingsContext";
 import "../styles/globals.css";
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 export default function App({ Component,
     pageProps,
 }) {
     const [sideModal, setSideModal] = useState(false);
     const [open, setOpen] = useState(false);
+    const [loading, setLoading] = useState(true);
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
+
+
+    useEffect(() => {
+        setTimeout(() => {
+            setLoading(false);
+        }, 4000);
+    }, [])
+
+
     return (
         <SettingsContext>
             <ToastContainer />
@@ -44,16 +47,20 @@ export default function App({ Component,
                                         >
                                             <FaArrowAltCircleLeft />
                                         </div>
-                                        <Sidebar open={open} setOpen={setOpen}>
-                                        </Sidebar>
+                                        <Sidebar open={open} setOpen={setOpen} />
                                     </>
                                 )}
                                 <div className="max-xl:hidden">
-                                    <Sidebar open={open} setOpen={setOpen}>
-                                    </Sidebar>
+                                    <Sidebar open={open} setOpen={setOpen} />
                                 </div>
                             </div>
-                            <Component {...pageProps} />
+                            {loading ?
+                                <div className="flex justify-center items-center w-full h-full min-h-[80vh]">
+                                    <FaSpinner className="animate-spin" size={50} />
+                                </div>
+                                :
+                                <Component {...pageProps} />
+                            }
                         </div>
                     </AppContextProvider>
                 </Context.Provider>

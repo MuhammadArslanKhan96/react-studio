@@ -38,6 +38,7 @@ export default function Header() {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const [modal, setModal] = useState(false);
     const [accountModal, setAccountModal] = React.useState(false);
+    const [active, setActive] = React.useState(false);
 
     if (router.pathname === "/signin" || router.pathname === "/signup") return;
 
@@ -172,114 +173,157 @@ export default function Header() {
                 {modal === "invite" && <InviteMembers isOpen={isOpen} onOpenChange={onOpenChange} />}
                 {modal === "api" && <APIKey isOpen={isOpen} onOpenChange={onOpenChange} />}
 
-                <Navbar className="w-fit">
-                    <NavbarContent as="div" justify="end">
-                        <Dropdown placement="bottom-end">
-                            <DropdownTrigger>
-                                <Avatar
-                                    isBordered
-                                    as="button"
-                                    className="transition-transform"
-                                    color="secondary"
-                                    name="Jason Hughes"
-                                    size="sm"
-                                    src={user?.photoURL || "https://i.pravatar.cc/150?u=a042581f4e29026704d"}
-                                />
-                            </DropdownTrigger>
-                            <DropdownMenu
-                                aria-label="Profile Actions"
-                                variant="flat"
-                                className="bg-[#242427] pl-[12px] pr-[12px] pt-[12px] pb-[12px] mt-[15px]  border border-[#44444A]	 rounded-md"
-                            >
-                                <DropdownItem key="profile" className="h-14 gap-2">
-                                    <div className="flex items-center">
-                                        <div>
-                                            {/* <Image src={"/images/setting.svg"} alt="" width={20} height={20} /> */}
-                                            <Avatar
-                                                src={
-                                                    user?.photoURL || "https://i.pravatar.cc/150?u=a042581f4e29026704d"
-                                                }
+                <div className="relative">
+                    <Navbar className="w-fit">
+                        <NavbarContent as="div" justify="end">
+                            <Dropdown placement="bottom-end">
+                                <DropdownTrigger>
+                                    <Avatar
+                                        isBordered
+                                        as="button"
+                                        className="transition-transform"
+                                        color="secondary"
+                                        name="Jason Hughes"
+                                        size="sm"
+                                        src={user?.photoURL || "https://i.pravatar.cc/150?u=a042581f4e29026704d"}
+                                    />
+                                </DropdownTrigger>
+                                <DropdownMenu
+                                    aria-label="Profile Actions"
+                                    variant="flat"
+                                    className="bg-[#242427] pl-[12px] pr-[12px] pt-[12px] pb-[12px] mt-[15px]  border border-[#44444A]	 rounded-md"
+                                >
+                                    <DropdownItem key="profile" className="h-14 gap-2">
+                                        <div className="flex items-center">
+                                            <div>
+                                                {/* <Image src={"/images/setting.svg"} alt="" width={20} height={20} /> */}
+                                                <Avatar
+                                                    src={
+                                                        user?.photoURL ||
+                                                        "https://i.pravatar.cc/150?u=a042581f4e29026704d"
+                                                    }
+                                                />
+                                            </div>
+
+                                            <div>
+                                                <p className="font-semibold">Signed in as {user?.displayName}</p>
+                                                <p className="font-semibold text-[12px] text-[#b6b8bf]">
+                                                    {user?.email || "zoey@example.com"}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </DropdownItem>
+
+                                    <DropdownItem key="my_account" onClick={(e) => setAccountModal(true)}>
+                                        <div className="flex items-center gap-2">
+                                            <Image
+                                                src={"/images/mayaccount.svg"}
+                                                alt=""
+                                                width={20}
+                                                height={20}
+                                                className="text-[#fff]"
                                             />
+                                            My Account
                                         </div>
+                                    </DropdownItem>
 
-                                        <div>
-                                            <p className="font-semibold">Signed in as {user?.displayName}</p>
-                                            <p className="font-semibold text-[12px] text-[#b6b8bf]">
-                                                {user?.email || "zoey@example.com"}
-                                            </p>
+                                    <DropdownItem key="settings" onClick={() => router.push("/settings/info")}>
+                                        <div className="flex items-center gap-2">
+                                            <Image src={"/images/setting.svg"} alt="" width={20} height={20} />
+                                            Settings
                                         </div>
-                                    </div>
-                                </DropdownItem>
+                                    </DropdownItem>
 
-                                <DropdownItem key="my_account" onClick={(e) => setAccountModal(true)}>
-                                    <div className="flex items-center gap-2">
-                                        <Image
-                                            src={"/images/mayaccount.svg"}
-                                            alt=""
-                                            width={20}
-                                            height={20}
-                                            className="text-[#fff]"
-                                        />
-                                        My Account
-                                    </div>
-                                </DropdownItem>
+                                    <DropdownItem key="pricing" onClick={() => router.push("/pricing")}>
+                                        <div className="flex items-center gap-2">
+                                            <Image src={"/images/pricing.svg"} alt="" width={20} height={20} />
+                                            Pricing
+                                        </div>
+                                    </DropdownItem>
+                                    <DropdownItem key="invite_member">
+                                        <div className="flex items-center gap-2" onClick={onOpen}>
+                                            <Image src={"/images/invite.svg"} alt="" width={20} height={20} />
+                                            Invite Member
+                                        </div>
+                                    </DropdownItem>
 
-                                <DropdownItem key="settings" onClick={() => router.push("/settings/info")}>
-                                    <div className="flex items-center gap-2">
-                                        <Image src={"/images/setting.svg"} alt="" width={20} height={20} />
-                                        Settings
-                                    </div>
-                                </DropdownItem>
+                                    <DropdownItem key="view_api_key">
+                                        <div
+                                            onClick={() => {
+                                                onOpen();
+                                                setModal("api");
+                                            }}
+                                            className="flex items-center gap-2"
+                                        >
+                                            <IoKeyOutline />
+                                            View API key
+                                        </div>
+                                    </DropdownItem>
 
-                                <DropdownItem key="pricing" onClick={() => router.push("/pricing")}>
-                                    <div className="flex items-center gap-2">
-                                        <Image src={"/images/pricing.svg"} alt="" width={20} height={20} />
-                                        Pricing
-                                    </div>
-                                </DropdownItem>
-                                <DropdownItem key="invite_member">
-                                    <div className="flex items-center gap-2" onClick={onOpen}>
-                                        <Image src={"/images/invite.svg"} alt="" width={20} height={20} />
-                                        Invite Member
-                                    </div>
-                                </DropdownItem>
+                                    <DropdownItem as="button" onMouseEnter={() => setActive(!active)} key="help_&_support">
+                                        <div className="flex items-center gap-2">
+                                            <Image src={"/images/questionmark.svg"} alt="" width={20} height={20} />
+                                            Help & Support
+                                        </div>
+                                    </DropdownItem>
 
-                                <DropdownItem key="view_api_key">
-                                    <div
-                                        onClick={() => {
-                                            onOpen();
-                                            setModal("api");
-                                        }}
-                                        className="flex items-center gap-2"
-                                    >
-                                        <IoKeyOutline />
-                                        View API key
-                                    </div>
-                                </DropdownItem>
+                                    <DropdownItem key="join_discord">
+                                        <div className="flex items-center gap-2">
+                                            <FaDiscord />
+                                            Join Discord
+                                        </div>
+                                    </DropdownItem>
+                                    <DropdownItem onClick={logout} key="logout" color="danger">
+                                        <div className="flex items-center gap-2">
+                                            <MdOutlineLogout />
+                                            Log Out
+                                        </div>
+                                    </DropdownItem>
+                                </DropdownMenu>
+                            </Dropdown>
+                        </NavbarContent>
+                    </Navbar>
+                    {active && (
+                        <div onClick={() => setActive(false)} className="w-fit absolute -left-[21.5vw] -bottom-[28vh]">
+                            <Dropdown onClick={() => setActive(false)} isOpen={active} placement="bottom-end">
+                                <DropdownMenu
+                                    onClick={() => setActive(false)}
+                                    aria-label="Profile Actions"
+                                    variant="flat"
+                                    className="bg-[#242427] pl-[12px] pr-[12px] pt-[12px] pb-[12px] mt-[15px]  border border-[#44444A]	 rounded-md"
+                                >
+                                    <DropdownItem key="profile" className="h-14 gap-2">
+                                        <p className="font-semibold text-[12px] text-[#b6b8bf]">
+                                            {user?.email || "zoey@example.com"}
+                                        </p>
+                                    </DropdownItem>
 
-                                {/* <DropdownItem key="help_&_support">
-                                    <div className="flex items-center gap-2">
-                                        <Image src={"/images/questionmark.svg"} alt="" width={20} height={20} />
-                                        Help & Support
-                                    </div>
-                                </DropdownItem>
+                                    <DropdownItem key="my_account" onClick={(e) => setAccountModal(true)}>
+                                        <div className="flex items-center gap-2">Tutorials</div>
+                                    </DropdownItem>
 
-                                <DropdownItem key="join_discord">
-                                    <div className="flex items-center gap-2">
-                                        <FaDiscord />
-                                        Join Discord
-                                    </div>
-                                </DropdownItem> */}
-                                <DropdownItem onClick={logout} key="logout" color="danger">
-                                    <div className="flex items-center gap-2">
-                                        <MdOutlineLogout />
-                                        Log Out
-                                    </div>
-                                </DropdownItem>
-                            </DropdownMenu>
-                        </Dropdown>
-                    </NavbarContent>
-                </Navbar>
+                                    <DropdownItem key="settings" onClick={() => router.push("/settings/info")}>
+                                        <div className="flex items-center gap-2">FAQ</div>
+                                    </DropdownItem>
+
+                                    <DropdownItem key="pricing" onClick={() => router.push("/pricing")}>
+                                        <div className="flex items-center gap-2">Blog</div>
+                                    </DropdownItem>
+                                    <DropdownItem key="invite_member">
+                                        <div className="flex items-center gap-2" onClick={onOpen}>
+                                            Send feedback
+                                        </div>
+                                    </DropdownItem>
+
+                                    <DropdownItem onClick={() => setActive(!active)} key="help_&_support">
+                                        <div className="flex items-center gap-2">Terms Of Service</div>
+                                    </DropdownItem>
+                                </DropdownMenu>
+                            </Dropdown>
+                        </div>
+                    )}
+                </div>
+
                 <AccountModal isOpen={accountModal} onOpenChange={setAccountModal} />
             </div>
         </div>

@@ -248,16 +248,16 @@ export default function ComparePlans({ switchactive, inc, dec, count }) {
             {/* Ai Voice */}
             <div>
                 <Table aria-label="Example static collection table">
-                    <TableHeader className="border-b border-b-[#44444A]">
+                    <TableHeader className="border-b border-b-[#44444A] grid grid-cols-5">
                         <TableColumn className="text-[14px] font-bold text-[#F5F6F7]">AI Voice</TableColumn>
                         <TableColumn className="text-[14px] font-bold text-[#F5F6F7]">Free</TableColumn>
                         <TableColumn className="text-[14px] font-bold text-[#F6AD55]">Basic</TableColumn>
                         <TableColumn className="text-[14px] font-bold text-[#428BEB]">Pro</TableColumn>
                         <TableColumn className="text-[14px] font-bold text-[#B794F4]">Pro +</TableColumn>
                     </TableHeader>
-                    <TableBody>
+                    <TableBody className="grid grid-cols-5">
                         {aivoice.map((item, idx) => <TableRow key={idx} className="border-b border-b-[#44444A]">
-                                <TableCell className="flex gap-x-2 items-center text-[14px] text-[#F5F6F7]">
+                                <TableCell className="flex gap-x-2 items-center text-[14px] text-[#F5F6F7] max-w-[300px] overflow-hidden">
                                     {item.voice}
                                     <Tooltip showArrow={true} content={item.tooltip} className="bg-black rounded-[10px] text-[10px] max-w-[200px]">
                                         <Button>
@@ -284,16 +284,16 @@ export default function ComparePlans({ switchactive, inc, dec, count }) {
             {/* Editing */}
             <div>
                 <Table aria-label="Example static collection table">
-                    <TableHeader className="border-b border-b-[#44444A]">
+                    <TableHeader className="border-b border-b-[#44444A] grid grid-cols-5">
                         <TableColumn className="text-[14px] font-bold text-[#F5F6F7]">Editing & Export</TableColumn>
                         <TableColumn className="text-[14px] font-bold text-[#F5F6F7]">Free</TableColumn>
                         <TableColumn className="text-[14px] font-bold text-[#F6AD55]">Basic</TableColumn>
                         <TableColumn className="text-[14px] font-bold text-[#428BEB]">Pro</TableColumn>
                         <TableColumn className="text-[14px] font-bold text-[#B794F4]">Pro +</TableColumn>
                     </TableHeader>
-                    <TableBody>
+                    <TableBody className="grid grid-cols-5">
                         {editing.map((item, idx) => <TableRow key={idx} className="border-b border-b-[#44444A]">
-                                <TableCell className="flex gap-x-2 items-center text-[14px] text-[#F5F6F7]">
+                                <TableCell className="flex gap-x-2 items-center text-[14px] text-[#F5F6F7] max-w-[300px] overflow-hidden">
                                     {item.voice}
                                     <Tooltip showArrow={true} content={item.tooltip} className="bg-black rounded-[10px] text-[10px] max-w-[200px]">
                                         <Button>
@@ -320,16 +320,16 @@ export default function ComparePlans({ switchactive, inc, dec, count }) {
             {/* Ai Feature */}
             <div>
                 <Table aria-label="Example static collection table">
-                    <TableHeader className="border-b border-b-[#44444A]">
+                    <TableHeader className="border-b border-b-[#44444A] grid grid-cols-5">
                         <TableColumn className="text-[14px] font-bold text-[#F5F6F7]">AI Features</TableColumn>
                         <TableColumn className="text-[14px] font-bold text-[#F5F6F7]">Free</TableColumn>
                         <TableColumn className="text-[14px] font-bold text-[#F6AD55]">Basic</TableColumn>
                         <TableColumn className="text-[14px] font-bold text-[#428BEB]">Pro</TableColumn>
                         <TableColumn className="text-[14px] font-bold text-[#B794F4]">Pro +</TableColumn>
                     </TableHeader>
-                    <TableBody>
+                    <TableBody className="grid grid-cols-5">
                         {feature.map((item, idx) => <TableRow key={idx} className="border-b border-b-[#44444A]">
-                                <TableCell className="flex gap-x-2 items-center text-[14px] text-[#F5F6F7]">
+                                <TableCell className="flex gap-x-2 items-center text-[14px] text-[#F5F6F7] max-w-[300px] overflow-hidden">
                                     {item.voice}
                                     <Tooltip showArrow={true} content={item.tooltip} className="bg-black rounded-[10px] text-[10px] max-w-[200px]">
                                         <Button>
@@ -356,17 +356,17 @@ export default function ComparePlans({ switchactive, inc, dec, count }) {
             {/* Collaboration */}
             <div>
                 <Table aria-label="Example static collection table">
-                    <TableHeader className="border-b border-b-[#44444A]">
+                    <TableHeader className="border-b border-b-[#44444A] grid grid-cols-5">
                         <TableColumn className="text-[14px] font-bold text-[#F5F6F7]">Collaboration</TableColumn>
                         <TableColumn className="text-[14px] font-bold text-[#F5F6F7]">Free</TableColumn>
                         <TableColumn className="text-[14px] font-bold text-[#F6AD55]">Basic</TableColumn>
                         <TableColumn className="text-[14px] font-bold text-[#428BEB]">Pro</TableColumn>
                         <TableColumn className="text-[14px] font-bold text-[#B794F4]">Pro +</TableColumn>
                     </TableHeader>
-                    <TableBody>
+                    <TableBody className="grid grid-cols-5">
                         {collaboration.map((item, idx) =>
                             <TableRow key={idx} className="border-b border-b-[#44444A]">
-                                <TableCell className="flex gap-x-2 items-center text-[14px] text-[#F5F6F7]">
+                                <TableCell className="flex gap-x-2 items-center text-[14px] text-[#F5F6F7] max-w-[300px] overflow-hidden">
                                     {item.voice}
                                     <Tooltip
                                         showArrow={true}
@@ -398,16 +398,16 @@ export default function ComparePlans({ switchactive, inc, dec, count }) {
             {/* Support */}
             <div>
                 <Table aria-label="Example static collection table">
-                    <TableHeader className="border-b border-b-[#44444A]">
+                    <TableHeader className="border-b border-b-[#44444A] grid grid-cols-5">
                         <TableColumn className="text-[14px] font-bold text-[#F5F6F7]">Support</TableColumn>
                         <TableColumn className="text-[14px] font-bold text-[#F5F6F7]">Free</TableColumn>
                         <TableColumn className="text-[14px] font-bold text-[#F6AD55]">Basic</TableColumn>
                         <TableColumn className="text-[14px] font-bold text-[#428BEB]">Pro</TableColumn>
                         <TableColumn className="text-[14px] font-bold text-[#B794F4]">Pro +</TableColumn>
                     </TableHeader>
-                    <TableBody>
+                    <TableBody className="grid grid-cols-5">
                         {support.map((item, idx) => <TableRow key={idx} className="border-b border-b-[#44444A]">
-                                <TableCell className="flex gap-x-2 items-center text-[14px] text-[#F5F6F7]">
+                                <TableCell className="flex gap-x-2 items-center text-[14px] text-[#F5F6F7] max-w-[300px] overflow-hidden">
                                     {item.voice}
                                     <Tooltip showArrow={true} content={item.tooltip} className="bg-black rounded-[10px] text-[10px] max-w-[200px]">
                                         <Button>
@@ -435,16 +435,16 @@ export default function ComparePlans({ switchactive, inc, dec, count }) {
             {/* price plan */}
             <div>
                 <Table hideHeader aria-label="Example static collection table">
-                    <TableHeader className="border-b border-b-[#44444A]">
+                    <TableHeader className="border-b border-b-[#44444A] grid grid-cols-5">
                         <TableColumn className="text-[14px] font-bold text-[#F5F6F7]">Support</TableColumn>
                         <TableColumn className="text-[14px] font-bold text-[#F5F6F7]">Free</TableColumn>
                         <TableColumn className="text-[14px] font-bold text-[#F6AD55]">Basic</TableColumn>
                         <TableColumn className="text-[14px] font-bold text-[#428BEB]">Pro</TableColumn>
                         <TableColumn className="text-[14px] font-bold text-[#B794F4]">Pro +</TableColumn>
                     </TableHeader>
-                    <TableBody>
+                    <TableBody className="grid grid-cols-5">
                         <TableRow className="">
-                            <TableCell className="flex gap-x-2 items-center text-[14px] text-[#F5F6F7]" />
+                            <TableCell className="flex gap-x-2 items-center text-[14px] text-[#F5F6F7] max-w-[300px] overflow-hidden" />
                             <TableCell className="text-[14px] text-[#F5F6F7]">
                                 <div className="p-2">
                                     <p className={`${"text-[#F5F6F7]"} text-[14px]`}>Free</p>
