@@ -7,14 +7,15 @@ import { MdOutlineUploadFile } from "react-icons/md";
 import { TbClockHour12 } from "react-icons/tb";
 import { generateSpeech } from "../helpers/generate-audio";
 import AudioCard from "./AudioCard";
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 import { useAppContext } from "./EditBar/EditorContext";
 import VoiceSelectorModal from "./EditBar/VoiceSelectorModal";
 import ShareModal from "./EditBar/ShareModal";
 import ViewModal from "./EditBar/ViewModal";
 
 export default function SimpleMode() {
-    const { setVoiceModel, voiceModel, speakers, selectedProject, setSelectedProject, setProjects, selectedSpeaker } = useAppContext();
+    const { setVoiceModel, voiceModel, speakers, selectedProject, setSelectedProject, selectedSpeaker } =
+        useAppContext();
     const [text, setText] = useState("");
     const [speaker, setSpeaker] = useState(selectedSpeaker);
     const [shareModal, setShareModal] = useState();
@@ -37,13 +38,13 @@ export default function SimpleMode() {
         setIsLoading(true);
         const data = {
             text: text,
-            speaker: speaker.id
+            speaker: speaker.id,
         };
         const speech = await generateSpeech(JSON.stringify(data));
         if (!speech?.urls?.[0]) {
-        setIsLoading(false);
-            return toast.error('Something went wrong')
-        };
+            setIsLoading(false);
+            return toast.error("Something went wrong");
+        }
         setSelectedProject((pre) => ({
             ...pre,
             data: [
@@ -52,18 +53,20 @@ export default function SimpleMode() {
                     speaker,
                     text,
                     speech,
-                    time: Date.now()
-                }
-            ]
+                    time: Date.now(),
+                },
+            ],
         }));
 
         setIsLoading(false);
-        setText("");
     };
 
     useEffect(() => {
+        if (!text) {
+            setText(selectedProject?.data?.sort((a, b) => b.time - a.time)[0]?.speech?.text || "");
+        }
         setSpeaker(speakers[0]);
-    }, [speakers]);
+    }, [speakers, selectedProject?.data, text]);
 
     return (
         <div className="bg-[#242427] w-full">
@@ -141,9 +144,8 @@ export default function SimpleMode() {
                         className="bg-[#2871DE] w-full py-2 rounded-xl font-semibold mt-4 items-center gap-2"
                     >
                         {!isLoading ? (
-                            
-                                <>
-                            <Image src={"/images/generate.svg"} alt="" width={20} height={20} />
+                            <>
+                                <Image src={"/images/generate.svg"} alt="" width={20} height={20} />
                                 Generate
                             </>
                         ) : (
@@ -152,7 +154,7 @@ export default function SimpleMode() {
                     </Button>
                     <VoiceSelectorModal
                         callback={function (data) {
-                            console.log(data)
+                            console.log(data);
                             setSpeaker(data);
                         }}
                         isOpen={voiceModel}
