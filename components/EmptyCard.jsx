@@ -14,7 +14,7 @@ export default function EmptyCard() {
         const { project: newProject } = await fetch(`/api/projects/add-project`, {
             method: "POST",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
             },
             body: JSON.stringify({
                 mockData: initMockData,
@@ -26,42 +26,222 @@ export default function EmptyCard() {
                 isBasic: active === "simple",
                 data: [
                     {
-                        text: "Hi there, welcome to Genny. The Simple mode is perfect for creating single speaker short voiceovers. Simply pick your preferred speaker, type or copy and paste your script. Then, click the 'Generate' button to generate your voiceover in seconds. You will see the voiceover output on the right for you to freely share or download. For more advanced capabilities, video editing, or longer multi-speaker voiceover production, please checkout the Advanced mode instead.",
-                        time: 1704095445817,
                         speaker: {
-                            imageUrl: "https://cdn.lovo.ai/f5349e2d/Aadesh+Madar.jpeg",
-                            gender: "male",
-                            id: "63b4094b241a82001d51c5fc",
+                            imageUrl: "https://cdn.lovo.ai/f5349e2d/simon.png",
+                            bookmarks: [],
+                            displayName: "Simon Miller",
+                            id: "62985a504ae23ac7dcf66732",
+                            locale: "en-US",
                             speakerStyles: [
                                 {
-                                    id: "63b4094b241a82001d51c5fd",
+                                    displayName: "Joy",
+                                    deprecated: true,
+                                    id: "62985a504ae23ac7dcf66734",
+                                },
+                                {
                                     sampleTtsUrl:
-                                        "https://cdn.lovo.ai/speaker-tts-samples/prod/kn-IN-GaganNeural-default.wav",
+                                        "https://cdn.lovo.ai/speaker-tts-samples/prod/danielsullivan-admiration.wav",
+                                    displayName: "Admiration",
+                                    id: "62985a504ae23ac7dcf66735",
                                     deprecated: false,
-                                    displayName: "Default"
-                                }
+                                },
+                                {
+                                    deprecated: true,
+                                    id: "62985a504ae23ac7dcf66736",
+                                    displayName: "Disgusted",
+                                },
+                                {
+                                    displayName: "Disappointed",
+                                    id: "62985a504ae23ac7dcf66737",
+                                    deprecated: true,
+                                },
+                                {
+                                    deprecated: false,
+                                    displayName: "Intimate",
+                                    id: "62985a504ae23ac7dcf66738",
+                                    sampleTtsUrl:
+                                        "https://cdn.lovo.ai/speaker-tts-samples/prod/danielsullivan-intimate.wav",
+                                },
+                                {
+                                    displayName: "Narrative",
+                                    id: "62985a504ae23ac7dcf66739",
+                                    sampleTtsUrl:
+                                        "https://cdn.lovo.ai/speaker-tts-samples/prod/danielsullivan-neutralnarrative.wav",
+                                    deprecated: false,
+                                },
+                                {
+                                    deprecated: true,
+                                    id: "62985a504ae23ac7dcf6673a",
+                                    displayName: "Confident",
+                                },
+                                {
+                                    sampleTtsUrl:
+                                        "https://cdn.lovo.ai/speaker-tts-samples/prod/danielsullivan-amazed.wav",
+                                    id: "62985a504ae23ac7dcf6673b",
+                                    displayName: "Amazed",
+                                    deprecated: false,
+                                },
+                                {
+                                    displayName: "Sleepy - Happy",
+                                    sampleTtsUrl:
+                                        "https://cdn.lovo.ai/speaker-tts-samples/prod/danielsullivan-sleepyhappy.wav",
+                                    id: "62985a504ae23ac7dcf6673c",
+                                    deprecated: false,
+                                },
+                                {
+                                    displayName: "Grief",
+                                    id: "62985a504ae23ac7dcf6673d",
+                                    deprecated: false,
+                                    sampleTtsUrl:
+                                        "https://cdn.lovo.ai/speaker-tts-samples/prod/danielsullivan-grief.wav",
+                                },
+                                {
+                                    id: "62985a504ae23ac7dcf6673e",
+                                    displayName: "Presenting",
+                                    deprecated: false,
+                                    sampleTtsUrl:
+                                        "https://cdn.lovo.ai/speaker-tts-samples/prod/danielsullivan-neutralpresenting.wav",
+                                },
+                                {
+                                    deprecated: false,
+                                    displayName: "Serious",
+                                    sampleTtsUrl:
+                                        "https://cdn.lovo.ai/speaker-tts-samples/prod/danielsullivan-serious.wav",
+                                    id: "62985a504ae23ac7dcf6673f",
+                                },
+                                {
+                                    deprecated: false,
+                                    displayName: "Disapproval",
+                                    id: "62985a504ae23ac7dcf66740",
+                                    sampleTtsUrl:
+                                        "https://cdn.lovo.ai/speaker-tts-samples/prod/danielsullivan-disapproval.wav",
+                                },
+                                {
+                                    id: "62985a504ae23ac7dcf66741",
+                                    deprecated: false,
+                                    sampleTtsUrl:
+                                        "https://cdn.lovo.ai/speaker-tts-samples/prod/danielsullivan-boredom.wav",
+                                    displayName: "Boredom",
+                                },
+                                {
+                                    sampleTtsUrl:
+                                        "https://cdn.lovo.ai/speaker-tts-samples/prod/danielsullivan-apprehensive.wav",
+                                    deprecated: false,
+                                    id: "62985a504ae23ac7dcf66742",
+                                    displayName: "Apprehensive",
+                                },
+                                {
+                                    deprecated: false,
+                                    id: "62985a504ae23ac7dcf66743",
+                                    displayName: "Annoyed",
+                                    sampleTtsUrl:
+                                        "https://cdn.lovo.ai/speaker-tts-samples/prod/danielsullivan-annoyed.wav",
+                                },
+                                {
+                                    deprecated: false,
+                                    id: "62985a504ae23ac7dcf66744",
+                                    displayName: "Tired",
+                                    sampleTtsUrl:
+                                        "https://cdn.lovo.ai/speaker-tts-samples/prod/danielsullivan-tired.wav",
+                                },
+                                {
+                                    deprecated: true,
+                                    id: "62985a504ae23ac7dcf66745",
+                                    displayName: "Urgent",
+                                },
+                                {
+                                    displayName: "Flirty",
+                                    sampleTtsUrl:
+                                        "https://cdn.lovo.ai/speaker-tts-samples/prod/danielsullivan-flirty.wav",
+                                    deprecated: false,
+                                    id: "62985a504ae23ac7dcf66746",
+                                },
+                                {
+                                    id: "62985a504ae23ac7dcf66747",
+                                    displayName: "Terrified",
+                                    deprecated: false,
+                                    sampleTtsUrl:
+                                        "https://cdn.lovo.ai/speaker-tts-samples/prod/danielsullivan-terrified.wav",
+                                },
+                                {
+                                    sampleTtsUrl:
+                                        "https://cdn.lovo.ai/speaker-tts-samples/prod/danielsullivan-hesitant.wav",
+                                    deprecated: false,
+                                    id: "62985a504ae23ac7dcf66748",
+                                    displayName: "Hesitant",
+                                },
+                                {
+                                    id: "62985a504ae23ac7dcf66749",
+                                    deprecated: true,
+                                    displayName: "Furious",
+                                },
+                                {
+                                    deprecated: false,
+                                    displayName: "Sarcastic",
+                                    sampleTtsUrl:
+                                        "https://cdn.lovo.ai/speaker-tts-samples/prod/danielsullivan-sarcastic.wav",
+                                    id: "62985a504ae23ac7dcf6674a",
+                                },
+                                {
+                                    displayName: "Sick",
+                                    sampleTtsUrl:
+                                        "https://cdn.lovo.ai/speaker-tts-samples/prod/danielsullivan-sick.wav",
+                                    id: "62985a504ae23ac7dcf6674b",
+                                    deprecated: false,
+                                },
+                                {
+                                    id: "62985a504ae23ac7dcf6674c",
+                                    deprecated: false,
+                                    displayName: "Serene",
+                                    sampleTtsUrl:
+                                        "https://cdn.lovo.ai/speaker-tts-samples/prod/danielsullivan-serene.wav",
+                                },
+                                {
+                                    deprecated: true,
+                                    displayName: "Ecstatic",
+                                    id: "62985a504ae23ac7dcf6674d",
+                                },
+                                {
+                                    displayName: "Sleepy - Frustrated",
+                                    sampleTtsUrl:
+                                        "https://cdn.lovo.ai/speaker-tts-samples/prod/danielsullivan-sleepyfrustrated.wav",
+                                    deprecated: false,
+                                    id: "62985a504ae23ac7dcf6674e",
+                                },
+                                {
+                                    deprecated: true,
+                                    id: "62985a504ae23ac7dcf6674f",
+                                    displayName: "Drunken - Happy",
+                                },
+                                {
+                                    deprecated: true,
+                                    id: "62985a504ae23ac7dcf66750",
+                                    displayName: "Drunken - Sad",
+                                },
                             ],
-                            displayName: "Aadesh Madar",
-                            speakerType: "global",
-                            locale: "kn-IN"
+                            speakerType: "emotional",
+                            ageRange: "mature",
+                            gender: "male",
                         },
+                        text: "hi",
                         speech: {
-                            id: "be73e283-665d-4870-b26b-d3775d7ee52c",
                             pronunciations: [],
-                            emphasis: [],
                             status: "succeeded",
-                            speaker: "63b4094b241a82001d51c5fc",
+                            text: "hi",
+                            speaker: "62985a504ae23ac7dcf66732",
+                            speakerStyle: "62985a504ae23ac7dcf66739",
                             speed: 1,
-                            text: "Hi there, welcome to Genny. The Simple mode is perfect for creating single speaker short voiceovers. Simply pick your preferred speaker, type or copy and paste your script. Then, click the 'Generate' button to generate your voiceover in seconds. You will see the voiceover output on the right for you to freely share or download. For more advanced capabilities, video editing, or longer multi-speaker voiceover production, please checkout the Advanced mode instead.",
                             pause: [],
+                            emphasis: [],
                             urls: [
-                                "https://firebasestorage.googleapis.com/v0/b/vivald-45d17.appspot.com/o/speeches%2Fd17e9b02-e529-414f-8a9b-305b0f40a058.mp3?alt=media&token=d1c441dc-4841-495c-b449-b967401a4407"
+                                "https://firebasestorage.googleapis.com/v0/b/vvld-7706b.appspot.com/o/speeches%2F458ad424-ff06-4144-bb72-4798a27d8e7c.mp3?alt=media&token=123f6c22-ea85-4f8d-9610-e7e23b017fa9",
                             ],
-                            speakerStyle: "63b4094b241a82001d51c5fd"
-                        }
-                    }
-                ]
-            })
+                            id: "804d0472-a690-4d76-a050-061db710d354",
+                        },
+                        time: 1704716399043,
+                    },
+                ],
+            }),
         }).then((res) => res.json());
         const newProjects = [...projects, newProject];
         setProjects(newProjects);

@@ -23,6 +23,7 @@ function TranscriptInput({ mockData, mockEffect, length }) {
     const { setMockData, setMockEffect, setVoiceModel, initMockData } = useAppContext();
     const [disabled, setDisabled] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+    const [show, setShow] = useState(false);
     const [soundId, setSoundId] = useState();
     const [isPlaying, setIsPlaying] = useState(false);
     const [sound, setSound] = useState();
@@ -133,12 +134,9 @@ function TranscriptInput({ mockData, mockEffect, length }) {
                     className="flex"
                     size="16"
                 ></Checkbox>
-                <div
-                    className="flex  w-full max-w-36 min-w-36 cursor-pointer gap-2 items-center"
-                    onClick={() => setVoiceModel(mockData?.id)}
-                >
+                <div className="flex cursor-pointer gap-2 w-full min-w-[150px] items-center" onClick={() => setVoiceModel(mockData?.id)}>
                     <Avatar size="24" src={mockData?.speaker?.imageUrl} />
-                    <p className="text-[14px]">{mockData?.speaker?.displayName || "Sophia"}</p>
+                    <p className="text-[14px] truncate">{mockData?.speaker?.displayName || "Sophia"}</p>
                 </div>
             </div>
             <div className="relative">
@@ -150,6 +148,8 @@ function TranscriptInput({ mockData, mockEffect, length }) {
                     className="bg-transparent resize-none border border-[#44444A] rounded-[5px] p-2 scrollStyle"
                     maxLength={400}
                     max={400}
+                    onFocus={() => setShow(true)}
+                    onBlur={() => setShow(false)}
                 ></textarea>
                 <div className="absolute top-2 right-2 hover:bg-[#353538] p-2 rounded-[5px] cursor-pointer">
                     <Dropdown>
@@ -194,51 +194,55 @@ function TranscriptInput({ mockData, mockEffect, length }) {
                     </Dropdown>
                 </div>
             </div>
-            <div className="flex flex-col gap-2 justify-evenly h-full">
-                <Tooltip
-                    showArrow={true}
-                    content="Generate"
-                    onClick={() => setDisabled(true)}
-                    disabled={!disabled}
-                    className="bg-black rounded-[10px]"
-                >
-                    <Button
-                        onClick={generateAudio}
-                        disabled={!disabled}
-                        className=" disabled:cursor-not-allowed disabled:opacity-50 enabled:cursor-pointer"
-                    >
-                        {!isLoading ? (
-                            <Image src={"/images/generate.svg"} alt="" width={20} height={20} />
-                        ) : (
-                            <div className="loadingButton"></div>
-                        )}
-                    </Button>
-                </Tooltip>
-                <Tooltip showArrow={true} content="Play" className="bg-black rounded-[10px]">
-                    <Button
-                        disabled={disabled}
-                        onClick={() => {
-                            if (isPlaying) {
-                                sound.pause(soundId);
-                            } else {
-                                sound.play(soundId);
-                            }
-                            setIsPlaying(!isPlaying);
-                        }}
-                        className=" disabled:cursor-not-allowed disabled:opacity-50 enabled:cursor-pointer"
-                    >
-                        {isPlaying ? <FaPause size={20} /> : <FaPlay size={20} />}
-                    </Button>
-                </Tooltip>
-                <Tooltip showArrow={true} content="Export" className="bg-black rounded-[10px]">
-                    <Button
-                        disabled={disabled}
-                        onClick={downloadFile}
-                        className=" disabled:cursor-not-allowed disabled:opacity-50 enabled:cursor-pointer"
-                    >
-                        <FaShareSquare size={20} />
-                    </Button>
-                </Tooltip>
+            <div className="w-full min-w-[30px]">
+                {show && (
+                    <div className="flex flex-col gap-2 justify-evenly h-full">
+                        <Tooltip
+                            showArrow={true}
+                            content="Generate"
+                            onClick={() => setDisabled(true)}
+                            disabled={!disabled}
+                            className="bg-black rounded-[10px]"
+                        >
+                            <Button
+                                onClick={generateAudio}
+                                disabled={!disabled}
+                                className=" disabled:cursor-not-allowed disabled:opacity-50 enabled:cursor-pointer"
+                            >
+                                {!isLoading ? (
+                                    <Image src={"/images/generate.svg"} alt="" width={20} height={20} />
+                                ) : (
+                                    <div className="loadingButton"></div>
+                                )}
+                            </Button>
+                        </Tooltip>
+                        <Tooltip showArrow={true} content="Play" className="bg-black rounded-[10px]">
+                            <Button
+                                disabled={disabled}
+                                onClick={() => {
+                                    if (isPlaying) {
+                                        sound.pause(soundId);
+                                    } else {
+                                        sound.play(soundId);
+                                    }
+                                    setIsPlaying(!isPlaying);
+                                }}
+                                className=" disabled:cursor-not-allowed disabled:opacity-50 enabled:cursor-pointer"
+                            >
+                                {isPlaying ? <FaPause size={20} /> : <FaPlay size={20} />}
+                            </Button>
+                        </Tooltip>
+                        <Tooltip showArrow={true} content="Export" className="bg-black rounded-[10px]">
+                            <Button
+                                disabled={disabled}
+                                onClick={downloadFile}
+                                className=" disabled:cursor-not-allowed disabled:opacity-50 enabled:cursor-pointer"
+                            >
+                                <FaShareSquare size={20} />
+                            </Button>
+                        </Tooltip>
+                    </div>
+                )}
             </div>
         </div>
     );

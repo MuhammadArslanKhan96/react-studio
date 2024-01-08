@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unescaped-entities */
-import { Avatar, Button, Tooltip } from "@nextui-org/react";
+import { Avatar, Button, Tooltip, useDisclosure } from "@nextui-org/react";
 import Image from "next/image";
 import React, { useEffect, useRef, useState } from "react";
 import { IoIosArrowDown } from "react-icons/io";
@@ -12,13 +12,17 @@ import { useAppContext } from "./EditBar/EditorContext";
 import VoiceSelectorModal from "./EditBar/VoiceSelectorModal";
 import ShareModal from "./EditBar/ShareModal";
 import ViewModal from "./EditBar/ViewModal";
+import PronouneModal from "./EditBar/PronouneModal";
 
 export default function SimpleMode() {
     const { setVoiceModel, voiceModel, speakers, selectedProject, setSelectedProject, selectedSpeaker } =
         useAppContext();
+    const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const [text, setText] = useState("");
     const [speaker, setSpeaker] = useState(selectedSpeaker);
     const [shareModal, setShareModal] = useState();
+    const [speedModal, setSpeedModal] = useState(false);
+    const [speed, setSpeed] = useState(1.0);
     const [isLoading, setIsLoading] = useState(false);
     const [load, setLoad] = useState(true);
     const [viewModal, setViewModal] = useState();
@@ -73,7 +77,7 @@ export default function SimpleMode() {
             }));
         }
         setSpeaker(speakers[0]);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [speakers, selectedProject?.data, text]);
 
     return (
@@ -90,13 +94,37 @@ export default function SimpleMode() {
                         </div>
                     </div>
                     <div className="flex items-center mt-2 border-b border-b-[#44444A] pb-2">
-                        <div className="flex items-center pr-4 gap-2">
+                        <div className="flex relative items-center pr-4 gap-2">
                             <Tooltip showArrow={true} content="Fix the start time" className="bg-black rounded-[10px]">
-                                <Button className="flex gap-x-[5px] items-center text-[12px] hover:bg-[#353538] px-2 rounded-[5px]">
-                                    <TbClockHour12 />
-                                    x1.00
+                                <Button
+                                    onClick={() => setSpeedModal(!speedModal)}
+                                    className="flex gap-x-[5px] items-center text-[12px] hover:bg-[#353538] px-2 rounded-[5px]"
+                                >
+                                    <TbClockHour12 />x{speed.toFixed(2)}
                                 </Button>
                             </Tooltip>
+                            {speedModal && (
+                                <div className="absolute z-50 flex flex-col w-full h-16 gap-2 border border-white/40 -bottom-16 bg-black rounded-lg py-2 px-4">
+                                    <p className="text-xs text-white/70">Speed</p>
+                                    <div className="flex items-center w-full">
+                                        <Button
+                                            onClick={() => setSpeed((pre) => pre - 0.01)}
+                                            className="flex h-full w-full gap-x-[5px] border border-white/70 items-center text-[12px] hover:bg-[#353538] max-w-[30px] px-2"
+                                        >
+                                            -
+                                        </Button>
+                                        <p className="flex gap-x-[5px] border border-white/70 items-center text-[12px] hover:bg-[#353538] w-full text-center justify-center px-2">
+                                            x{speed.toFixed(2)}
+                                        </p>
+                                        <Button
+                                            onClick={() => setSpeed((pre) => pre + 0.01)}
+                                            className="flex h-full w-full gap-x-[5px] border border-white/70 items-center text-[12px] hover:bg-[#353538] max-w-[30px] px-2"
+                                        >
+                                            +
+                                        </Button>
+                                    </div>
+                                </div>
+                            )}
                             <Tooltip
                                 showArrow={true}
                                 content="Emphasis is not supported for Pro voice"
@@ -122,10 +150,14 @@ export default function SimpleMode() {
                                 Import Text
                             </Button>
                         </div>
-                        {/* <Button className="flex gap-2 items-center text-xs hover:bg-[#353538] rounded-xl px-4 py-2 ml-2">
+                        <Button
+                            onClick={onOpen}
+                            className="flex gap-2 items-center text-xs hover:bg-[#353538] rounded-xl px-4 py-2 ml-2"
+                        >
                             <Image src={"images/pronoune.svg"} alt="" width={16} height={16} /> Pronunciation
-                        </Button> */}
+                        </Button>
                     </div>
+                    <PronouneModal isOpen={isOpen} onOpenChange={onOpenChange} />
                     {/* paragraph */}
                     <div className="py-4 border-b border-b-[#44444A]">
                         <textarea
@@ -147,9 +179,9 @@ export default function SimpleMode() {
                         </div>
                     </div>
                     <Button
-                        disabled={isLoading}
+                        disabled={isLoading || !text}
                         onClick={handleGenerate}
-                        className="bg-[#2871DE] w-full py-2 rounded-xl font-semibold mt-4 items-center gap-2"
+                        className="bg-[#2871DE] disabled:bg-opacity-70 disabled:cursor-not-allowed w-full py-2 rounded-xl font-semibold mt-4 items-center gap-2"
                     >
                         {!isLoading ? (
                             <>
