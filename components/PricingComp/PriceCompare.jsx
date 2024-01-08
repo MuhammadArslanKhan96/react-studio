@@ -176,57 +176,57 @@ export default function PriceCompare() {
                 <p className="text-[#2871DE] text-[14px] flex justify-center mt-2">SAVE UP TO 50% WITH YEARLY</p>
             </div>
             <div>
-                <div className="flex lg:grid w-full  lg:grid-cols-4 gap-[1px]">
+                <div className="flex lg:grid w-full pt-10 relative lg:grid-cols-4 gap-[1px]">
                     {plans.map((item, idx) => (
                         <div key={idx} className="flex flex-col">
-                            <div className="p-2">
-                                {item.tier === "Pro" && (
-                                    <div className="bg-[linear-gradient(90deg,rgb(46,148,255)0%,rgb(64,140,255)32.81%,rgb(61,181,255)71.35%,rgb(46,209,234)100%)] p-[1px] rounded-[10px] w-fit  m-2">
-                                        <Button
-                                            className="bg-[#2D2D30]  flex rounded-[10px] flex-col text-[12px] text-[#3396FF] px-4 py-2 w-full"
-                                            onClick={() => ref.current.click()}
-                                        >
-                                            Most Popular
-                                        </Button>
-                                    </div>
-                                )}
-                                <p
-                                    className={`${
-                                        item.tier === "Free"
-                                            ? "text-[#F5F6F7]"
-                                            : item.tier === "Basic"
-                                            ? "text-[#F6AD55]"
-                                            : item.tier === "Pro"
-                                            ? "text-[#428BEB]"
-                                            : item.tier === "Pro +"
-                                            ? "text-[#B794F4]" // Set the color to #B794F4 for "Pro +"
-                                            : "" // Default case, you can adjust this based on your requirements
-                                    } text-[20px]`}
-                                >
-                                    {item.tier}
-                                </p>
-                                <p
-                                    className={`${
-                                        item.tier === "Free"
-                                            ? "text-[#F5F6F7]"
-                                            : item.tier === "Basic"
-                                            ? "text-[#F6AD55]"
-                                            : item.tier === "Pro"
-                                            ? "text-[#428BEB]"
-                                            : item.tier === "Pro +"
-                                            ? "text-[#B794F4]" // Set the color to #B794F4 for "Pro +"
-                                            : "" // Default case, you can adjust this based on your requirements
-                                    } text-[48px] font-bold`}
-                                >
-                                    {!switchactive ? item.pricemon : item.priceyear}
-                                </p>
-                                <p className="text-[#8C8C96] text-[14px]">{item.method1}</p>
-                                <p className="text-[#8C8C96] text-[14px]">
-                                    {switchactive ? item.billedyear : item.billedmont}
-                                </p>
-                                <p className="text-[#F5F6F7] text-[16px]">{item.des}</p>
-                                {item.tier === "Pro" ||
-                                    (item.tier === "Pro +" && (
+                            <div className="p-2 flex flex-col justify-between min-h-[19rem]">
+                                <div>
+                                    {item.tier === "Pro" && (
+                                        <div className="absolute top-0 bg-[linear-gradient(90deg,rgb(46,148,255)0%,rgb(64,140,255)32.81%,rgb(61,181,255)71.35%,rgb(46,209,234)100%)] p-[1px] rounded-[10px] w-fit  m-2">
+                                            <Button
+                                                className="bg-[#2D2D30]  flex rounded-[10px] flex-col text-[12px] text-[#3396FF] px-4 py-2 w-full"
+                                                onClick={() => ref.current.click()}
+                                            >
+                                                Most Popular
+                                            </Button>
+                                        </div>
+                                    )}
+                                    <p
+                                        className={`${
+                                            item.tier === "Free"
+                                                ? "text-[#F5F6F7]"
+                                                : item.tier === "Basic"
+                                                ? "text-[#F6AD55]"
+                                                : item.tier === "Pro"
+                                                ? "text-[#428BEB]"
+                                                : item.tier === "Pro +"
+                                                ? "text-[#B794F4]" // Set the color to #B794F4 for "Pro +"
+                                                : "" // Default case, you can adjust this based on your requirements
+                                        } text-[20px]`}
+                                    >
+                                        {item.tier}
+                                    </p>
+                                    <p
+                                        className={`${
+                                            item.tier === "Free"
+                                                ? "text-[#F5F6F7]"
+                                                : item.tier === "Basic"
+                                                ? "text-[#F6AD55]"
+                                                : item.tier === "Pro"
+                                                ? "text-[#428BEB]"
+                                                : item.tier === "Pro +"
+                                                ? "text-[#B794F4]" // Set the color to #B794F4 for "Pro +"
+                                                : "" // Default case, you can adjust this based on your requirements
+                                        } text-[48px] font-bold`}
+                                    >
+                                        {!switchactive ? item.pricemon : item.priceyear}
+                                    </p>
+                                    <p className="text-[#8C8C96] text-[14px]">{item.method1}</p>
+                                    <p className="text-[#8C8C96] text-[14px]">
+                                        {switchactive ? item.billedyear : item.billedmont}
+                                    </p>
+                                    <p className="text-[#F5F6F7] text-[16px]">{item.des}</p>
+                                    {(item.tier === "Pro" || item.tier === "Pro +") && (
                                         <div className="mt-2 w-full">
                                             <p className="text-[#B6B8BF] text-[12px]">Users</p>
                                             <div className="flex gap-x-2 items-center w-full">
@@ -242,10 +242,11 @@ export default function PriceCompare() {
                                                 <button onclick={inc}>+</button>
                                             </div>
                                         </div>
-                                    ))}
+                                    )}
+                                </div>
                                 <Button
                                     onClick={() => handlePlanChange(item.tier)}
-                                    className="bg-[#2871DE] text-[14px] rounded-[10px] w-full py-2 mt-2"
+                                    className="bg-[#2871DE]  text-[14px] rounded-[10px] w-full py-2 mt-2"
                                 >
                                     Change Plan
                                 </Button>
@@ -280,7 +281,10 @@ export default function PriceCompare() {
                 </div>
             </div>
             <div className="flex justify-center my-2">
-                <Button onClick={() => router.push('/pricing#pricing-policy-table')} className="flex items-center gap-x-2 text-[#EFEFEF] hover:bg-[#353538] rounded-[5px] px-4 py-2">
+                <Button
+                    onClick={() => router.push("/pricing#pricing-policy-table")}
+                    className="flex items-center gap-x-2 text-[#EFEFEF] hover:bg-[#353538] rounded-[5px] px-4 py-2"
+                >
                     See all features <FaArrowDownLong />
                 </Button>
             </div>

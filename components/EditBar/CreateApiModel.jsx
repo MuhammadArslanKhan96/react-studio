@@ -41,7 +41,6 @@ export default function CreateApiModal({ isOpen, onOpenChange, setApiKeys }) {
 
     const handleCopyButton = () => {
         navigator.clipboard.writeText(input).then(function () {
-            console.log('API Key copied to clipboard');
         }, function (err) {
             console.error('Could not copy text: ', err);
         });

@@ -25,6 +25,7 @@ export default function SimpleMode() {
     const [speed, setSpeed] = useState(1.0);
     const [isLoading, setIsLoading] = useState(false);
     const [load, setLoad] = useState(true);
+    const [progress, setProgress] = useState(0);
     const [viewModal, setViewModal] = useState();
     const ref = useRef();
 
@@ -45,11 +46,14 @@ export default function SimpleMode() {
             text: text,
             speaker: speaker.id,
         };
+        setProgress(10);
         const speech = await generateSpeech(JSON.stringify(data));
+        setProgress(40);
         if (!speech?.urls?.[0]) {
             setIsLoading(false);
             return toast.error("Something went wrong");
         }
+        setProgress(100);
         setSelectedProject((pre) => ({
             ...pre,
             data: [
@@ -189,12 +193,14 @@ export default function SimpleMode() {
                                 Generate
                             </>
                         ) : (
-                            <div className="loadingButton"></div>
+                            <div className="flex gap-3 items-center justify-center">
+                                <div className="loadingButton"></div>
+                                <div>{progress} %</div>
+                            </div>
                         )}
                     </Button>
                     <VoiceSelectorModal
                         callback={function (data) {
-                            console.log(data);
                             setSpeaker(data);
                         }}
                         isOpen={voiceModel}

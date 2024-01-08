@@ -51,7 +51,6 @@ const Share = () => {
   };
 
   const handleLoadedMetadata = () => {
-    console.log('loadedmetadata')
     setDuration(videoRef.current.duration);
   };
 

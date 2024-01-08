@@ -44,9 +44,7 @@ export default function APIKey({ isOpen, onOpenChange }) {
 
     const handleCopyButton = (key) => {
         navigator.clipboard.writeText(key).then(
-            function () {
-                console.log("API Key copied to clipboard");
-            },
+            function () {},
             function (err) {
                 console.error("Could not copy text: ", err);
             }

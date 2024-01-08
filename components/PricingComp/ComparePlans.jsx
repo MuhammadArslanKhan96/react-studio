@@ -7,16 +7,14 @@ import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell } from 
 import { useAppContext } from "../EditBar/EditorContext";
 
 export default function ComparePlans({ switchactive, inc, dec, count }) {
-
     const { setUser } = useAppContext();
 
-
     const handlePlanChange = (name) => {
-        setUser(prevUser => ({
+        setUser((prevUser) => ({
             ...prevUser,
-            plan: name
-          }));
-    }
+            plan: name,
+        }));
+    };
 
     const aivoice = [
         {
@@ -243,130 +241,23 @@ export default function ComparePlans({ switchactive, inc, dec, count }) {
         },
     ];
 
-    return <div className="scrollStyle" id="pricing-policy-table">
+    return (
+        <div className="scrollStyle" id="pricing-policy-table">
             <p className="text-[24px] text-[#EFEFEF] mt-4 font-bold pl-4">Compare plans</p>
             {/* Ai Voice */}
             <div>
                 <Table aria-label="Example static collection table">
                     <TableHeader className="border-b border-b-[#44444A] grid grid-cols-5">
-                        <TableColumn className="text-[14px] font-bold text-[#F5F6F7]">AI Voice</TableColumn>
+                        <TableColumn className="text-[14px] font-bold max-w-[300px] w-[300px] text-[#F5F6F7]">AI Voice</TableColumn>
                         <TableColumn className="text-[14px] font-bold text-[#F5F6F7]">Free</TableColumn>
                         <TableColumn className="text-[14px] font-bold text-[#F6AD55]">Basic</TableColumn>
                         <TableColumn className="text-[14px] font-bold text-[#428BEB]">Pro</TableColumn>
                         <TableColumn className="text-[14px] font-bold text-[#B794F4]">Pro +</TableColumn>
                     </TableHeader>
                     <TableBody className="grid grid-cols-5">
-                        {aivoice.map((item, idx) => <TableRow key={idx} className="border-b border-b-[#44444A]">
-                                <TableCell className="flex gap-x-2 items-center text-[14px] text-[#F5F6F7] max-w-[300px] overflow-hidden">
-                                    {item.voice}
-                                    <Tooltip showArrow={true} content={item.tooltip} className="bg-black rounded-[10px] text-[10px] max-w-[200px]">
-                                        <Button>
-                                            <AiOutlineQuestionCircle />
-                                        </Button>
-                                    </Tooltip>
-                                </TableCell>
-                                <TableCell className="text-[14px] text-[#F5F6F7]">
-                                    {item.free}
-                                </TableCell>
-                                <TableCell className="text-[14px] text-[#F5F6F7]">
-                                    {item.basic}
-                                </TableCell>
-                                <TableCell className="text-[14px] text-[#F5F6F7]">
-                                    {item.pro}
-                                </TableCell>
-                                <TableCell className="text-[14px] text-[#F5F6F7]">
-                                    {item.proplus}
-                                </TableCell>
-                            </TableRow>)}
-                    </TableBody>
-                </Table>
-            </div>
-            {/* Editing */}
-            <div>
-                <Table aria-label="Example static collection table">
-                    <TableHeader className="border-b border-b-[#44444A] grid grid-cols-5">
-                        <TableColumn className="text-[14px] font-bold text-[#F5F6F7]">Editing & Export</TableColumn>
-                        <TableColumn className="text-[14px] font-bold text-[#F5F6F7]">Free</TableColumn>
-                        <TableColumn className="text-[14px] font-bold text-[#F6AD55]">Basic</TableColumn>
-                        <TableColumn className="text-[14px] font-bold text-[#428BEB]">Pro</TableColumn>
-                        <TableColumn className="text-[14px] font-bold text-[#B794F4]">Pro +</TableColumn>
-                    </TableHeader>
-                    <TableBody className="grid grid-cols-5">
-                        {editing.map((item, idx) => <TableRow key={idx} className="border-b border-b-[#44444A]">
-                                <TableCell className="flex gap-x-2 items-center text-[14px] text-[#F5F6F7] max-w-[300px] overflow-hidden">
-                                    {item.voice}
-                                    <Tooltip showArrow={true} content={item.tooltip} className="bg-black rounded-[10px] text-[10px] max-w-[200px]">
-                                        <Button>
-                                            <AiOutlineQuestionCircle />
-                                        </Button>
-                                    </Tooltip>
-                                </TableCell>
-                                <TableCell className="text-[14px] text-[#F5F6F7]">
-                                    {item.free}
-                                </TableCell>
-                                <TableCell className="text-[14px] text-[#F5F6F7]">
-                                    {item.basic}
-                                </TableCell>
-                                <TableCell className="text-[14px] text-[#F5F6F7]">
-                                    {item.pro}
-                                </TableCell>
-                                <TableCell className="text-[14px] text-[#F5F6F7]">
-                                    {item.proplus}
-                                </TableCell>
-                            </TableRow>)}
-                    </TableBody>
-                </Table>
-            </div>
-            {/* Ai Feature */}
-            <div>
-                <Table aria-label="Example static collection table">
-                    <TableHeader className="border-b border-b-[#44444A] grid grid-cols-5">
-                        <TableColumn className="text-[14px] font-bold text-[#F5F6F7]">AI Features</TableColumn>
-                        <TableColumn className="text-[14px] font-bold text-[#F5F6F7]">Free</TableColumn>
-                        <TableColumn className="text-[14px] font-bold text-[#F6AD55]">Basic</TableColumn>
-                        <TableColumn className="text-[14px] font-bold text-[#428BEB]">Pro</TableColumn>
-                        <TableColumn className="text-[14px] font-bold text-[#B794F4]">Pro +</TableColumn>
-                    </TableHeader>
-                    <TableBody className="grid grid-cols-5">
-                        {feature.map((item, idx) => <TableRow key={idx} className="border-b border-b-[#44444A]">
-                                <TableCell className="flex gap-x-2 items-center text-[14px] text-[#F5F6F7] max-w-[300px] overflow-hidden">
-                                    {item.voice}
-                                    <Tooltip showArrow={true} content={item.tooltip} className="bg-black rounded-[10px] text-[10px] max-w-[200px]">
-                                        <Button>
-                                            <AiOutlineQuestionCircle />
-                                        </Button>
-                                    </Tooltip>
-                                </TableCell>
-                                <TableCell className="text-[14px] text-[#F5F6F7]">
-                                    {item.free}
-                                </TableCell>
-                                <TableCell className="text-[14px] text-[#F5F6F7]">
-                                    {item.basic}
-                                </TableCell>
-                                <TableCell className="text-[14px] text-[#F5F6F7]">
-                                    {item.pro}
-                                </TableCell>
-                                <TableCell className="text-[14px] text-[#F5F6F7]">
-                                    {item.proplus}
-                                </TableCell>
-                            </TableRow>)}
-                    </TableBody>
-                </Table>
-            </div>
-            {/* Collaboration */}
-            <div>
-                <Table aria-label="Example static collection table">
-                    <TableHeader className="border-b border-b-[#44444A] grid grid-cols-5">
-                        <TableColumn className="text-[14px] font-bold text-[#F5F6F7]">Collaboration</TableColumn>
-                        <TableColumn className="text-[14px] font-bold text-[#F5F6F7]">Free</TableColumn>
-                        <TableColumn className="text-[14px] font-bold text-[#F6AD55]">Basic</TableColumn>
-                        <TableColumn className="text-[14px] font-bold text-[#428BEB]">Pro</TableColumn>
-                        <TableColumn className="text-[14px] font-bold text-[#B794F4]">Pro +</TableColumn>
-                    </TableHeader>
-                    <TableBody className="grid grid-cols-5">
-                        {collaboration.map((item, idx) =>
+                        {aivoice.map((item, idx) => (
                             <TableRow key={idx} className="border-b border-b-[#44444A]">
-                                <TableCell className="flex gap-x-2 items-center text-[14px] text-[#F5F6F7] max-w-[300px] overflow-hidden">
+                                <TableCell className="flex gap-x-2 items-center text-[14px] text-[#F5F6F7] max-w-[300px] w-[300px] overflow-hidden">
                                     {item.voice}
                                     <Tooltip
                                         showArrow={true}
@@ -378,20 +269,114 @@ export default function ComparePlans({ switchactive, inc, dec, count }) {
                                         </Button>
                                     </Tooltip>
                                 </TableCell>
-                                <TableCell className="text-[14px] text-[#F5F6F7]">
-                                    {item.free}
-                                </TableCell>
-                                <TableCell className="text-[14px] text-[#F5F6F7]">
-                                    {item.basic}
-                                </TableCell>
-                                <TableCell className="text-[14px] text-[#F5F6F7]">
-                                    {item.pro}
-                                </TableCell>
-                                <TableCell className="text-[14px] text-[#F5F6F7]">
-                                    {item.proplus}
-                                </TableCell>
+                                <TableCell className="text-[14px] text-[#F5F6F7]">{item.free}</TableCell>
+                                <TableCell className="text-[14px] text-[#F5F6F7]">{item.basic}</TableCell>
+                                <TableCell className="text-[14px] text-[#F5F6F7]">{item.pro}</TableCell>
+                                <TableCell className="text-[14px] text-[#F5F6F7]">{item.proplus}</TableCell>
                             </TableRow>
-                        )}
+                        ))}
+                    </TableBody>
+                </Table>
+            </div>
+            {/* Editing */}
+            <div>
+                <Table aria-label="Example static collection table">
+                    <TableHeader className="border-b border-b-[#44444A] grid grid-cols-5">
+                        <TableColumn className="text-[14px] font-bold max-w-[300px] w-[300px] text-[#F5F6F7]">Editing & Export</TableColumn>
+                        <TableColumn className="text-[14px] font-bold text-[#F5F6F7]">Free</TableColumn>
+                        <TableColumn className="text-[14px] font-bold text-[#F6AD55]">Basic</TableColumn>
+                        <TableColumn className="text-[14px] font-bold text-[#428BEB]">Pro</TableColumn>
+                        <TableColumn className="text-[14px] font-bold text-[#B794F4]">Pro +</TableColumn>
+                    </TableHeader>
+                    <TableBody className="grid grid-cols-5">
+                        {editing.map((item, idx) => (
+                            <TableRow key={idx} className="border-b border-b-[#44444A]">
+                                <TableCell className="flex gap-x-2 items-center text-[14px] text-[#F5F6F7] max-w-[300px] w-[300px] overflow-hidden">
+                                    {item.voice}
+                                    <Tooltip
+                                        showArrow={true}
+                                        content={item.tooltip}
+                                        className="bg-black rounded-[10px] text-[10px] max-w-[200px]"
+                                    >
+                                        <Button>
+                                            <AiOutlineQuestionCircle />
+                                        </Button>
+                                    </Tooltip>
+                                </TableCell>
+                                <TableCell className="text-[14px] text-[#F5F6F7]">{item.free}</TableCell>
+                                <TableCell className="text-[14px] text-[#F5F6F7]">{item.basic}</TableCell>
+                                <TableCell className="text-[14px] text-[#F5F6F7]">{item.pro}</TableCell>
+                                <TableCell className="text-[14px] text-[#F5F6F7]">{item.proplus}</TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </div>
+            {/* Ai Feature */}
+            <div>
+                <Table aria-label="Example static collection table">
+                    <TableHeader className="border-b border-b-[#44444A] grid grid-cols-5">
+                        <TableColumn className="text-[14px] font-bold max-w-[300px] w-[300px] text-[#F5F6F7]">AI Features</TableColumn>
+                        <TableColumn className="text-[14px] font-bold text-[#F5F6F7]">Free</TableColumn>
+                        <TableColumn className="text-[14px] font-bold text-[#F6AD55]">Basic</TableColumn>
+                        <TableColumn className="text-[14px] font-bold text-[#428BEB]">Pro</TableColumn>
+                        <TableColumn className="text-[14px] font-bold text-[#B794F4]">Pro +</TableColumn>
+                    </TableHeader>
+                    <TableBody className="grid grid-cols-5">
+                        {feature.map((item, idx) => (
+                            <TableRow key={idx} className="border-b border-b-[#44444A]">
+                                <TableCell className="flex gap-x-2 items-center text-[14px] text-[#F5F6F7] max-w-[300px] w-[300px] overflow-hidden">
+                                    {item.voice}
+                                    <Tooltip
+                                        showArrow={true}
+                                        content={item.tooltip}
+                                        className="bg-black rounded-[10px] text-[10px] max-w-[200px]"
+                                    >
+                                        <Button>
+                                            <AiOutlineQuestionCircle />
+                                        </Button>
+                                    </Tooltip>
+                                </TableCell>
+                                <TableCell className="text-[14px] text-[#F5F6F7]">{item.free}</TableCell>
+                                <TableCell className="text-[14px] text-[#F5F6F7]">{item.basic}</TableCell>
+                                <TableCell className="text-[14px] text-[#F5F6F7]">{item.pro}</TableCell>
+                                <TableCell className="text-[14px] text-[#F5F6F7]">{item.proplus}</TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </div>
+            {/* Collaboration */}
+            <div>
+                <Table aria-label="Example static collection table">
+                    <TableHeader className="border-b border-b-[#44444A] grid grid-cols-5">
+                        <TableColumn className="text-[14px] font-bold max-w-[300px] w-[300px] text-[#F5F6F7]">Collaboration</TableColumn>
+                        <TableColumn className="text-[14px] font-bold text-[#F5F6F7]">Free</TableColumn>
+                        <TableColumn className="text-[14px] font-bold text-[#F6AD55]">Basic</TableColumn>
+                        <TableColumn className="text-[14px] font-bold text-[#428BEB]">Pro</TableColumn>
+                        <TableColumn className="text-[14px] font-bold text-[#B794F4]">Pro +</TableColumn>
+                    </TableHeader>
+                    <TableBody className="grid grid-cols-5">
+                        {collaboration.map((item, idx) => (
+                            <TableRow key={idx} className="border-b border-b-[#44444A]">
+                                <TableCell className="flex gap-x-2 items-center text-[14px] text-[#F5F6F7] max-w-[300px] w-[300px] overflow-hidden">
+                                    {item.voice}
+                                    <Tooltip
+                                        showArrow={true}
+                                        content={item.tooltip}
+                                        className="bg-black rounded-[10px] text-[10px] max-w-[200px]"
+                                    >
+                                        <Button>
+                                            <AiOutlineQuestionCircle />
+                                        </Button>
+                                    </Tooltip>
+                                </TableCell>
+                                <TableCell className="text-[14px] text-[#F5F6F7]">{item.free}</TableCell>
+                                <TableCell className="text-[14px] text-[#F5F6F7]">{item.basic}</TableCell>
+                                <TableCell className="text-[14px] text-[#F5F6F7]">{item.pro}</TableCell>
+                                <TableCell className="text-[14px] text-[#F5F6F7]">{item.proplus}</TableCell>
+                            </TableRow>
+                        ))}
                     </TableBody>
                 </Table>
             </div>
@@ -399,35 +384,33 @@ export default function ComparePlans({ switchactive, inc, dec, count }) {
             <div>
                 <Table aria-label="Example static collection table">
                     <TableHeader className="border-b border-b-[#44444A] grid grid-cols-5">
-                        <TableColumn className="text-[14px] font-bold text-[#F5F6F7]">Support</TableColumn>
+                        <TableColumn className="text-[14px] font-bold max-w-[300px] w-[300px] text-[#F5F6F7]">Support</TableColumn>
                         <TableColumn className="text-[14px] font-bold text-[#F5F6F7]">Free</TableColumn>
                         <TableColumn className="text-[14px] font-bold text-[#F6AD55]">Basic</TableColumn>
                         <TableColumn className="text-[14px] font-bold text-[#428BEB]">Pro</TableColumn>
                         <TableColumn className="text-[14px] font-bold text-[#B794F4]">Pro +</TableColumn>
                     </TableHeader>
                     <TableBody className="grid grid-cols-5">
-                        {support.map((item, idx) => <TableRow key={idx} className="border-b border-b-[#44444A]">
-                                <TableCell className="flex gap-x-2 items-center text-[14px] text-[#F5F6F7] max-w-[300px] overflow-hidden">
+                        {support.map((item, idx) => (
+                            <TableRow key={idx} className="border-b border-b-[#44444A]">
+                                <TableCell className="flex gap-x-2 items-center text-[14px] text-[#F5F6F7] max-w-[300px] w-[300px] overflow-hidden">
                                     {item.voice}
-                                    <Tooltip showArrow={true} content={item.tooltip} className="bg-black rounded-[10px] text-[10px] max-w-[200px]">
+                                    <Tooltip
+                                        showArrow={true}
+                                        content={item.tooltip}
+                                        className="bg-black rounded-[10px] text-[10px] max-w-[200px]"
+                                    >
                                         <Button>
                                             <AiOutlineQuestionCircle />
                                         </Button>
                                     </Tooltip>
                                 </TableCell>
-                                <TableCell className="text-[14px] text-[#F5F6F7]">
-                                    {item.free}
-                                </TableCell>
-                                <TableCell className="text-[14px] text-[#F5F6F7]">
-                                    {item.basic}
-                                </TableCell>
-                                <TableCell className="text-[14px] text-[#F5F6F7]">
-                                    {item.pro}
-                                </TableCell>
-                                <TableCell className="text-[14px] text-[#F5F6F7]">
-                                    {item.proplus}
-                                </TableCell>
-                            </TableRow>)}
+                                <TableCell className="text-[14px] text-[#F5F6F7]">{item.free}</TableCell>
+                                <TableCell className="text-[14px] text-[#F5F6F7]">{item.basic}</TableCell>
+                                <TableCell className="text-[14px] text-[#F5F6F7]">{item.pro}</TableCell>
+                                <TableCell className="text-[14px] text-[#F5F6F7]">{item.proplus}</TableCell>
+                            </TableRow>
+                        ))}
                     </TableBody>
                 </Table>
             </div>
@@ -436,7 +419,7 @@ export default function ComparePlans({ switchactive, inc, dec, count }) {
             <div>
                 <Table hideHeader aria-label="Example static collection table">
                     <TableHeader className="border-b border-b-[#44444A] grid grid-cols-5">
-                        <TableColumn className="text-[14px] font-bold text-[#F5F6F7]">Support</TableColumn>
+                        <TableColumn className="text-[14px] font-bold max-w-[300px] w-[300px] text-[#F5F6F7]">Support</TableColumn>
                         <TableColumn className="text-[14px] font-bold text-[#F5F6F7]">Free</TableColumn>
                         <TableColumn className="text-[14px] font-bold text-[#F6AD55]">Basic</TableColumn>
                         <TableColumn className="text-[14px] font-bold text-[#428BEB]">Pro</TableColumn>
@@ -444,91 +427,117 @@ export default function ComparePlans({ switchactive, inc, dec, count }) {
                     </TableHeader>
                     <TableBody className="grid grid-cols-5">
                         <TableRow className="">
-                            <TableCell className="flex gap-x-2 items-center text-[14px] text-[#F5F6F7] max-w-[300px] overflow-hidden" />
+                            <TableCell className="flex gap-x-2 items-center text-[14px] text-[#F5F6F7] max-w-[300px] w-[300px] overflow-hidden" />
                             <TableCell className="text-[14px] text-[#F5F6F7]">
-                                <div className="p-2">
-                                    <p className={`${"text-[#F5F6F7]"} text-[14px]`}>Free</p>
-                                    <p className={`text-[24px] font-bold text-[#F5F6F7]`}>$0</p>
-                                    <p className="text-[#8C8C96] text-[12px]">No credit card required</p>
-                                    <p className="text-[#F5F6F7] text-[14px]">
-                                        Fully experience the product before committing
-                                    </p>
-                                    <Button onClick={() => handlePlanChange("Free")} className="bg-[#2871DE] text-[14px] rounded-[10px] w-full py-2 mt-2">
+                                <div className="p-2 flex flex-col justify-between min-h-[250px]">
+                                    <div>
+                                        <p className={`${"text-[#F5F6F7]"} text-[14px]`}>Free</p>
+                                        <p className={`text-[24px] font-bold text-[#F5F6F7]`}>$0</p>
+                                        <p className="text-[#8C8C96] text-[12px]">No credit card required</p>
+                                        <p className="text-[#F5F6F7] text-[14px]">
+                                            Fully experience the product before committing
+                                        </p>
+                                    </div>
+                                    <Button
+                                        onClick={() => handlePlanChange("Free")}
+                                        className="bg-[#2871DE] text-[14px] rounded-[10px] w-full py-2 mt-2"
+                                    >
                                         Change Plan
                                     </Button>
                                 </div>
                             </TableCell>
                             <TableCell className="text-[14px] text-[#F5F6F7]">
-                                <div className="p-2">
-                                    <p className={`${"text-[#F6AD55]"} text-[14px]`}>Basic</p>
-                                    <p className={`text-[24px] font-bold text-[#F5F6F7]`}>
-                                        ${switchactive ? "29" : "36"}
-                                    </p>
-                                    <p className="text-[#8C8C96] text-[14px]">
-                                        Billed US$ {switchactive ? "348" : "36"} monthly
-                                    </p>
-                                    <p className="text-[#F5F6F7] text-[14px]">
-                                        Essential for creating awesome content
-                                    </p>
-                                    <Button onClick={() => handlePlanChange("Basic")} className="bg-[#2871DE] text-[14px] rounded-[10px] w-full py-2 mt-2">
+                                <div className="p-2 flex flex-col justify-between min-h-[250px]">
+                                    <div>
+                                        <p className={`${"text-[#F6AD55]"} text-[14px]`}>Basic</p>
+                                        <p className={`text-[24px] font-bold text-[#F5F6F7]`}>
+                                            ${switchactive ? "29" : "36"}
+                                        </p>
+                                        <p className="text-[#8C8C96] text-[14px]">
+                                            Billed US$ {switchactive ? "348" : "36"} monthly
+                                        </p>
+                                        <p className="text-[#F5F6F7] text-[14px]">
+                                            Essential for creating awesome content
+                                        </p>
+                                    </div>
+                                    <Button
+                                        onClick={() => handlePlanChange("Basic")}
+                                        className="bg-[#2871DE] text-[14px] rounded-[10px] w-full py-2 mt-2"
+                                    >
                                         Change Plan
                                     </Button>
                                 </div>
                             </TableCell>
                             <TableCell className="text-[14px] text-[#F5F6F7]">
-                                <div className="p-2">
-                                    <p className={`${"text-[#428BEB]"} text-[14px]`}>Pro</p>
-                                    <p className={`text-[24px] font-bold text-[#F5F6F7]`}>
-                                        ${switchactive ? "39" : "79"}
-                                    </p>
-                                    <p className="text-[#8C8C96] text-[14px]">
-                                        Billed US$ {switchactive ? "468" : "79"} monthly
-                                    </p>
-                                    <p className="text-[#F5F6F7] text-[14px]">
-                                        All of Genny’s powerful features for professionals
-                                    </p>
+                                <div className="p-2 flex flex-col justify-between min-h-[250px]">
+                                    <div>
+                                        <p className={`${"text-[#428BEB]"} text-[14px]`}>Pro</p>
+                                        <p className={`text-[24px] font-bold text-[#F5F6F7]`}>
+                                            ${switchactive ? "39" : "79"}
+                                        </p>
+                                        <p className="text-[#8C8C96] text-[14px]">
+                                            Billed US$ {switchactive ? "468" : "79"} monthly
+                                        </p>
+                                        <p className="text-[#F5F6F7] text-[14px]">
+                                            All of Genny’s powerful features for professionals
+                                        </p>
 
-                                    <div className="mt-2 w-full">
-                                        <p className="text-[#B6B8BF] text-[12px]">Users</p>
-                                        <div className="flex gap-x-2 items-center w-full">
-                                            <button onclick={dec}>-</button>
+                                        <div className="mt-2 w-full">
+                                            <p className="text-[#B6B8BF] text-[12px]">Users</p>
+                                            <div className="flex gap-x-2 items-center w-full">
+                                                <button onclick={dec}>-</button>
 
-                                            <input type="number" value={count} // onChange={(e) => setcount(e.target.value)}
-                                                className="bg-[#242427] border border-[#44444A] rounded-[5px] px-2 w-full" />
+                                                <input
+                                                    type="number"
+                                                    value={count} // onChange={(e) => setcount(e.target.value)}
+                                                    className="bg-[#242427] border border-[#44444A] rounded-[5px] px-2 w-full"
+                                                />
 
-                                            <button onclick={inc}>+</button>
+                                                <button onclick={inc}>+</button>
+                                            </div>
                                         </div>
                                     </div>
-                                    <Button onClick={() => handlePlanChange("Pro")} className="bg-[#2871DE] text-[14px] rounded-[10px] w-full py-2 mt-2">
+                                    <Button
+                                        onClick={() => handlePlanChange("Pro")}
+                                        className="bg-[#2871DE] text-[14px] rounded-[10px] w-full py-2 mt-2"
+                                    >
                                         Change Plan
                                     </Button>
                                 </div>
                             </TableCell>
                             <TableCell className="text-[14px] text-[#F5F6F7]">
-                                <div className="p-2">
-                                    <p className={`${"text-[#B794F4]"} text-[14px]`}>Pro +</p>
-                                    <p className={`text-[24px] font-bold text-[#F5F6F7]`}>
-                                        ${switchactive ? "75" : "149"}
-                                    </p>
-                                    <p className="text-[#8C8C96] text-[14px]">
-                                        Billed US$ {switchactive ? "900" : "149"} monthly
-                                    </p>
-                                    <p className="text-[#F5F6F7] text-[14px]">
-                                        Perfect for businesses with large content volume
-                                    </p>
+                                <div className="p-2 flex flex-col justify-between min-h-[250px]">
+                                    <div>
+                                        <p className={`${"text-[#B794F4]"} text-[14px]`}>Pro +</p>
+                                        <p className={`text-[24px] font-bold text-[#F5F6F7]`}>
+                                            ${switchactive ? "75" : "149"}
+                                        </p>
+                                        <p className="text-[#8C8C96] text-[14px]">
+                                            Billed US$ {switchactive ? "900" : "149"} monthly
+                                        </p>
+                                        <p className="text-[#F5F6F7] text-[14px]">
+                                            Perfect for businesses with large content volume
+                                        </p>
 
-                                    <div className="mt-2 w-full">
-                                        <p className="text-[#B6B8BF] text-[12px]">Users</p>
-                                        <div className="flex gap-x-2 items-center w-full">
-                                            <button onclick={dec}>-</button>
+                                        <div className="mt-2 w-full">
+                                            <p className="text-[#B6B8BF] text-[12px]">Users</p>
+                                            <div className="flex gap-x-2 items-center w-full">
+                                                <button onclick={dec}>-</button>
 
-                                            <input type="number" value={count} // onChange={(e) => setcount(e.target.value)}
-                                                className="bg-[#242427] border border-[#44444A] rounded-[5px] px-2 w-full" />
+                                                <input
+                                                    type="number"
+                                                    value={count} // onChange={(e) => setcount(e.target.value)}
+                                                    className="bg-[#242427] border border-[#44444A] rounded-[5px] px-2 w-full"
+                                                />
 
-                                            <button onclick={inc}>+</button>
+                                                <button onclick={inc}>+</button>
+                                            </div>
                                         </div>
                                     </div>
-                                    <Button onClick={() => handlePlanChange("Pro +")} className="bg-[#2871DE] text-[14px] rounded-[10px] w-full py-2 mt-2">
+                                    <Button
+                                        onClick={() => handlePlanChange("Pro +")}
+                                        className="bg-[#2871DE] text-[14px] rounded-[10px] w-full py-2 mt-2"
+                                    >
                                         Change Plan
                                     </Button>
                                 </div>
@@ -537,5 +546,6 @@ export default function ComparePlans({ switchactive, inc, dec, count }) {
                     </TableBody>
                 </Table>
             </div>
-        </div>;
+        </div>
+    );
 }

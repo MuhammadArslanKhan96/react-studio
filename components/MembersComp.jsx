@@ -120,7 +120,6 @@ export default function MembersComp() {
                                                 <Button
                                                     className="text-[14px] bg-[#2871DE] text-white rounded-[5px] px-[12px] py-[6px] flex items-center"
                                                     onClick={() => {
-                                                        console.log("reject");
                                                     }}
                                                 >
                                                     Reject
