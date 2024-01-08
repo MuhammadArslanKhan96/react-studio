@@ -28,7 +28,7 @@ export default function EditHead() {
                             ],
                         },
                     ].sort(function (a, b) {
-                        return Number(b.id) - Number(a.id);
+                        return Number(a.index) - Number(b.index);
                     })
                 );
             });
@@ -46,7 +46,7 @@ export default function EditHead() {
                                     pre
                                         .map((a) => ({ ...a, checked: e.target.checked }))
                                         .sort(function (a, b) {
-                                            return Number(b.id) - Number(a.id);
+                                            return Number(a.index) - Number(b.index);
                                         })
                                 )
                             }
@@ -94,7 +94,9 @@ export default function EditHead() {
                             <Button
                                 onClick={() => {
                                     setMockData((pre) =>
-                                        pre.length > 1 ? pre.filter((a) => !a.checked) : initMockData
+                                        pre.length > 1 || mockData.filter((a) => a.checked).length !== mockData.length
+                                            ? pre.filter((a) => !a.checked)
+                                            : initMockData
                                     );
                                 }}
                             >

@@ -16,10 +16,10 @@ import { RiDeleteBin5Line } from "react-icons/ri";
 import { VscPulse } from "react-icons/vsc";
 import { useAppContext } from "./EditorContext";
 import { useEffect, useState } from "react";
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 import { generateSpeech } from "../../helpers/generate-audio";
 
-function TranscriptInput({ mockData, mockEffect,length }) {
+function TranscriptInput({ mockData, mockEffect, length }) {
     const { setMockData, setMockEffect, setVoiceModel, initMockData } = useAppContext();
     const [disabled, setDisabled] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
@@ -32,7 +32,7 @@ function TranscriptInput({ mockData, mockEffect,length }) {
                 a,
                 b
             ) {
-                return Number(b.id) - Number(a.id);
+                return Number(a.index) - Number(b.index);
             })
         );
     };
@@ -57,13 +57,13 @@ function TranscriptInput({ mockData, mockEffect,length }) {
                     },
                     onseek: function () {
                         setCurrentTime(Math.round(this.seek(soundId)));
-                    }
+                    },
                 })
             );
 
-            if (mockData?.actions?.[0]?.data?.src === '/audio/bg.mp3') {
-                setDisabled(true)
-            } 
+            if (mockData?.actions?.[0]?.data?.src === "/audio/bg.mp3") {
+                setDisabled(true);
+            }
         }
     }, [mockData]);
 
@@ -85,7 +85,7 @@ function TranscriptInput({ mockData, mockEffect,length }) {
                     actions: [{ ...mockData.actions[0], data: { ...mockData.actions[0].data, name: e.target.value } }],
                 },
             ].sort(function (a, b) {
-                return Number(b.id) - Number(a.id);
+                return Number(a.index) - Number(b.index);
             })
         );
         setMockEffect((pre) => ({
@@ -99,9 +99,9 @@ function TranscriptInput({ mockData, mockEffect,length }) {
         setIsLoading(true);
         const speech = await generateSpeech(JSON.stringify({ text: mockEffect?.name, speaker: mockData?.speaker?.id }));
         if (!speech?.urls?.[0]) {
-        setIsLoading(false);
-            return toast.error('Something went wrong')
-        };
+            setIsLoading(false);
+            return toast.error("Something went wrong");
+        }
         setMockData((pre) =>
             [
                 ...pre.filter((a) => a.id !== mockData.id),
@@ -115,13 +115,12 @@ function TranscriptInput({ mockData, mockEffect,length }) {
                     ],
                 },
             ].sort(function (a, b) {
-                return Number(b.id) - Number(a.id);
+                return Number(a.index) - Number(b.index);
             })
         );
         setIsLoading(false);
         setDisabled(false);
     };
-
 
     return (
         <div className="flex items-start gap-x-2">
@@ -134,7 +133,10 @@ function TranscriptInput({ mockData, mockEffect,length }) {
                     className="flex"
                     size="16"
                 ></Checkbox>
-                <div className="flex cursor-pointer gap-2 items-center" onClick={() => setVoiceModel(mockData?.id)}>
+                <div
+                    className="flex  w-full max-w-36 min-w-36 cursor-pointer gap-2 items-center"
+                    onClick={() => setVoiceModel(mockData?.id)}
+                >
                     <Avatar size="24" src={mockData?.speaker?.imageUrl} />
                     <p className="text-[14px]">{mockData?.speaker?.displayName || "Sophia"}</p>
                 </div>
@@ -166,21 +168,20 @@ function TranscriptInput({ mockData, mockEffect,length }) {
                             </DropdownItem>
                             <DropdownItem
                                 key="delete"
-                                onClick={() =>
-                                {
+                                onClick={() => {
                                     if (length) {
                                         setMockData((pre) =>
-                                        pre
-                                        .filter((a) => a.id !== mockData.id)
-                                        .sort(function (a, b) {
-                                            return Number(b.id) - Number(a.id);
-                                        })
-                                        )
+                                            pre
+                                                .filter((a) => a.id !== mockData.id)
+                                                .map((a, idx) => ({ ...a, index: idx }))
+                                                .sort(function (a, b) {
+                                                    return Number(a.index) - Number(b.index);
+                                                })
+                                        );
                                     } else {
                                         setMockData(initMockData);
                                     }
-                                    }
-                                }
+                                }}
                                 className="text-[14px] text-[#F56565]"
                                 startContent={<RiDeleteBin5Line />}
                             >

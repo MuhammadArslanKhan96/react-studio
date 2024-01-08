@@ -9,32 +9,33 @@ import { useMemo } from "react";
 
 export default function Promptbar() {
     const { mockData, mockEffect, setMockData, setMockEffect, selectedSpeaker } = useAppContext();
-    
-    const addAnotherMock = () => {
+
+    const addAnotherMock = (idx) => {
         const editor = mockData.length;
-        setMockData((pre) =>
-            [
-                ...pre,
-                {
-                    id: `${editor}`,
-                    actions: [
-                        {
-                            id: `action${editor}`,
-                            start: 0,
-                            end: 2,
-                            effectId: "effect" + editor,
-                            data: {
-                                src: "/audio/bg.mp3",
-                                name: "",
-                            },
+        const newMockData = [
+            ...mockData.slice(0, idx + 1),
+            {
+                id: `${editor}`,
+                actions: [
+                    {
+                        id: `action${editor}`,
+                        start: 0,
+                        end: 2,
+                        effectId: "effect" + editor,
+                        data: {
+                            src: "/audio/bg.mp3",
+                            name: "",
                         },
-                    ],
-                    checked: false,
-                    speaker: selectedSpeaker
-                },
-            ].sort(function (a, b) {
-                return Number(b.id) - Number(a.id);
-            })
+                    },
+                ],
+                checked: false,
+                speaker: selectedSpeaker,
+                index: idx + 1,
+            },
+            ...mockData.slice(idx + 1),
+        ];
+        setMockData(
+            newMockData.map((a) => ({ ...a, index: newMockData.indexOf(a) })).sort((a, b) => a.index - b.index)
         );
         setMockEffect((pre) => ({
             ...pre,
@@ -68,7 +69,7 @@ export default function Promptbar() {
     };
 
     const sortedMockData = useMemo(() => {
-        return [...mockData].sort((a, b) => a.id - b.id);
+        return [...mockData].sort((a, b) => Number(a.index) - Number(b.index));
     }, [mockData]);
 
     return (
@@ -107,7 +108,7 @@ export default function Promptbar() {
                     </div>
                 </div>
                 <div className="flex flex-col gap-4">
-                    {sortedMockData.map((item,idx) => {
+                    {sortedMockData.map((item, idx) => {
                         return (
                             <div className="group" key={idx}>
                                 <TranscriptInput
@@ -120,7 +121,7 @@ export default function Promptbar() {
                                 <div className="flex items-center w-full justify-between cursor-pointer opacity-0 group-hover:opacity-100">
                                     <div className="bg-[#343438] h-[1px] w-full"></div>
                                     <Button
-                                        onClick={addAnotherMock}
+                                        onClick={() => addAnotherMock(idx)}
                                         className="flex rounded-[10px] w-full gap-x-2 bg-[#44444A] px-2  text-[10px] text-[#EFEFEF]"
                                     >
                                         <FaPlus size={10} />
@@ -131,7 +132,6 @@ export default function Promptbar() {
                             </div>
                         );
                     })}
-                    
                 </div>
             </div>
         </div>

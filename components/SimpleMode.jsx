@@ -20,6 +20,7 @@ export default function SimpleMode() {
     const [speaker, setSpeaker] = useState(selectedSpeaker);
     const [shareModal, setShareModal] = useState();
     const [isLoading, setIsLoading] = useState(false);
+    const [load, setLoad] = useState(true);
     const [viewModal, setViewModal] = useState();
     const ref = useRef();
 
@@ -62,10 +63,17 @@ export default function SimpleMode() {
     };
 
     useEffect(() => {
-        if (!text) {
-            setText(selectedProject?.data?.sort((a, b) => b.time - a.time)[0]?.speech?.text || "");
+        if (!text && load) {
+            setText(selectedProject?.recentText || "");
+            setLoad(false);
+        } else {
+            setSelectedProject((pre) => ({
+                ...pre,
+                recentText: text,
+            }));
         }
         setSpeaker(speakers[0]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [speakers, selectedProject?.data, text]);
 
     return (

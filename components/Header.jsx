@@ -18,7 +18,7 @@ import {
 } from "@nextui-org/react";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { Context } from "./Context";
 import EditInput from "./EditInput";
@@ -39,8 +39,8 @@ export default function Header() {
     const [modal, setModal] = useState(false);
     const [accountModal, setAccountModal] = React.useState(false);
     const [active, setActive] = React.useState(false);
-
-    if (router.pathname === "/signin" || router.pathname === "/signup") return;
+    const [saving, setSaving] = React.useState(false);
+    const [saved, setSaved] = React.useState(false);
 
     const logout = () => {
         signOut(auth).then(() => {
@@ -50,6 +50,7 @@ export default function Header() {
     };
 
     const saveProject = async () => {
+        setSaving(true);
         setSelectedProject({
             ...selectedProject,
             mockData,
@@ -77,9 +78,19 @@ export default function Header() {
                 "Content-Type": "application/json",
             },
         });
+        setSaving(false);
+        setSaved(true);
 
-        toast.success("Saved successfully");
+        setTimeout(() => setSaved(false), 5000);
     };
+
+    useEffect(() => {
+        setInterval(() => {
+            saveProject();
+        }, 1000 * 60 * 10);
+    }, []);
+
+    if (router.pathname === "/signin" || router.pathname === "/signup") return;
 
     return (
         <div className="flex justify-between items-center px-[16px] py-[8px] bg-[#242427] border-b border-b-[#44444A]">
@@ -144,8 +155,13 @@ export default function Header() {
                         >
                             UPGRADE
                         </Button>
-                        <Button onClick={saveProject} className="border rounded-[10px] px-2 py-1 text-[14px]">
-                            Save
+                        <Button
+                            onClick={saveProject}
+                            className={`border-2 rounded-lg px-4 py-1 min-w-40 text-[14px] ${
+                                saving || saved ? "bg-transparent text-blue-600 border-blue-600" : "text-white"
+                            }`}
+                        >
+                            {saving ? "Saving" : saved ? "Saved !" : "Save"}
                         </Button>
                         <Button
                             className="border lg:flex hidden rounded-[10px] px-2 py-1 gap-x-2 items-center bg-[#EBECF0] text-black text-[14px]"
@@ -260,7 +276,11 @@ export default function Header() {
                                         </div>
                                     </DropdownItem>
 
-                                    <DropdownItem as="button" onMouseEnter={() => setActive(!active)} key="help_&_support">
+                                    <DropdownItem
+                                        as="button"
+                                        onMouseEnter={() => setActive(!active)}
+                                        key="help_&_support"
+                                    >
                                         <div className="flex items-center gap-2">
                                             <Image src={"/images/questionmark.svg"} alt="" width={20} height={20} />
                                             Help & Support

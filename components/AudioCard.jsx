@@ -40,7 +40,7 @@ function AudioCard({ data, setViewModal, setShareModal }) {
                     },
                     onseek: function () {
                         setCurrentTime(Math.round(this.seek(soundId)));
-                    }
+                    },
                 })
             );
         }
@@ -122,6 +122,7 @@ function AudioCard({ data, setViewModal, setShareModal }) {
                             <div className="flex items-center gap-4">
                                 <Button
                                     onClick={() => {
+                                        if (sound.seek(soundId) - 15 < 0) return;
                                         sound.seek(sound.seek(soundId) - 15, soundId);
                                         setCurrentTime(Math.round(sound.seek(soundId) - 15));
                                     }}
@@ -144,6 +145,7 @@ function AudioCard({ data, setViewModal, setShareModal }) {
                                 )}
                                 <Button
                                     onClick={() => {
+                                        if (sound.seek(soundId) + 15 > sound.duration(soundId)) return;
                                         sound.seek(sound.seek(soundId) + 15, soundId);
                                         setCurrentTime(Math.round(sound.seek(soundId) + 15));
                                     }}

@@ -40,7 +40,7 @@ export default function Card({ project }) {
                 setSelectedProject(project);
                 setMockData(
                     project.mockData.sort(function (a, b) {
-                        return Number(b.id) - Number(a.id);
+                        return Number(b.index) - Number(a.index)
                     })
                 );
                 setMockEffect(project.mockEffect);
@@ -95,7 +95,7 @@ export default function Card({ project }) {
             <div className="px-[12px] max-h-[11rem] h-full py-[4px] relative">
                 <p className="text-white line-clamp-5">
                     {project?.isBasic
-                        ? project?.data?.sort((a, b) => b?.time - a?.time)?.[0]?.speech?.text
+                        ? project?.recentText
                         : project?.mockData?.[0]?.actions?.[0]?.data?.name ||
                           ``}
                 </p>

@@ -22,7 +22,7 @@ import InviteMembers from "../components/InviteMembers";
 import WordSpaceModal from "./EditBar/WordSpaceModal";
 export default function Sidebar() {
     const router = useRouter();
-    const { user, workspaces, setSelectedWorkspace } = useAppContext();
+    const { user, workspaces, setSelectedWorkspace, selectedWorkspace } = useAppContext();
     const [open, setOpen] = useState(false);
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const [modal, setModal] = useState(true);
@@ -118,10 +118,16 @@ export default function Sidebar() {
                     </Button>
 
                     {modal &&
-                        (workspaces||[])?.map((workspace) => (
-                            <div
+                        (workspaces || [])?.map((workspace) => (
+                            <Link
+                                href={"/"}
                                 key={workspace.id}
-                                className="flex items-center cursor-pointer gap-x-2 text-[14px] border-b-2 border-b-[#4D4D51] px-3 py-2 hover:bg-[#39393C] mb-3"
+                                className={
+                                    "flex items-center cursor-pointer gap-x-2 text-[14px] border-b-2 border-b-[#4D4D51] px-3 py-2 mb-3 " +
+                                    (selectedWorkspace === workspace.id
+                                        ? "bg-[#182C5C] hover:!bg-[#182C5C]"
+                                        : "hover:bg-[#39393C] ")
+                                }
                                 onClick={() => {
                                     setSelectedWorkspace(workspace);
                                 }}
@@ -130,26 +136,35 @@ export default function Sidebar() {
                                     <PiFolder size={20} />
                                     {workspace?.name}
                                 </div>
-                            </div>
+                            </Link>
                         ))}
 
                     <Link
                         href={"/pricing"}
-                        className={(router.pathname === '/pricing' ?"bg-[#182C5C] hover:!bg-[#182C5C]" : "")+ " flex items-center gap-x-2 text-[14px] py-2 px-3 hover:bg-[#39393C] "}
+                        className={
+                            (router.pathname === "/pricing" ? "bg-[#182C5C] hover:!bg-[#182C5C]" : "") +
+                            " flex items-center gap-x-2 text-[14px] py-2 px-3 hover:bg-[#39393C] "
+                        }
                     >
                         <Image src={"/images/pricing.svg"} alt="" width={20} height={20} />
                         Pricing
                     </Link>
                     <Link
                         href={"/setting/subscription"}
-                        className={(router.pathname === '/setting/subscription' ?"bg-[#182C5C] hover:!bg-[#182C5C]" : "")+" flex items-center gap-x-2 text-[14px] py-2 px-3 hover:bg-[#39393C] space-y-0"}
+                        className={
+                            (router.pathname === "/setting/subscription" ? "bg-[#182C5C] hover:!bg-[#182C5C]" : "") +
+                            " flex items-center gap-x-2 text-[14px] py-2 px-3 hover:bg-[#39393C] space-y-0"
+                        }
                     >
                         <Image src={"/images/subscription.svg"} alt="" width={20} height={20} />
                         Subscription
                     </Link>
                     <Link
                         href={"/setting/info"}
-                        className={(router.pathname === '/setting/info' ?"bg-[#182C5C] hover:!bg-[#182C5C]" : "") + " flex items-center gap-x-2 text-[14px] py-2 px-3 hover:bg-[#39393C] "}
+                        className={
+                            (router.pathname === "/setting/info" ? "bg-[#182C5C] hover:!bg-[#182C5C]" : "") +
+                            " flex items-center gap-x-2 text-[14px] py-2 px-3 hover:bg-[#39393C] "
+                        }
                     >
                         <Image src={"/images/setting.svg"} alt="" width={20} height={20} />
                         Setting
