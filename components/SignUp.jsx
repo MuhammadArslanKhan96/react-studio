@@ -51,6 +51,8 @@ export default function SignUp() {
                 },
             }).then((r) => r.json());
 
+            if (!addUser?.success) return toast.error(addUser.message);
+
             localStorage.setItem("email", user.email);
             setUser(addUser.user);
             toast.success("Signed Up successfully");

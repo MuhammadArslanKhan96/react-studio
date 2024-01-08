@@ -124,7 +124,7 @@ export default function Sidebar() {
                                 key={workspace.id}
                                 className={
                                     "flex items-center cursor-pointer gap-x-2 text-[14px] border-b-2 border-b-[#4D4D51] px-3 py-2 mb-3 " +
-                                    (selectedWorkspace === workspace.id
+                                    (selectedWorkspace?.id === workspace.id
                                         ? "bg-[#182C5C] hover:!bg-[#182C5C]"
                                         : "hover:bg-[#39393C] ")
                                 }
@@ -162,7 +162,7 @@ export default function Sidebar() {
                     <Link
                         href={"/setting/info"}
                         className={
-                            (router.pathname === "/setting/info" ? "bg-[#182C5C] hover:!bg-[#182C5C]" : "") +
+                            (router.pathname.includes("/setting") ? "bg-[#182C5C] hover:!bg-[#182C5C]" : "") +
                             " flex items-center gap-x-2 text-[14px] py-2 px-3 hover:bg-[#39393C] "
                         }
                     >

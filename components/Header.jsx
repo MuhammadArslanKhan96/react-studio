@@ -34,7 +34,17 @@ import ExportModal from "./ExportModal";
 export default function Header() {
     const router = useRouter();
     const { setSideModal } = useContext(Context);
-    const { setUser, user, mockData, mockEffect, setSelectedProject, selectedProject, setProjects } = useAppContext();
+    const {
+        setUser,
+        user,
+        mockData,
+        mockEffect,
+        setSelectedProject,
+        selectedProject,
+        setProjects,
+        setProgressModal,
+        progressModal,
+    } = useAppContext();
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const [modal, setModal] = useState(false);
     const [accountModal, setAccountModal] = React.useState(false);
@@ -85,9 +95,12 @@ export default function Header() {
     };
 
     useEffect(() => {
-        setInterval(() => {
-            saveProject();
-        }, 1000 * 60 * 10);
+        if (router.pathname.includes("/project")) {
+            setInterval(() => {
+                saveProject();
+            }, 1000 * 60 * 10);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     if (router.pathname === "/signin" || router.pathname === "/signup") return;
@@ -106,15 +119,41 @@ export default function Header() {
                 <Button
                     onClick={() => {
                         if (router.pathname.includes("/project")) {
+                            setProgressModal({
+                                ...progressModal,
+                                progress: 0,
+                                text: "Saving project...",
+                            });
                             saveProject();
+
+                            let count = 0;
+                            const interval = setInterval(() => {
+                                count += 5;
+                                if (count === 100) {
+                                    setProgressModal({
+                                        text: "Saving project...",
+                                        progress: 100,
+                                    });
+                                } else if (count > 100) {
+                                    clearInterval(interval);
+                                    setProgressModal("");
+                                    router.push("/");
+                                } else {
+                                    setProgressModal({
+                                        text: "Saving project...",
+                                        progress: count,
+                                    });
+                                }
+                            });
+                        } else {
+                            router.push("/");
                         }
-                        router.push("/");
                     }}
                 >
                     <Image src={"/logo.svg"} alt="" width={111} height={90} />
                 </Button>
                 {router.pathname.includes("/project") && (
-                    <div className="flex max-w-[100px]">
+                    <div className="flex">
                         <EditInput />
                     </div>
                 )}
@@ -276,11 +315,7 @@ export default function Header() {
                                         </div>
                                     </DropdownItem>
 
-                                    <DropdownItem
-                                        as="button"
-                                        onMouseEnter={() => setActive(!active)}
-                                        key="help_&_support"
-                                    >
+                                    <DropdownItem as="button" onMouseEnter={() => setActive(true)} key="help_&_support">
                                         <div className="flex items-center gap-2">
                                             <Image src={"/images/questionmark.svg"} alt="" width={20} height={20} />
                                             Help & Support
@@ -303,45 +338,54 @@ export default function Header() {
                             </Dropdown>
                         </NavbarContent>
                     </Navbar>
-                    {active && (
-                        <div onClick={() => setActive(false)} className="w-fit absolute -left-[21.5vw] -bottom-[28vh]">
-                            <Dropdown onClick={() => setActive(false)} isOpen={active} placement="bottom-end">
-                                <DropdownMenu
-                                    onClick={() => setActive(false)}
-                                    aria-label="Profile Actions"
-                                    variant="flat"
-                                    className="bg-[#242427] pl-[12px] pr-[12px] pt-[12px] pb-[12px] mt-[15px]  border border-[#44444A]	 rounded-md"
+                    <div
+                        onMouseEnter={() => setActive(true)}
+                        onMouseLeave={() => setActive(false)}
+                        className={` w-fit z-50 absolute -left-[19.1vw] -bottom-[56vh] ${active ? "" : "hidden"} `}
+                    >
+                        <div
+                            onClick={() => setActive(false)}
+                            className="bg-[#242427] flex flex-col gap-3 pl-[12px] pr-[12px] pt-[12px] pb-[12px] mt-[15px]  border border-[#44444A]	 rounded-md"
+                        >
+                            <div key="profile" className="gap-2">
+                                <p className="font-semibold text-[12px] text-[#b6b8bf]">
+                                    {user?.email || "zoey@example.com"}
+                                </p>
+                            </div>
+
+                            <div key="my_account" onClick={(e) => setAccountModal(true)}>
+                                <div className="flex items-center gap-2 cursor-pointer hover:bg-white/20 px-2 py-1 rounded-lg">
+                                    Tutorials
+                                </div>
+                            </div>
+
+                            <div key="settings" onClick={() => router.push("/settings/info")}>
+                                <div className="flex items-center gap-2 cursor-pointer hover:bg-white/20 px-2 py-1 rounded-lg">
+                                    FAQ
+                                </div>
+                            </div>
+
+                            <div key="pricing" onClick={() => router.push("/pricing")}>
+                                <div className="flex items-center gap-2 cursor-pointer hover:bg-white/20 px-2 py-1 rounded-lg">
+                                    Blog
+                                </div>
+                            </div>
+                            <div key="invite_member">
+                                <div
+                                    className="flex items-center gap-2 cursor-pointer hover:bg-white/20 px-2 py-1 rounded-lg"
+                                    onClick={onOpen}
                                 >
-                                    <DropdownItem key="profile" className="h-14 gap-2">
-                                        <p className="font-semibold text-[12px] text-[#b6b8bf]">
-                                            {user?.email || "zoey@example.com"}
-                                        </p>
-                                    </DropdownItem>
+                                    Send feedback
+                                </div>
+                            </div>
 
-                                    <DropdownItem key="my_account" onClick={(e) => setAccountModal(true)}>
-                                        <div className="flex items-center gap-2">Tutorials</div>
-                                    </DropdownItem>
-
-                                    <DropdownItem key="settings" onClick={() => router.push("/settings/info")}>
-                                        <div className="flex items-center gap-2">FAQ</div>
-                                    </DropdownItem>
-
-                                    <DropdownItem key="pricing" onClick={() => router.push("/pricing")}>
-                                        <div className="flex items-center gap-2">Blog</div>
-                                    </DropdownItem>
-                                    <DropdownItem key="invite_member">
-                                        <div className="flex items-center gap-2" onClick={onOpen}>
-                                            Send feedback
-                                        </div>
-                                    </DropdownItem>
-
-                                    <DropdownItem onClick={() => setActive(!active)} key="help_&_support">
-                                        <div className="flex items-center gap-2">Terms Of Service</div>
-                                    </DropdownItem>
-                                </DropdownMenu>
-                            </Dropdown>
+                            <div onClick={() => setActive(!active)} key="help_&_support">
+                                <div className="flex items-center gap-2 cursor-pointer hover:bg-white/20 px-2 py-1 rounded-lg">
+                                    Terms Of Service
+                                </div>
+                            </div>
                         </div>
-                    )}
+                    </div>
                 </div>
 
                 <AccountModal isOpen={accountModal} onOpenChange={setAccountModal} />

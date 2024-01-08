@@ -43,10 +43,10 @@ export default function EditInput({ isWorkspace }) {
                             : (e) => setSelectedProject((pre) => ({ ...pre, name: e.target.value }))
                     }
                     type="text"
-                    className="text-[24px] min-w-[7rem]"
+                    className="text-[24px] w-full max-w-[10rem] min-w-[8rem]"
                 />
             ) : (
-                <p className="text-[24px] ml-4 min-w-[7rem]">
+                <p className="text-[24px] ml-4 w-full overflow-scroll scrollStyle max-w-[10rem] min-w-[8rem]">
                     {(isWorkspace ? selectedWorkspace?.name : selectedProject?.name) || "Title"}
                 </p>
             )}

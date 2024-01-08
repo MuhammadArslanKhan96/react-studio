@@ -13,7 +13,7 @@ export default async function handler(req, res) {
             return;
         }
         await addDoc(collection(db, 'workspaces'), {
-            name: "",
+            name: "My workspace",
             members: [
                 {
                     email: req.body.email,

@@ -82,6 +82,7 @@ export const AppContextProvider = ({ children }) => {
     const [selectedWorkspace, setSelectedWorkspace] = useState({});
     const [inviteMembers, setInviteMembers] = useState([]);
     const [workspaceProjects, setWorkspaceProjects] = useState([]);
+    const [progressModal, setProgressModal] = useState("");
 
 
     const getData = async () => {
@@ -105,12 +106,12 @@ export const AppContextProvider = ({ children }) => {
         const workspaces = await fetch('/api/workspaces/get-workspaces?email=' + email).then(r => r.json()).then(r => r.workspaces);
         const pending = await fetch('/api/workspaces/get-pending-invites?email=' + email).then(r => r.json()).then(r => r.pending);
         setPendingInvites([]);
-        await (pending||[])?.forEach(async (workspace) => {
+        await (pending || [])?.forEach(async (workspace) => {
             const members = workspace.members;
             const getAllMembers = await Promise.all(members.map(async a => await fetch(`/api/auth/get-user?email=${a.email}`).then(r => r.json()).then(r => ({ ...r.user, ...a }))));
             setPendingInvites(pre => ([...pre, { ...workspace, members: getAllMembers }]));
         });
-        setWorkspaces(workspaces||[]);
+        setWorkspaces(workspaces || []);
         setSelectedWorkspace(workspaces?.[0] || {});
     };
 
@@ -176,8 +177,22 @@ export const AppContextProvider = ({ children }) => {
                     workspaceProjects,
                     setPendingInvites,
                     pendingInvites,
+                    progressModal,
+                    setProgressModal
                 }}
             >
+                {progressModal
+                    && (
+                        <div className="absolute top-0 left-0 z-50 bg-black/60 min-h-screen h-full w-full flex justify-center items-center">
+                            <div className="w-fit px-4 min-w-[300px] h-24 bg-black/90 flex flex-col items-center justify-center border-2 border-gray-700 rounded-lg">
+                                <p className="text-white text-lg font-medium">{progressModal?.text || ""}</p>
+                            <div className="w-full h-2 bg-gray-700 rounded-lg mt-2">
+                                    <div className="h-full bg-blue-500 rounded-lg transition-all ease-in-out duration-300" style={{ width: `${progressModal?.progress || 0}%` }}></div>
+                                </div>
+                            </div>
+                        </div>
+                    )
+                }
                 {children}
             </AppContext.Provider>
         </>
