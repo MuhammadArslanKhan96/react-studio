@@ -71,6 +71,7 @@ export const AppContextProvider = ({ children }) => {
     };
     const [mockData, setMockData] = useState(initMockData);
     const [user, setUser] = useState();
+    const [text, setText] = useState("");
     const [mockEffect, setMockEffect] = useState(initMockEffect);
     const [speakers, setSpeakers] = useState([]);
     const [selectedSpeaker, setSelectedSpeaker] = useState(speakers?.[0] ?? false);
@@ -178,7 +179,8 @@ export const AppContextProvider = ({ children }) => {
                     setPendingInvites,
                     pendingInvites,
                     progressModal,
-                    setProgressModal
+                    setProgressModal,
+                    text, setText
                 }}
             >
                 {progressModal

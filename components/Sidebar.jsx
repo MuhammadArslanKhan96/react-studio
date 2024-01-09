@@ -62,7 +62,7 @@ export default function Sidebar() {
                                         </div>
                                         <div className="flex flex-col items-start">
                                             <p className="text-[12px] leading-3">{user?.plan || "Free"} Plan</p>
-                                            <p>{user?.team?.title || "Vivald"}</p>
+                                            <p>{user?.team?.title || `${user?.displayName}'s team` || ""}</p>
                                         </div>
                                     </div>
                                     <FaChevronDown />
@@ -76,7 +76,7 @@ export default function Sidebar() {
                                         </div>
                                         <div>
                                             <p className="text-[12px]">{user?.plan || "Free"} Plan</p>
-                                            <p>{user?.team?.title || "Vivald"}</p>
+                                            <p>{user?.team?.title || `${user?.displayName}'s team` || ""}</p>
                                         </div>
                                     </div>
                                 </DropdownItem>
@@ -162,7 +162,7 @@ export default function Sidebar() {
                     <Link
                         href={"/setting/info"}
                         className={
-                            (router.pathname.includes("/setting") ? "bg-[#182C5C] hover:!bg-[#182C5C]" : "") +
+                            ((router.pathname.includes("/setting/info")) ? "bg-[#182C5C] hover:!bg-[#182C5C]" : "") +
                             " flex items-center gap-x-2 text-[14px] py-2 px-3 hover:bg-[#39393C] "
                         }
                     >
@@ -171,7 +171,9 @@ export default function Sidebar() {
                     </Link>
                     <Button
                         onPress={onOpen}
-                        className="flex items-center justify-start gap-x-2 text-[14px] py-2 px-3 hover:bg-[#39393C] "
+                        className={"flex items-center justify-start gap-x-2 text-[14px] py-2 px-3 " +
+                            ((router.pathname.includes("/setting/mem")) ? "bg-[#182C5C] hover:!bg-[#182C5C]" : "")
+                        }
                     >
                         <Image src={"/images/invite.svg"} alt="" width={20} height={20} />
                         Invite Members
@@ -181,15 +183,17 @@ export default function Sidebar() {
                     <Discount />
                 </article>
             </section>
-            {open ? (
-                <section
-                    className=" xl:w-0 w-screen !h-full cursor-pointer"
-                    onClick={() => {
-                        setOpen(false);
-                    }}
-                ></section>
-            ) : null}
+            {
+                open ? (
+                    <section
+                        className=" xl:w-0 w-screen !h-full cursor-pointer"
+                        onClick={() => {
+                            setOpen(false);
+                        }}
+                    ></section>
+                ) : null
+            }
             <WordSpaceModal isOpen={workSpaceModal} onOpenChange={setWorkSpaceModal} />
-        </main>
+        </main >
     );
 }

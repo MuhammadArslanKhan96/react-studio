@@ -44,6 +44,7 @@ export default function Header() {
         setProjects,
         setProgressModal,
         progressModal,
+        setText
     } = useAppContext();
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const [modal, setModal] = useState(false);
@@ -137,6 +138,7 @@ export default function Header() {
                                 } else if (count > 100) {
                                     clearInterval(interval);
                                     setProgressModal("");
+                            setText("");
                                     router.push("/");
                                 } else {
                                     setProgressModal({
@@ -196,9 +198,8 @@ export default function Header() {
                         </Button>
                         <Button
                             onClick={saveProject}
-                            className={`border-2 rounded-lg px-4 py-1 min-w-40 text-[14px] ${
-                                saving || saved ? "bg-transparent text-blue-600 border-blue-600" : "text-white"
-                            }`}
+                            className={`border-2 rounded-lg px-4 py-1 min-w-40 text-[14px] ${saving || saved ? "bg-transparent text-blue-600 border-blue-600" : "text-white"
+                                }`}
                         >
                             {saving ? "Saving" : saved ? "Saved !" : "Save"}
                         </Button>
@@ -341,7 +342,7 @@ export default function Header() {
                     <div
                         onMouseEnter={() => setActive(true)}
                         onMouseLeave={() => setActive(false)}
-                        className={` w-fit z-50 absolute -left-[19.1vw] -bottom-[56vh] ${active ? "" : "hidden"} `}
+                        className={` w-fit z-50 absolute -left-[24.8rem] top-[20rem] ${active ? "" : "hidden"} `}
                     >
                         <div
                             onClick={() => setActive(false)}

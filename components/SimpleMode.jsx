@@ -15,10 +15,9 @@ import ViewModal from "./EditBar/ViewModal";
 import PronouneModal from "./EditBar/PronouneModal";
 
 export default function SimpleMode() {
-    const { setVoiceModel, voiceModel, speakers, selectedProject, setSelectedProject, selectedSpeaker } =
+    const { setVoiceModel, voiceModel, speakers, selectedProject, setSelectedProject, selectedSpeaker, text, setText } =
         useAppContext();
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
-    const [text, setText] = useState("");
     const [speaker, setSpeaker] = useState(selectedSpeaker);
     const [shareModal, setShareModal] = useState();
     const [speedModal, setSpeedModal] = useState(false);

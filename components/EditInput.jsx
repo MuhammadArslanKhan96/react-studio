@@ -46,7 +46,7 @@ export default function EditInput({ isWorkspace }) {
                     className="text-[24px] w-full max-w-[10rem] min-w-[8rem]"
                 />
             ) : (
-                <p className="text-[24px] ml-4 w-full overflow-scroll scrollStyle max-w-[10rem] min-w-[8rem]">
+                <p className="text-[24px] ml-4 w-full overflow-scroll whitespace-nowrap scrollStyle max-w-[10rem] min-w-[8rem]">
                     {(isWorkspace ? selectedWorkspace?.name : selectedProject?.name) || "Title"}
                 </p>
             )}

@@ -124,7 +124,9 @@ function TranscriptInput({ mockData, mockEffect, length }) {
     };
 
     return (
-        <div className="flex items-start gap-x-2">
+        <div
+            onMouseLeave={() => setShow(false)}
+            className="flex items-start gap-x-2">
             <div className="flex gap-2 items-center">
                 <Checkbox
                     defaultSelected={mockData.checked}
@@ -149,7 +151,6 @@ function TranscriptInput({ mockData, mockEffect, length }) {
                     maxLength={400}
                     max={400}
                     onFocus={() => setShow(true)}
-                    onBlur={() => setShow(false)}
                 ></textarea>
                 <div className="absolute top-2 right-2 hover:bg-[#353538] p-2 rounded-[5px] cursor-pointer">
                     <Dropdown>

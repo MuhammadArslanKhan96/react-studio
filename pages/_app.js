@@ -19,13 +19,11 @@ export default function App({ Component,
     const [loading, setLoading] = useState(true);
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
-
     useEffect(() => {
         setTimeout(() => {
             setLoading(false);
         }, 4000);
     }, [])
-
 
     return (
         <SettingsContext>
